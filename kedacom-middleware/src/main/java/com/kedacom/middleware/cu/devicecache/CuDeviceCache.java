@@ -52,17 +52,30 @@ public class CuDeviceCache {
 	private Hashtable<String, ArrayList<PDevice>> devicesByGroup = new Hashtable<String, ArrayList<PDevice>>(20);
 
 	/**
-	 *   视墙
+	 *电视墙集合
 	 **/
-	private TvWall tvWall;
+	private List<TvWall> tvWalls;
 
-	public TvWall getTvWall() {
-		return tvWall;
-	}
+    public List<TvWall> getTvWalls() {
+        return tvWalls;
+    }
 
-	public void setTvWall(TvWall tvWall) {
-		this.tvWall = tvWall;
-	}
+    public void setTvWalls(List<TvWall> tvWalls) {
+        this.tvWalls = tvWalls;
+    }
+
+    public List<TvWallScheme> getTvWallSchemes() {
+        return tvWallSchemes;
+    }
+
+    public void setTvWallSchemes(List<TvWallScheme> tvWallSchemes) {
+        this.tvWallSchemes = tvWallSchemes;
+    }
+
+    /**
+	 *电视墙预案集合
+	 **/
+	private List<TvWallScheme> tvWallSchemes;
 
 	/**
 	 * 设备是否加载完成
@@ -246,7 +259,7 @@ public class CuDeviceCache {
 	
 	/**
 	 * 删除设备
-	 * @param device
+	 * @param puid
 	 */
 	public void removeDevice(String puid){
 
@@ -304,7 +317,7 @@ public class CuDeviceCache {
 	/**
 	 * 更新通道（视频源）状态
 	 * @param puid
-	 * @param deviceStatus
+	 * @param channelStatus
 	 */
 	public void updateChannelStatus(String puid, List<PChannelStatus> channelStatus){
 		if(channelStatus == null){

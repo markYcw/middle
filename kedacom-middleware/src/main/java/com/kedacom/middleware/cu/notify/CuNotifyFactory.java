@@ -23,7 +23,8 @@ public class CuNotifyFactory {
 		NotifyFactory.register(DeviceType.CU, LostCnntNotify.NAME, LostCnntNotify.class);
 		NotifyFactory.register(DeviceType.CU, StartPlayPlatrecNotify.NAME, StartPlayPlatrecNotify.class);
 		NotifyFactory.register(DeviceType.CU, TransCmdNotify.NAME, TransCmdNotify.class);
-		
+		NotifyFactory.register(DeviceType.CU, GetTvWallNotify.NAME, GetTvWallNotify.class);
+		NotifyFactory.register(DeviceType.CU, GetTvWallSchemeNotify.NAME, GetTvWallSchemeNotify.class);
 
 		NotifyFactory.register(DeviceType.CU2, DeviceStatusNotify.NAME, DeviceStatusNotify.class);
 		NotifyFactory.register(DeviceType.CU2, GetGroupNotify.NAME, GetGroupNotify.class);
@@ -34,5 +35,6 @@ public class CuNotifyFactory {
 		NotifyFactory.register(DeviceType.CU2, StartPlayPlatrecNotify.NAME, StartPlayPlatrecNotify.class);
 		NotifyFactory.register(DeviceType.CU2, TransCmdNotify.NAME, TransCmdNotify.class);
 		NotifyFactory.register(DeviceType.CU2, GetTvWallNotify.NAME, GetTvWallNotify.class);
+		NotifyFactory.register(DeviceType.CU2, GetTvWallSchemeNotify.NAME, GetTvWallSchemeNotify.class);
 	}
 }

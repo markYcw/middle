@@ -25,7 +25,7 @@ import java.util.concurrent.Executors;
  * @author TaoPeng
  *
  */
-public class TCPClient implements com.kedacom.middleware.client.IClient {
+public class TCPClient implements IClient {
 
 	private static final Logger log = Logger.getLogger(TCPClient.class);
 
@@ -67,15 +67,15 @@ public class TCPClient implements com.kedacom.middleware.client.IClient {
 	/**
 	 * 连接监听器
 	 */
-	private com.kedacom.middleware.client.TCPClientConnMonitor connMonitor;
+	private TCPClientConnMonitor connMonitor;
 	/**
 	 * 数据接收器
 	 */
-	private com.kedacom.middleware.client.TCPClientDataReciver dataReciver;
+	private TCPClientDataReciver dataReciver;
 	/**
 	 * 服务器数据和状态监听器
 	 */
-	private Set<com.kedacom.middleware.client.TCPClientListener> listeners = new HashSet<com.kedacom.middleware.client.TCPClientListener>();
+	private Set<TCPClientListener> listeners = new HashSet<TCPClientListener>();
 
 	/**
 	 * 响应数据的缓存
@@ -109,7 +109,7 @@ public class TCPClient implements com.kedacom.middleware.client.IClient {
 	 * @param listener
 	 * @return
 	 */
-	public boolean addListener(com.kedacom.middleware.client.TCPClientListener listener){
+	public boolean addListener(TCPClientListener listener){
 		return this.listeners.add(listener);
 	}
 
@@ -119,7 +119,7 @@ public class TCPClient implements com.kedacom.middleware.client.IClient {
 	 * @see #addListener(TCPClientListener)
 	 * @return
 	 */
-	public boolean removeListener(com.kedacom.middleware.client.TCPClientListener listener){
+	public boolean removeListener(TCPClientListener listener){
 		return this.listeners.remove(listener);
 	}
 
@@ -189,7 +189,7 @@ public class TCPClient implements com.kedacom.middleware.client.IClient {
 		//准备接收数据包
 		log.debug("start to reciver...");
 		if(dataReciver == null || !dataReciver.isRun()){
-			dataReciver = new com.kedacom.middleware.client.TCPClientDataReciver(this);
+			dataReciver = new TCPClientDataReciver(this);
 			dataReciver.start();
 			log.debug("start to reciver finished.");
 		}
@@ -204,7 +204,7 @@ public class TCPClient implements com.kedacom.middleware.client.IClient {
 	 */
 	public void startConnect(){
 		if(connMonitor == null || !connMonitor.isRun()){
-			connMonitor = new com.kedacom.middleware.client.TCPClientConnMonitor(this);
+			connMonitor = new TCPClientConnMonitor(this);
 			connMonitor.start();
 		}
 
@@ -258,7 +258,7 @@ public class TCPClient implements com.kedacom.middleware.client.IClient {
 	}
 
 	@Override
-	public com.kedacom.middleware.client.IResponse sendRequest(com.kedacom.middleware.client.IRequest request) throws KMException {
+	public IResponse sendRequest(IRequest request) throws KMException {
 		return this.sendRequest(request, defaultResponseTimeout);
 	}
 
@@ -271,7 +271,7 @@ public class TCPClient implements com.kedacom.middleware.client.IClient {
 	 * @throws DataException
 	 */
 	@Override
-	public com.kedacom.middleware.client.IResponse sendRequest(com.kedacom.middleware.client.IRequest request, long timeout) throws KMException {
+	public IResponse sendRequest(IRequest request, long timeout) throws KMException {
 
 		int ssno = getSsno();
 		request.setSsno(ssno);
@@ -304,7 +304,7 @@ public class TCPClient implements com.kedacom.middleware.client.IClient {
 			timeout = defaultResponseTimeout;
 		}
 		boolean isTimeout = false;
-		com.kedacom.middleware.client.IResponse response = null;
+		IResponse response = null;
 		synchronized(resultCache) {
 			long t1 = System.currentTimeMillis();
 			while(result.response == null) {
@@ -363,7 +363,7 @@ public class TCPClient implements com.kedacom.middleware.client.IClient {
 			this.connect();
 		}
 
-		byte[] bytes = com.kedacom.middleware.client.TCPPackageUtil.buidPack(data);
+		byte[] bytes = TCPPackageUtil.buidPack(data);
 
 		try {
 			socket.setSoTimeout(timeout3Read);
@@ -384,7 +384,7 @@ public class TCPClient implements com.kedacom.middleware.client.IClient {
 	 * @throws DataException
 	 * @throws NetException
 	 */
-	public void sendCmd(com.kedacom.middleware.client.ICommand cmd) throws KMException{
+	public void sendCmd(ICommand cmd) throws KMException{
 		int ssno = getSsno();
 		cmd.setSsno(ssno);
 
@@ -412,7 +412,7 @@ public class TCPClient implements com.kedacom.middleware.client.IClient {
 			//无法对应，“响应”无对应的“请求”
 			log.debug(buildNetLog(concat("command result already destroyed, can not set command result: ", jsonData)));
 		}else{
-			com.kedacom.middleware.client.IResponse response = rr.request.getResponse();
+			IResponse response = rr.request.getResponse();
 			try {
 				response.parseData(jsonData);
 				rr.response = response;
@@ -436,9 +436,9 @@ public class TCPClient implements com.kedacom.middleware.client.IClient {
 	protected void onNotify(int ssno, JSONObject jsonData){
 
 
-		com.kedacom.middleware.client.INotify notify = null;
+		INotify notify = null;
 		try {
-			notify = com.kedacom.middleware.client.NotifyFactory.buildNotify(jsonData);
+			notify = NotifyFactory.buildNotify(jsonData);
 		} catch (Exception e) {
 			log.warn("Notify解析失败", e);
 			return;
@@ -451,11 +451,11 @@ public class TCPClient implements com.kedacom.middleware.client.IClient {
 			return;
 		}
 
-		final com.kedacom.middleware.client.INotify nty = notify;
+		final INotify nty = notify;
 		Thread thread = new Thread(){
 			@Override
 			public void run() {
-				for(com.kedacom.middleware.client.TCPClientListener l : listeners){
+				for(TCPClientListener l : listeners){
 					try{
 						l.onNotify(nty);
 					}catch(Exception e){
@@ -480,7 +480,7 @@ public class TCPClient implements com.kedacom.middleware.client.IClient {
 		Thread thread = new Thread(){
 			@Override
 			public void run() {
-				for(com.kedacom.middleware.client.TCPClientListener l : listeners){
+				for(TCPClientListener l : listeners){
 					l.onInterrupt(TCPClient.this);
 				}
 			}
@@ -499,7 +499,7 @@ public class TCPClient implements com.kedacom.middleware.client.IClient {
 		Thread thread = new Thread(){
 			@Override
 			public void run() {
-				for(com.kedacom.middleware.client.TCPClientListener l : listeners){
+				for(TCPClientListener l : listeners){
 					l.onClosed(TCPClient.this);
 				}
 			}
@@ -595,7 +595,7 @@ public class TCPClient implements com.kedacom.middleware.client.IClient {
 	public static void main(String[] args) {
 
 		String xml = "this is word";
-		byte[] bytes = com.kedacom.middleware.client.TCPPackageUtil.buidPack(xml);
+		byte[] bytes = TCPPackageUtil.buidPack(xml);
 		out(bytes);
 	}
 	private static void out(byte[] bytes){
@@ -610,8 +610,8 @@ public class TCPClient implements com.kedacom.middleware.client.IClient {
 class RequestResponse{
 	protected long time; //消息构建的时间
 	protected int ssno;
-	protected com.kedacom.middleware.client.IRequest request;
-	protected com.kedacom.middleware.client.IResponse response;
+	protected IRequest request;
+	protected IResponse response;
 	protected KMException exception; // null表示异常
 	protected RequestResponse(){
 		time = System.currentTimeMillis();

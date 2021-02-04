@@ -6,10 +6,7 @@ import com.kedacom.middleware.cu.CuClient;
 import com.kedacom.middleware.cu.CuNotifyListener;
 import com.kedacom.middleware.cu.CuSession;
 import com.kedacom.middleware.cu.domain.*;
-import com.kedacom.middleware.cu.notify.DeviceStatusNotify;
-import com.kedacom.middleware.cu.notify.GetDeviceNotify;
-import com.kedacom.middleware.cu.notify.GetGroupNotify;
-import com.kedacom.middleware.cu.notify.GetTvWallNotify;
+import com.kedacom.middleware.cu.notify.*;
 import com.kedacom.middleware.exception.KMException;
 import keda.common.util.ToolsUtil;
 import org.apache.log4j.Logger;
@@ -288,6 +285,9 @@ public class CuDeviceLoadThread  extends TCPClientListenerAdapter{
 		}else if(notify instanceof GetTvWallNotify){
 			log.info("加载电视墙");
 			this.onTvWallNotify((GetTvWallNotify)notify);
+		}else if(notify instanceof GetTvWallSchemeNotify){
+			log.info("加载电视墙预案");
+			this.onTvWallSchemeNotify((GetTvWallSchemeNotify)notify);
 		}
 	}
 
@@ -348,9 +348,16 @@ public class CuDeviceLoadThread  extends TCPClientListenerAdapter{
 
 	private void onTvWallNotify(GetTvWallNotify notify){
 		int ssid = notify.getSsid();
-		TvWall tvWall = notify.getTvWall();
-		CuSession sessionBySSID = client.getSessionManager().getSessionBySSID(ssid);
-		sessionBySSID.getDeviceCache().setTvWall(tvWall);
+        List<TvWall> tvWalls = notify.getTvWalls();
+        CuSession sessionBySSID = client.getSessionManager().getSessionBySSID(ssid);
+		sessionBySSID.getDeviceCache().setTvWalls(tvWalls);
+	}
+
+	private void onTvWallSchemeNotify(GetTvWallSchemeNotify notify){
+		int ssid = notify.getSsid();
+        List<TvWallScheme> tvWallSchemes = notify.getTvWallSchemes();
+        CuSession sessionBySSID = client.getSessionManager().getSessionBySSID(ssid);
+		sessionBySSID.getDeviceCache().setTvWallSchemes(tvWallSchemes);
 	}
 
 	/**

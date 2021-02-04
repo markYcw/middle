@@ -135,6 +135,19 @@ public class CuDemo {
                             e.printStackTrace();
                         }
 
+                        try {
+                            client.getCuOperate().getTvWallScheme(cuId,"9c439fea5e5640609fe6911c3abde964@xinyangzhidui");
+                            try {
+                                //睡眠0.2s
+                                Thread.currentThread().sleep(5000);
+                            } catch (InterruptedException e) {
+                                log.error("获取电视墙线程睡眠0.2秒失败");
+                            }
+                            List<TvWallScheme> tvWallSchemes = client.getSessionManager().getSessionByCuID(cuId).getDeviceCache().getTvWallSchemes();
+                            System.out.println("=========================================================电视墙预案为："+tvWallSchemes);
+                        } catch (KMException e) {
+                            log.debug("获取电视墙预案失败");
+                        }
 
 
                     } else {
