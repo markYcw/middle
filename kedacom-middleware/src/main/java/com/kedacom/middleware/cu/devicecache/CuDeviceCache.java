@@ -51,31 +51,9 @@ public class CuDeviceCache {
 	 */
 	private Hashtable<String, ArrayList<PDevice>> devicesByGroup = new Hashtable<String, ArrayList<PDevice>>(20);
 
-	/**
-	 *电视墙集合
-	 **/
-	private List<TvWall> tvWalls;
-
-    public List<TvWall> getTvWalls() {
-        return tvWalls;
-    }
-
-    public void setTvWalls(List<TvWall> tvWalls) {
-        this.tvWalls = tvWalls;
-    }
-
-    public List<TvWallScheme> getTvWallSchemes() {
-        return tvWallSchemes;
-    }
-
-    public void setTvWallSchemes(List<TvWallScheme> tvWallSchemes) {
-        this.tvWallSchemes = tvWallSchemes;
-    }
-
-    /**
-	 *电视墙预案集合
-	 **/
-	private List<TvWallScheme> tvWallSchemes;
+	public void setRootGroupId(String rootGroupId) {
+		this.rootGroupId = rootGroupId;
+	}
 
 	/**
 	 * 设备是否加载完成

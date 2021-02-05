@@ -20,19 +20,12 @@ public class GetTvWallSchemeNotify extends CuNotify {
      * 命令值
      */
     public static final String NAME = "gettvwallscheme";
-    /**
-     * 电视墙预案
-     */
-    private TvWallScheme tvWallScheme = new TvWallScheme();
-
-    private static List<TvWallScheme> tvWallSchemes=new ArrayList<TvWallScheme>();
 
     /**
-     * 本次通知信息是否取完
+     * 电视墙预案集
      */
-    private static Boolean isOver = false;
+    public static List<TvWallScheme> tvWallSchemes=new ArrayList<TvWallScheme>();
 
-    public static List<TvWallScheme> getTvWallSchemes(){return tvWallSchemes;}
     /**
      * 是否传完
      */
@@ -42,13 +35,11 @@ public class GetTvWallSchemeNotify extends CuNotify {
     @Override
     public void parseData(JSONObject jsonData) throws DataException {
         super.parseNty(jsonData);
-        if(isOver==false){
             this.isend = jsonData.optBoolean("isend");
             JSONObject object = jsonData.optJSONObject("tvwallscheme");
             if (object != null) {
                 this.parseData_tvwallscheme(object);
             }
-        }
     }
 
     private void parseData_tvwallscheme(JSONObject jsonObj) {
@@ -109,9 +100,6 @@ public class GetTvWallSchemeNotify extends CuNotify {
         tvWallScheme.setTvwallid(tvwallid);
         tvWallScheme.setSchemes(schemes);
         tvWallSchemes.add(tvWallScheme);
-        if (isend == true) {
-            isOver=true;
-        }
     }
 
     public boolean isIsend() {

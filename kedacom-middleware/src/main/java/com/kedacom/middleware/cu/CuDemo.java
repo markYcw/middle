@@ -3,6 +3,8 @@ package com.kedacom.middleware.cu;
 import com.kedacom.middleware.KM;
 import com.kedacom.middleware.cu.devicecache.CuDeviceCache;
 import com.kedacom.middleware.cu.domain.*;
+import com.kedacom.middleware.cu.notify.GetTvWallNotify;
+import com.kedacom.middleware.cu.notify.GetTvWallSchemeNotify;
 import com.kedacom.middleware.exception.KMException;
 import keda.common.util.TimeUtil;
 import org.apache.log4j.Logger;
@@ -126,7 +128,14 @@ public class CuDemo {
 
                         try {
                             boolean tvWall = client.getCuOperate().getTvWall(cuId);
-                            if (tvWall) {
+                            try {
+                                //睡眠0.2s
+                                Thread.currentThread().sleep(200);
+                            } catch (InterruptedException e) {
+                                log.error("获取电视墙线程睡眠0.2秒失败");
+                            }
+                            List<TvWall> tvWalls = GetTvWallNotify.tvWalls;
+                            if (tvWalls!=null) {
                                 //testCu_device(cuId);
                             } else {
                                 log.debug("平台设备正在加载中");
@@ -139,12 +148,16 @@ public class CuDemo {
                             client.getCuOperate().getTvWallScheme(cuId,"9c439fea5e5640609fe6911c3abde964@xinyangzhidui");
                             try {
                                 //睡眠0.2s
-                                Thread.currentThread().sleep(5000);
+                                Thread.currentThread().sleep(200);
                             } catch (InterruptedException e) {
                                 log.error("获取电视墙线程睡眠0.2秒失败");
                             }
-                            List<TvWallScheme> tvWallSchemes = client.getSessionManager().getSessionByCuID(cuId).getDeviceCache().getTvWallSchemes();
-                            System.out.println("=========================================================电视墙预案为："+tvWallSchemes);
+                            List<TvWallScheme> tvWallSchemes = GetTvWallSchemeNotify.tvWallSchemes;
+                            if (tvWallSchemes!=null) {
+                                //testCu_device(cuId);
+                            } else {
+                                log.debug("平台设备正在加载中");
+                            }
                         } catch (KMException e) {
                             log.debug("获取电视墙预案失败");
                         }

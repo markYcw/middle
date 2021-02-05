@@ -44,6 +44,8 @@ public class CuDeviceLoadThread  extends TCPClientListenerAdapter{
 	private Object lock = new Object();
 	private Thread loadThread;
 	private CuClient client;
+
+	private CuDeviceCache cuDeviceCache;
 	
 	public CuDeviceLoadThread(CuClient client){
 		this.client = client;
@@ -347,17 +349,12 @@ public class CuDeviceLoadThread  extends TCPClientListenerAdapter{
 	}
 
 	private void onTvWallNotify(GetTvWallNotify notify){
-		int ssid = notify.getSsid();
-        List<TvWall> tvWalls = notify.getTvWalls();
-        CuSession sessionBySSID = client.getSessionManager().getSessionBySSID(ssid);
-		sessionBySSID.getDeviceCache().setTvWalls(tvWalls);
+		log.info("========加载电视墙========");
+
 	}
 
 	private void onTvWallSchemeNotify(GetTvWallSchemeNotify notify){
-		int ssid = notify.getSsid();
-        List<TvWallScheme> tvWallSchemes = notify.getTvWallSchemes();
-        CuSession sessionBySSID = client.getSessionManager().getSessionBySSID(ssid);
-		sessionBySSID.getDeviceCache().setTvWallSchemes(tvWallSchemes);
+		log.info("========加载电视墙预案========");
 	}
 
 	/**

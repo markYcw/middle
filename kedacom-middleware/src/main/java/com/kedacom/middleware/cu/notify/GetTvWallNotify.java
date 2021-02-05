@@ -25,20 +25,10 @@ public class GetTvWallNotify extends CuNotify {
     public static final String NAME = "gettvwall";
 
     /**
-     * 监控设备
+     * 电视墙
      */
-    private TvWall tvWall = new TvWall();
+    public static List<TvWall> tvWalls = new ArrayList<TvWall>();
 
-    private static List<TvWall> tvWalls = new ArrayList<TvWall>();
-
-    public List<TvWall> getTvWalls() {
-        return tvWalls;
-    }
-
-	/**
-	 * 本次通知信息是否取完
-	 */
-	private static Boolean isOver = false;
 
     /**
      * 是否传完
@@ -49,13 +39,11 @@ public class GetTvWallNotify extends CuNotify {
     public void parseData(JSONObject jsonData) throws DataException {
 
         super.parseNty(jsonData);
-        if(isOver==false){
 			this.isend = jsonData.optBoolean("isend");
 			JSONObject object = jsonData.optJSONObject("tvwall");
 			if (object != null) {
 				this.parseData_tvwall(object);
 			}
-        }
     }
 
     private void parseData_tvwall(JSONObject jsonObj) {
@@ -92,21 +80,10 @@ public class GetTvWallNotify extends CuNotify {
         tvwall.setStyle(style);
         tvwall.setTvcount(tvcount);
         tvWalls.add(tvwall);
-        if (isend == true) {
-          isOver=true;
-        }
     }
 
     public boolean isIsend() {
         return isend;
-    }
-
-    public TvWall getTvWall() {
-        return tvWall;
-    }
-
-    public void setTvWall(TvWall tvWall) {
-        this.tvWall = tvWall;
     }
 
 }
