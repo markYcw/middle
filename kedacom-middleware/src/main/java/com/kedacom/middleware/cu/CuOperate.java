@@ -568,6 +568,48 @@ public class CuOperate {
         return tvwallid;
     }
 
+	/**
+	 * 添加/修改电视墙预案
+	 * @param cuId
+	 * @param tvWallScheme
+	 * @param isAdd
+	 * @return true
+	 * @author: ycw
+	 * @Date: 2021年2月20日 上午9:50:28
+	 * @throws KMException
+	 */
+    public boolean putTvWallScheme(int cuId,TvWallScheme tvWallScheme,boolean isAdd)throws KMException{
+
+		PutTvWallSchemeRequest request = new PutTvWallSchemeRequest();
+		request.setIsadd(isAdd);
+		request.setTvWallScheme(tvWallScheme);
+
+		this.sendRequest(cuId, request);
+		return true;
+	}
+
+	/**
+	 * 删除电视墙预案
+	 * @param cuId
+	 * @param tvWallId
+	 * @param name
+	 * @return true
+	 * @author ycw
+	 * @Date 2021年2月20日 上午10:17:02
+	 * @throws KMException
+	 */
+	public boolean delTvWallScheme(int cuId,String tvWallId,String name)throws KMException{
+
+		DelTvWallSchemeRequest request = new DelTvWallSchemeRequest();
+        request.setTvwallid(tvWallId);
+        request.setName(name);
+
+        this.sendRequest(cuId,request);
+        return true;
+	}
+
+
+
     /**
      * @Title: delTvWall
      * @Description: 删除电视墙

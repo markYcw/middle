@@ -144,25 +144,6 @@ public class CuDemo {
                             e.printStackTrace();
                         }
 
-                        try {
-                            client.getCuOperate().getTvWallScheme(cuId,"9c439fea5e5640609fe6911c3abde964@xinyangzhidui");
-                            try {
-                                //睡眠0.2s
-                                Thread.currentThread().sleep(200);
-                            } catch (InterruptedException e) {
-                                log.error("获取电视墙线程睡眠0.2秒失败");
-                            }
-                            List<TvWallScheme> tvWallSchemes = GetTvWallSchemeNotify.tvWallSchemes;
-                            if (tvWallSchemes!=null) {
-                                //testCu_device(cuId);
-                            } else {
-                                log.debug("平台设备正在加载中");
-                            }
-                        } catch (KMException e) {
-                            log.debug("获取电视墙预案失败");
-                        }
-
-
                     } else {
                         log.debug("平台未连接");
                     }
@@ -177,8 +158,6 @@ public class CuDemo {
 
                 }
             }
-
-            ;
         };
         thread.start();
 
