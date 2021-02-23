@@ -5,7 +5,8 @@ import org.json.JSONObject;
 
 /**
  * 2. 删除电视墙预案回复
- * @author gaoguang
+ * @author ycw
+ * @Date 2021/2/23 11:04
  */
 public class DelTvWallSchemeResponse extends CuResponse {
     @Override

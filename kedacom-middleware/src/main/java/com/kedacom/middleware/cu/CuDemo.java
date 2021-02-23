@@ -144,6 +144,13 @@ public class CuDemo {
                             e.printStackTrace();
                         }
 
+                        try {
+                            client.getCuOperate().loadTvWallScheme(cuId, "9c439fea5e5640609fe6911c3abde964@xinyangzhidui", "334");
+
+                        } catch (KMException e) {
+                            e.printStackTrace();
+                        }
+
                     } else {
                         log.debug("平台未连接");
                     }
