@@ -1,5 +1,7 @@
 package com.kedacom.middleware.mcu.domain;
 
+import com.kedacom.middleware.DeviceType;
+
 /**
  * 会议平台
  * @author TaoPeng
@@ -7,8 +9,8 @@ package com.kedacom.middleware.mcu.domain;
  */
 public class Mcu {
 	
-	public static final String MCU_VERSION_4 = "4.7";//MCU 4.7版本
-	public static final String MCU_VERSION_5 = "5.0";//MCU 5.0及以上版本
+	public static final String MCU_VERSION_4 = String.valueOf(DeviceType.MCU.toInt());//MCU 4.7版本
+	public static final String MCU_VERSION_5 = String.valueOf(DeviceType.MCU5.toInt());//MCU 5.0及以上版本
 	
 
 	private String id; //会议平台本地标识。比如：MT信息在本地数据库的数据ID
@@ -21,7 +23,7 @@ public class Mcu {
 	/**
 	 * MCU 版本号
 	 */
-	private String version = MCU_VERSION_4;
+	private String version = MCU_VERSION_5;
 	
 	/**
 	 * 连接会议平台:帐号（5.0及以上版本有效）

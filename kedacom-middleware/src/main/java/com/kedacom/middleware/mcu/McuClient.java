@@ -714,6 +714,23 @@ public class McuClient {
 		
 		this.sendRequest(request);//CancelSpeakerResponse
 	}
+
+    /**
+     * 获取发言人
+     * @param id
+     * @param conFe164 会议e164号
+     * @return
+     * @throws KMException
+     */
+	public String getSpeaker(String id, String conFe164) throws KMException{
+        int ssid = this.tryGetSSIDByID(id);
+        GetSpeakerRequest request = new GetSpeakerRequest();
+        request.setSsid(ssid);
+        request.setConFe164(conFe164);
+
+        GetSpeakerResponse response = (GetSpeakerResponse) this.sendRequest(request);
+        return response.getMtInfo();
+    }
 	
 	/**
 	 * 设置主席
@@ -746,6 +763,16 @@ public class McuClient {
 		
 		this.sendRequest(request);//CancelChairmanResponse
 	}
+
+	public String getChairMan(String id, String conFe164) throws KMException{
+        int ssid = this.tryGetSSIDByID(id);
+        GetChairManRequest request = new GetChairManRequest();
+        request.setSsid(ssid);
+        request.setConFe164(conFe164);
+
+        GetChairManResponse response = (GetChairManResponse) this.sendRequest(request);
+        return response.getMtInfo();
+    }
 	
 	/**
 	 * 全场终端静音/哑音设置
@@ -866,6 +893,24 @@ public class McuClient {
 		
 		this.sendRequest(request);//StopMTMonitorResponse
 	}
+
+
+    /**
+     * 请求浏览码流关键帧
+     * @param id 会议平台标识
+     * @param conFe164 会议e164号
+     * @param dstAddr 接受码流地址
+     * @throws KMException
+     */
+	public void getMonitorKey(String id ,String conFe164 ,IPAddr dstAddr) throws KMException{
+        int ssid = this.tryGetSSIDByID(id);
+        GetMonitorKeyRequest request = new GetMonitorKeyRequest();
+        request.setSsid(ssid);
+        request.setConFe164(conFe164);
+        request.setDstaddr(dstAddr);
+
+        this.sendRequest(request);
+    }
 	
 	//外设操作
 	
@@ -952,7 +997,7 @@ public class McuClient {
 	 * 添加混音成员
 	 * @param id 会议平台标识
 	 * @param confe164 会议e164号
-	 * @param mtinfos 终端IP或者e164号
+	 * @param mtinfo 终端IP或者e164号
 	 * @throws KMException
 	 */
 	public void addMixMember(String id, String confe164, String mtinfo) throws KMException {
@@ -969,7 +1014,7 @@ public class McuClient {
 	 * 删除混音成员
 	 * @param id 会议平台标识
 	 * @param confe164 会议e164号
-	 * @param mtinfos 终端IP或者e164号
+	 * @param mtinfo 终端IP或者e164号
 	 * @throws KMException
 	 */
 	public void delMixMember(String id, String confe164, String mtinfo) throws KMException {
@@ -1039,7 +1084,7 @@ public class McuClient {
 	 * @param id 会议平台标识
 	 * @param confe164 会议e164号
 	 * @param mtinfo 终端IP或者e164号
-	 * @param vcrnamec 录像机名称
+	 * @param vcrname 录像机名称
 	 * @param filename 录像文件名称
 	 * @param isconf 是否是会议录像 False: 终端录像
 	 * @throws KMException
@@ -1054,7 +1099,7 @@ public class McuClient {
 	 * @param id 会议平台标识
 	 * @param confe164 会议e164号
 	 * @param mtinfo 终端IP或者e164号
-	 * @param vcrnamec 录像机名称
+	 * @param vcrname 录像机名称
 	 * @param filename 录像文件名称
 	 * @param isconf 是否是会议录像 False: 终端录像
 	 * @param publishmode 发布模式（5.0）0-不发布；1-发布
@@ -1128,7 +1173,7 @@ public class McuClient {
 	 * @param id 会议平台标识
 	 * @param confe164 会议e164号
 	 * @param mtinfo 终端IP或者e164号
-	 * @param vcrnamec 录像机名称
+	 * @param vcrname 录像机名称
 	 * @param filename 录像文件名称
 	 * @param isconf 是否是会议录像 False: 终端录像
 	 * @throws KMException
@@ -1142,7 +1187,7 @@ public class McuClient {
 	 * @param id 会议平台标识
 	 * @param confe164 会议e164号
 	 * @param mtinfo 终端IP或者e164号（会议平台4.7版本有效）
-	 * @param vcrnamec 录像机名称（会议平台4.7版本有效）
+	 * @param vcrname 录像机名称（会议平台4.7版本有效）
 	 * @param filename 录像文件名称（会议平台4.7版本有效）
 	 * @param isconf 是否是会议录像 False: 终端录像（会议平台4.7版本有效）
 	 * @param recid 录像ID（会议平台5.0及以上版本有效）
