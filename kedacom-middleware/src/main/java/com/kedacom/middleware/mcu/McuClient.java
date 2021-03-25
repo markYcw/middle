@@ -764,6 +764,13 @@ public class McuClient {
 		this.sendRequest(request);//CancelChairmanResponse
 	}
 
+	/**
+	 * 获取主席
+	 * @param id
+	 * @param conFe164 会议e164号
+	 * @return
+	 * @throws KMException
+	 */
 	public String getChairMan(String id, String conFe164) throws KMException{
         int ssid = this.tryGetSSIDByID(id);
         GetChairManRequest request = new GetChairManRequest();
@@ -1261,6 +1268,61 @@ public class McuClient {
 		GetTVWallResponse response = (GetTVWallResponse)this.sendRequest(request);
 		return response.getTvwalls();
 	}
+
+	/**
+	 * 获取平台电视墙列表
+	 * @author ycw
+	 * @param id 会议平台标识
+	 * @return Hdu 电视墙相关信息
+	 * @throws KMException
+	 */
+	public List<Hdu> getPlatTvWall(String id) throws KMException {
+		int ssid = this.tryGetSSIDByID(id);
+		GetPlatTvWallRequest request = new GetPlatTvWallRequest();
+		request.setSsid(ssid);
+
+		GetPlatTvWallResponse response = (GetPlatTvWallResponse) this.sendRequest(request);
+		return response.getHdus();
+	}
+	/**
+	 * 获取会议电视墙列表
+	 * @author ycw
+	 * @param id 会议平台标识
+	 * @return HduId 电视墙相关信息
+	 * @throws KMException
+	 */
+	public List<HduId> getConfTvWall(String id, String confe164) throws KMException{
+		int ssid = this.tryGetSSIDByID(id);
+		GetConfTvWallRequest request = new GetConfTvWallRequest();
+		request.setSsid(ssid);
+		request.setConfe164(confe164);
+
+		GetConfTvWallResponse response = (GetConfTvWallResponse) this.sendRequest(request);
+		return response.getHduIds();
+	}
+
+	/**
+	 * 获取会议电视墙通道信息
+	 * @author ycw
+	 * @param id
+	 * @param confe164 会议ID
+	 * @param eqpid 电视墙ID
+	 * @return
+	 * @throws KMException
+	 */
+	public HduInfo getTvWallChnInfo(String id, String confe164, int eqpid)throws KMException{
+		int ssid = this.tryGetSSIDByID(id);
+		GetTvWallChnInfoRequest request = new GetTvWallChnInfoRequest();
+		request.setSsid(ssid);
+		request.setConfe164(confe164);
+		request.setEqpid(eqpid);
+
+		GetTvWallChnInfoResponse response = (GetTvWallChnInfoResponse) this.sendRequest(request);
+		return response.getHduInfo();
+	}
+
+
+
 	
 	/**
 	 * 终端开始上墙（会议平台4.7版本调用）
