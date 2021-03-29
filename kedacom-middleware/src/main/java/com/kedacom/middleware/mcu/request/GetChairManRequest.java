@@ -1,6 +1,7 @@
 package com.kedacom.middleware.mcu.request;
 
 import com.kedacom.middleware.client.IResponse;
+import com.kedacom.middleware.mcu.response.GetChairManResponse;
 import lombok.Data;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -35,6 +36,6 @@ public class GetChairManRequest extends McuRequest {
 
     @Override
     public IResponse getResponse() {
-        return null;
+        return new GetChairManResponse();
     }
 }
