@@ -20,7 +20,7 @@ public enum DeviceType {
 	MCU(1),
 	
 	/**
-	 * 会议终端4.7
+	 * 会议终端3代高清
 	 */
 	MT(2),
 	

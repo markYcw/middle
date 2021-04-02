@@ -280,7 +280,7 @@ public class MTClient {
 	 * @param port 终端端口
 	 * @param username 用户名
 	 * @param password 密码
-	 * @param type 类型：0-4.7版本、1-5.0版本、2-科达天行
+	 * @param type 类型：0-4.7版本、11-5.0版本、2-科达天行
 	 * @return 登录成功返回会话ID，登录失败返回-1或抛出异常
 	 * @see #login(String)
 	 * @see #logout(String)
@@ -363,11 +363,11 @@ public class MTClient {
 		request.setPort(port);
 		request.setUsername(username);
 		request.setPassword(password);
-		if(type == 1)//终端5.0
+		if(type == 11)//终端5.0
 			request.setDevtype(DeviceType.MT5.getValue());
-		else if(type == 2)//科达天行
+		else if(type == 25)//科达天行
 			request.setDevtype(DeviceType.SKY.getValue());
-		else//终端4.7
+		else//终端3代高清
 			request.setDevtype(DeviceType.MT.getValue());
 		
 		LoginResponse response = (LoginResponse)this.sendRequest(request);
@@ -923,20 +923,22 @@ public class MTClient {
 		
 		this.sendRequest(request);//MtStarteDualResponse
 	}
-	
+
 	/**
-	 * Ptz控制
-	 * @param id 终端标识 {@link MT#getId()}
-	 * @param mode 模式 {@link PtzCtrlRequest#MODE_SINGLE_DOUBLE} 
-	 * / {@link PtzCtrlRequest#MODE_DOUBLE_DOUBLE} / {@link PtzCtrlRequest#MODE_SINGLE_THRED}
-	 * @return response {@link PtzCtrlResponse#ptzcmd} {@link PtzCtrlResponse#start} 
+	 * PTZ控制
+	 * @param id
+	 * @param ptzcmd 控制命令 1:上 2:下 3:左 4:右 5:自动聚焦 6:焦距大 7:焦距小 8:zoomin 9:zoomout 10：亮 11：暗
+	 * @param isinmeeting (暂不使用)选填,是否在会议中，默认不在会议中
+	 * @return
+	 * @author ycw
 	 * @throws KMException
 	 */
-	public PtzCtrlResponse ptzCtrl(String id, int mode) throws KMException{
+	public PtzCtrlResponse ptzCtrl(String id, int ptzcmd, boolean isinmeeting) throws KMException{
 		int ssid = this.tryLogin(id);
 		PtzCtrlRequest request= new PtzCtrlRequest();
 		request.setSsid(ssid);
-		request.setMode(mode);
+		request.setPtzcmd(ptzcmd);
+		request.setIsinmeeting(isinmeeting);
 		
 		PtzCtrlResponse response = (PtzCtrlResponse)this.sendRequest(request);
 		return response;
