@@ -805,11 +805,12 @@ public class MTClient {
 	 * @return videoport 终端视频端口
 	 * @throws KMException
 	 */
-	public int getcurVideoSrc(String id, boolean local) throws KMException{
+	public int getcurVideoSrc(String id, boolean local,int videotype) throws KMException{
 		int ssid = this.tryLogin(id);
 		GetcurVideoSrcRequest request = new GetcurVideoSrcRequest();
 		request.setSsid(ssid);
 		request.setLocal(local);
+		request.setVideoType(videotype);
 		
 		GetcurVideoSrcResponse response = (GetcurVideoSrcResponse)this.sendRequest(request);
 		return response.getVideoport();
@@ -933,10 +934,11 @@ public class MTClient {
 	 * @author ycw
 	 * @throws KMException
 	 */
-	public PtzCtrlResponse ptzCtrl(String id, int ptzcmd, boolean isinmeeting) throws KMException{
+	public PtzCtrlResponse ptzCtrl(String id,boolean isstart, int ptzcmd, boolean isinmeeting) throws KMException{
 		int ssid = this.tryLogin(id);
 		PtzCtrlRequest request= new PtzCtrlRequest();
 		request.setSsid(ssid);
+		request.setIsstart(isstart);
 		request.setPtzcmd(ptzcmd);
 		request.setIsinmeeting(isinmeeting);
 		
