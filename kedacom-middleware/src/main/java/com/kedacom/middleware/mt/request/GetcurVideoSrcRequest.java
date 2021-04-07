@@ -19,7 +19,7 @@ public class GetcurVideoSrcRequest extends MTRequest {
 	/**
 	 * true:本地终端，false：远端终端.
 	 */
-	private boolean local;
+	private boolean islocal;
 
 	private int videoType;
 	@Override
@@ -30,7 +30,7 @@ public class GetcurVideoSrcRequest extends MTRequest {
 		//Data部分
 		JSONObject data = new JSONObject();
 		data.put("req", req);
-		data.put("local", local);
+		data.put("islocal", islocal);
 		data.put("videotype",videoType);
 				
 		//返回

@@ -801,16 +801,16 @@ public class MTClient {
 	/**
 	 * 获取当前视频源
 	 * @param id 终端标识 {@link MT#getId()}
-	 * @param local true:本地终端，false：远端终端.
+	 * @param islocal true:本地终端，false：远端终端.
 	 * @return videoport 终端视频端口
 	 * @throws KMException
 	 */
-	public int getcurVideoSrc(String id, boolean local,int videotype) throws KMException{
+	public int getcurVideoSrc(String id, int videotype, boolean islocal) throws KMException{
 		int ssid = this.tryLogin(id);
 		GetcurVideoSrcRequest request = new GetcurVideoSrcRequest();
 		request.setSsid(ssid);
-		request.setLocal(local);
 		request.setVideoType(videotype);
+		request.setIslocal(islocal);
 		
 		GetcurVideoSrcResponse response = (GetcurVideoSrcResponse)this.sendRequest(request);
 		return response.getVideoport();
