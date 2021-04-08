@@ -96,7 +96,7 @@ public class MTClient {
 	
 	/**
 	 * 设置（添加或修改）终端信息
-	 * @param mcu
+	 * @param mt
 	 */
 	public void setMT(MT mt){
 		MT old = this.mtCacheByID.get(mt.getId());
@@ -263,8 +263,8 @@ public class MTClient {
 	 * 登录
 	 * @param ip 终端IP
 	 * @param port 终端端口
-	 * @param username 用户名
-	 * @param password 密码
+	 * @param user 用户名
+	 * @param pwd 密码
 	 * @return 登录成功返回会话ID，登录失败返回-1或抛出异常
 	 * @see #login(String)
 	 * @see #logout(String)
@@ -278,8 +278,8 @@ public class MTClient {
 	 * 登录
 	 * @param ip 终端IP
 	 * @param port 终端端口
-	 * @param username 用户名
-	 * @param password 密码
+	 * @param user 用户名
+	 * @param pwd 密码
 	 * @param type 类型：0-4.7版本、11-5.0版本、2-科达天行
 	 * @return 登录成功返回会话ID，登录失败返回-1或抛出异常
 	 * @see #login(String)
@@ -310,7 +310,7 @@ public class MTClient {
 
 	/**
 	 * 根据ID登录终端
-	 * @see #login(String, String, String, String)
+	 * @see #login (String, String, String, String)
 	 * @see #logout(String)
 	 * @param id
 	 * @return
@@ -435,7 +435,7 @@ public class MTClient {
 	
 	/**
 	 * 登出终端
-	 * @param ssid
+	 * @param id
 	 * @return
 	 */
 	public void logout(String id){
@@ -670,7 +670,7 @@ public class MTClient {
 	
 	/**
 	 * 终端是否在会议中
-	 * @param id 终端标识 {@link MT#getId()}
+	 * @param ssid 终端标识 {@link MT#getId()}
 	 * @param type 点对点/多点。1.是否在点对点会议;2.是否在多点会议; 3.是否在会议中（不区分点对点还是多点。是1或者2都算） 
 	 */
 	public CheckisinconfResponse checkMtInConf(int ssid, int type){
@@ -679,7 +679,7 @@ public class MTClient {
 	
 	/**
 	 * 终端是否在会议中
-	 * @param id 终端标识 {@link MT#getId()}
+	 * @param ssid 终端标识 {@link MT#getId()}
 	 * @param type 点对点/多点。1.是否在点对点会议;2.是否在多点会议; 3.是否在会议中（不区分点对点还是多点。是1或者2都算） 
 	 */
 	private CheckisinconfResponse checkIsInConf2(int ssid, int type){
@@ -766,7 +766,7 @@ public class MTClient {
 	 * @param id 终端标识 {@link MT#getId()}
 	 * @param videotype 视频源类型 {@link GetVideoSrcRequest#VIDEOTYPE_MAIN} {@link GetVideoSrcRequest#VIDEOTYPE_AUXILIARY}
 	 * @param local 本地终端  true 本地终端, false:远端终端（远端只能获取主视频源）
-	 * @return videoSrcs 终端视频源  参数：{@link VideoSrcs#port} {@link VideoSrcs#name}
+	 * @return videoSrcs 终端视频源  参数：{@link VideoSrcs# port } {@link VideoSrcs# name}
 	 * @throws KMException
 	 */
 	public List<VideoSrcs> getVideoSrc(String id, int videotype, boolean local) throws KMException{
@@ -826,7 +826,7 @@ public class MTClient {
 	 * @param ip 接受码流IP地址
 	 * @param port 接受码流端口
 	 * @param usevtdu 是否通过中间件转发
-	 * @return response {@link StartMtStreamResponse#audiorTcp} {@link StartMtStreamResponse#videorTcp}
+	 * @return response {@link StartMtStreamResponse# audiorTcp} {@link StartMtStreamResponse# videorTcp}
 	 * @throws KMException
 	 */
 	public StartMtStreamResponse startMtStream(String id, int type, String ip, int port, boolean usevtdu) throws KMException{
@@ -994,6 +994,7 @@ public class MTClient {
 		
 		this.sendRequest(request);//SetDumbMuteResponse
 	}
+
 	
 	/**
 	 * 静音哑音状态获取
@@ -1028,6 +1029,25 @@ public class MTClient {
 		
 		this.sendRequest(request);//VolumeCtrlResponse
 	}
+
+	/**
+	 * 音量获取
+	 * @param id
+	 * @param type 1:扬声器 2:麦克
+	 * @return
+	 * @throws KMException
+	 */
+	public int getVolume(String id, int type) throws KMException{
+		int ssid = this.tryLogin(id);
+		GetVolumeRequest request = new GetVolumeRequest();
+		request.setSsid(ssid);
+		request.setType(type);
+
+		GetVolumeResponse response = (GetVolumeResponse) this.sendRequest(request);
+		return response.getVolume();
+	}
+
+
 	
 	/**
 	 * 登录硬盘录像机
@@ -1434,7 +1454,7 @@ public class MTClient {
 	
 	/**
 	 * 登录卓兰设备
-	 * @param mt
+	 * @param subdevtype
 	 * @return ssid
 	 * @throws KMException
 	 */
