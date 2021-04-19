@@ -7,8 +7,10 @@ import com.kedacom.middleware.exception.DataException;
 import com.kedacom.middleware.exception.KMException;
 import com.kedacom.middleware.exception.RemoteException;
 import com.kedacom.middleware.svr.domain.Devinfo;
+import com.kedacom.middleware.svr.domain.RecInfo;
 import com.kedacom.middleware.svr.domain.SVR;
 import com.kedacom.middleware.svr.domain.SvrState;
+import com.kedacom.middleware.svr.notify.QueryRecNotify;
 import com.kedacom.middleware.svr.request.*;
 import com.kedacom.middleware.svr.response.*;
 import org.apache.log4j.Logger;
@@ -485,6 +487,41 @@ public class SVRClient {
 		StartBurnResponse response = (StartBurnResponse) this
 				.sendRequest(request);
 		return response.getErrorcode();
+	}
+
+	/**
+	 * 获取SVR时间
+	 * @param svr
+	 * @return
+	 * @author ycw
+	 * @throws KMException
+	 */
+    public long getBurnTime(SVR svr) throws KMException{
+		int ssid = loginBySVR(svr);
+		GetBurnTimeRequest request = new GetBurnTimeRequest();
+		request.setSsid(ssid);
+		GetBurnTimeResponse response = (GetBurnTimeResponse) this.sendRequest(request);
+		return response.getTime();
+	}
+
+	/**
+	 * 查询svr录像
+	 * @param svr
+	 * @param chnid 查询录像的通道id，0表示合成通道
+	 * @param starttime 开始时间
+	 * @param endtime 结束时间
+	 * @return
+	 * @throws KMException
+	 */
+    public int queryRec(SVR svr,int chnid, String starttime, String endtime)throws KMException{
+		int ssid = loginBySVR(svr);
+		QueryRecRequest request = new QueryRecRequest();
+		request.setSsid(ssid);
+		request.setChnid(chnid);
+		request.setStarttime(starttime);
+		request.setEndtime(endtime);
+		QueryRecResponse response = (QueryRecResponse) this.sendRequest(request);
+		return response.getNum();
 	}
 
 	/**

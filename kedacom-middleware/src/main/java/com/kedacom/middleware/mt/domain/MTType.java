@@ -67,6 +67,7 @@ public enum MTType {
 	MT_H700_TP(51),
 	MT_H850_TP(52),
 	MT_H900_TP(53),
+	MT_H650_LB(56),
 	MT_D510_TP(88);
 
 	private int value; 

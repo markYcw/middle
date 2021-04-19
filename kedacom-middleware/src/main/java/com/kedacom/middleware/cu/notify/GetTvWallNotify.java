@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * 获取电视墙信息
  *
- * @author dengjie
+ * @author ycw
  */
 @Data
 public class GetTvWallNotify extends CuNotify {

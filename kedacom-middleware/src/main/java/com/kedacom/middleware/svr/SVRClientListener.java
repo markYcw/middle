@@ -4,10 +4,7 @@ import com.kedacom.middleware.client.INotify;
 import com.kedacom.middleware.client.TCPClientListenerAdapter;
 import com.kedacom.middleware.svr.domain.Devinfo;
 import com.kedacom.middleware.svr.domain.SVR;
-import com.kedacom.middleware.svr.notify.BurnStatusNotify;
-import com.kedacom.middleware.svr.notify.DownloadrecntyNotify;
-import com.kedacom.middleware.svr.notify.LostCntNotify;
-import com.kedacom.middleware.svr.notify.SearchEncoderAndDecoderNotify;
+import com.kedacom.middleware.svr.notify.*;
 import org.apache.log4j.Logger;
 
 import java.util.List;
@@ -57,15 +54,21 @@ public class SVRClientListener extends TCPClientListenerAdapter {
 			this.onDownloadrec((DownloadrecntyNotify) notify);
 		}else if(notify instanceof SearchEncoderAndDecoderNotify){
 			this.searchEncoderAndDecoder((SearchEncoderAndDecoderNotify) notify);
+		}else if(notify instanceof QueryRecNotify) {
+			this.queryRec((QueryRecNotify) notify);
 		}
 	}
-	
+
+	private void queryRec(QueryRecNotify notify) {
+		log.info("---------查询SVR录像----------");
+	}
+
 
 	/**
 	 * 终端掉线通知
 	 * 
-	 * @param ssid
-	 * @param mcu
+	 * @param
+	 * @param notify
 	 */
 	private void onSVROffine(LostCntNotify notify) {
 		int ssid = notify.getSsid();
