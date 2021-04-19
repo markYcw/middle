@@ -510,6 +510,7 @@ public class SVRClient {
 	 * @param chnid 查询录像的通道id，0表示合成通道
 	 * @param starttime 开始时间
 	 * @param endtime 结束时间
+	 * @author ycw
 	 * @return
 	 * @throws KMException
 	 */

@@ -22,7 +22,7 @@ public class QueryRecNotify extends SVRNotify{
     /**
      * 录像集合
      */
-    private static List<RecInfo> recInfos = new ArrayList<RecInfo>();
+    public static List<RecInfo> recInfos = new ArrayList<RecInfo>();
 
     /**
      * 是否传完
