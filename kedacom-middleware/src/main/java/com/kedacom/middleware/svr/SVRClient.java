@@ -610,16 +610,17 @@ public class SVRClient {
      * @return
      * @throws KMException
      */
-    public int remotePointOn(SVR svr, String rpname, String ip, int rate, boolean dual) throws KMException {
+    public int remotePointOn(SVR svr, String rpname, String url, String ip, int rate, boolean dual) throws KMException {
         int ssid = loginBySVR(svr);
-        return remotePointOn(ssid, rpname, ip, rate, dual);
+        return remotePointOn(ssid, rpname, url,ip, rate, dual);
     }
 
-    public int remotePointOn(int ssid, String rpname, String ip, int rate, boolean dual) throws KMException {
+    public int remotePointOn(int ssid, String rpname, String url, String ip, int rate, boolean dual) throws KMException {
         try {
             RemotePointOnRequest request = new RemotePointOnRequest();
             request.setSsid(ssid);
             request.setIp(ip);
+            request.setUrl(url);
             request.setRate(rate);
             request.setDual(dual);
             request.setRpname(rpname);
@@ -641,14 +642,15 @@ public class SVRClient {
      * @param rate   码率
      * @throws KMException
      */
-    public void remotePointOff(SVR svr, String rpname, String ip, int rate) throws KMException {
+    public void remotePointOff(SVR svr, String rpname, String url, String ip, int rate) throws KMException {
         int ssid = loginBySVR(svr);
-        remotePointOff(ssid, rpname, ip, rate);
+        remotePointOff(ssid, rpname, url, ip, rate);
     }
 
-    public void remotePointOff(int ssid, String rpname, String ip, int rate) throws KMException {
+    public void remotePointOff(int ssid, String rpname, String url, String ip, int rate) throws KMException {
         RemotePointOffRequest request = new RemotePointOffRequest();
         request.setSsid(ssid);
+        request.setUrl(url);
         request.setIp(ip);
         request.setRate(rate);
         request.setRpname(rpname);

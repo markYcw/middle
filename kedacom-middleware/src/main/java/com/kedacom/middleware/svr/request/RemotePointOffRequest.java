@@ -2,6 +2,7 @@ package com.kedacom.middleware.svr.request;
 
 import com.kedacom.middleware.client.IResponse;
 import com.kedacom.middleware.svr.response.RemotePointOffResponse;
+import lombok.Data;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -9,15 +10,22 @@ import org.json.JSONObject;
  * 停用远程点
  * @see RemotePointOffResponse
  * 
- * @author LinChaoYu
+ * @author ycw
  *
  */
+@Data
 public class RemotePointOffRequest extends SVRRequest {
 	
 	/**
 	 * 远程点名称，不能为空，长度限制为32字节（不包含结束符）
 	 */
 	private String rpname;
+
+	/**
+	 * 远程点URL
+	 * 这个填写了，下面的IP，rate就没用，不解析了。
+	 */
+	private String url;
 	
 	/**
 	 * IP地址
@@ -40,6 +48,7 @@ public class RemotePointOffRequest extends SVRRequest {
 		JSONObject data = new JSONObject();
 		data.put("req", req);
 		data.put("rpname", rpname);
+		data.put("url",url);
 		data.put("ip", ip);
 		data.put("rate", rate);
 		
