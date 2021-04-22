@@ -21,10 +21,11 @@ public class CuErrorCode {
 	}
 	
 	private static void init(){
-		
-		InputStream is = CuErrorCode.class.getResourceAsStream("CuSdkErrCode.properties");
-		
-		
+
+
+		InputStream is = CuErrorCode.class.getClassLoader().getResourceAsStream("CuSdkErrCode.properties");
+
+
 		if(properties == null){
 			properties = new Properties();
 		}
