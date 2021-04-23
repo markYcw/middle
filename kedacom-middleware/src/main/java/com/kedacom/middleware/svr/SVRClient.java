@@ -527,7 +527,7 @@ public class SVRClient {
      * @throws KMException
      * @author ycw
      */
-    public long getBurnTime(SVR svr) throws KMException {
+    public String getBurnTime(SVR svr) throws KMException {
         int ssid = loginBySVR(svr);
         GetBurnTimeRequest request = new GetBurnTimeRequest();
         request.setSsid(ssid);
