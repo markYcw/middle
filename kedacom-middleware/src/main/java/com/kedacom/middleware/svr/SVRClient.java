@@ -557,6 +557,16 @@ public class SVRClient {
         return response.getNum();
     }
 
+    public int getBurnTask(SVR svr, String starttime, String endtime) throws KMException{
+        int ssid = loginBySVR(svr);
+        GetBurnTaskRequest request = new GetBurnTaskRequest();
+        request.setSsid(ssid);
+        request.setStarttime(starttime);
+        request.setEndtime(endtime);
+        GetBurnTaskResponse response = (GetBurnTaskResponse) this.sendRequest(request);
+        return response.getNum();
+    }
+
     /**
      * 停止刻录
      *
