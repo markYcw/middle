@@ -1,6 +1,5 @@
 package com.kedacom.middleware.mt;
 
-import com.kedacom.middleware.mcu.McuErrorCode;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
@@ -25,7 +24,7 @@ public class MTErrorCode {
 	
 	private static void init(){
 		
-		InputStream is = MTErrorCode.class.getResourceAsStream("MTSdkErrCode.properties");
+		InputStream is = MTErrorCode.class.getClassLoader().getResourceAsStream("MTSdkErrCode.properties");
 		if(is==null){
 			throw new MissingResourceException("MTSdkErrCode.properties，not found", MTErrorCode.class.getName(),"MTErrorCode");
 		}

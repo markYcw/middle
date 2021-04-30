@@ -1,6 +1,5 @@
 package com.kedacom.middleware.mcu;
 
-import com.kedacom.middleware.cu.CuErrorCode;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
@@ -25,7 +24,7 @@ public class McuErrorCode {
 	
 	private static void init(){
 		
-		InputStream is = McuErrorCode.class.getResourceAsStream("McuSdkErrCode.properties");
+		InputStream is = McuErrorCode.class.getClassLoader().getResourceAsStream("McuSdkErrCode.properties");
 		if(is==null){
 			throw new MissingResourceException("McuSdkErrCode.properties，not found", McuErrorCode.class.getName(),"McuErrorCode");
 		}
