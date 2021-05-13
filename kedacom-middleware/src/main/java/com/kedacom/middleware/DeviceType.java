@@ -62,6 +62,11 @@ public enum DeviceType {
 	 * 录播服务器5.1
 	 */
 	VRS51(15),
+
+	/**
+	 * 硬盘刻录机SVR-2kb
+	 */
+	VRS2000B(18),
 	
 	/**
 	 * 人脸对比服务

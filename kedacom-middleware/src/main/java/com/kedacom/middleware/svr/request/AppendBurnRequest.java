@@ -18,6 +18,11 @@ public class AppendBurnRequest extends SVRRequest{
      * 追加刻录的本地文件路径名
      */
     private String filepathname;
+    /**
+     * 0:文件名全路径
+     * 1:文件夹全路径
+     */
+    private int type;
 
     @Override
     public String toJson() throws JSONException {
@@ -26,6 +31,7 @@ public class AppendBurnRequest extends SVRRequest{
         //data部分
         JSONObject data = new JSONObject();
         data.put("req", req);
+        data.put("type",type);
         data.put("filepathname", filepathname);
 
         //返回

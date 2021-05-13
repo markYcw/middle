@@ -1,6 +1,5 @@
 package com.kedacom.middleware.vrs;
 
-import com.kedacom.middleware.DeviceType;
 import com.kedacom.middleware.KM;
 import com.kedacom.middleware.client.IClient;
 import com.kedacom.middleware.client.TCPClient;
@@ -8,14 +7,12 @@ import com.kedacom.middleware.exception.ConnectException;
 import com.kedacom.middleware.exception.DataException;
 import com.kedacom.middleware.exception.KMException;
 import com.kedacom.middleware.exception.RemoteException;
+import com.kedacom.middleware.vrs.domain.DstAddr;
+import com.kedacom.middleware.vrs.domain.MtInfo;
+import com.kedacom.middleware.vrs.domain.StreamTcpPort;
 import com.kedacom.middleware.vrs.domain.VRS;
-import com.kedacom.middleware.vrs.request.LoginRequest;
-import com.kedacom.middleware.vrs.request.LogoutRequest;
-import com.kedacom.middleware.vrs.request.VRSRequest;
-import com.kedacom.middleware.vrs.request.VrsQueryRecRequest;
-import com.kedacom.middleware.vrs.response.LoginResponse;
-import com.kedacom.middleware.vrs.response.VRSResponse;
-import com.kedacom.middleware.vrs.response.VrsQueryRecResponse;
+import com.kedacom.middleware.vrs.request.*;
+import com.kedacom.middleware.vrs.response.*;
 import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
@@ -102,7 +99,7 @@ public class VRSClient {
 	}
 	/**
 	 * 增加VRS信息。
-	 * @param mt
+	 * @param vrs
 	 */
 	public void addVRS(VRS vrs){
 		this.vrsCacheByID.put(vrs.getId(), vrs);
@@ -315,7 +312,7 @@ public class VRSClient {
 	 * @see #logout(String)
 	 * @throws KMException 
 	 */
-	public int login(String ip, String user, String pwd,String version) throws KMException{
+	public int login(String ip, String user, String pwd,String version, Integer port) throws KMException{
 		
 		VRSSession session = sessionManager.getSessionByIP(ip);
 		if(session != null){
@@ -326,7 +323,7 @@ public class VRSClient {
 			return session.getSsid();
 		}
 		
-		int ssid = this.login0(ip, user, pwd, version);
+		int ssid = this.login0(ip, user, pwd, version ,port);
 		if(ssid > 0){
 			//登录成功
 			session = new VRSSession();
@@ -339,7 +336,7 @@ public class VRSClient {
 
 	/**
 	 * 根据ID登录VRS
-	 * @see #login(String, String, String, String)
+	 * @see #login(String)
 	 * @see #logout(String)
 	 * @param id
 	 * @return
@@ -361,6 +358,7 @@ public class VRSClient {
 		String user = vrs.getUsername();
 		String pwd = vrs.getPassword();
 		String version = vrs.getVersion();
+		Integer port = vrs.getPort();
 		
 		VRSSession session = sessionManager.getSessionByID(id);
 		if(session != null){
@@ -368,7 +366,7 @@ public class VRSClient {
 			return session.getSsid();
 		}
 		
-		int ssid = this.login(ip, user, pwd, version);
+		int ssid = this.login(ip, user, pwd, version,port);
 		if(ssid > 0){
 			//登录成功
 			session = new VRSSession();
@@ -383,14 +381,15 @@ public class VRSClient {
 		return ssid;
 	}
 
-	private int login0(String ip, String user, String pwd, String version) throws KMException{
+	private int login0(String ip, String user, String pwd, String version,Integer port) throws KMException{
 		LoginRequest request = new LoginRequest();
 		request.setIp(ip);
 		request.setUser(user);
 		request.setPwd(pwd);
-		
-		if(VRS.VRS_VERSION_5_1.equals(version))
-			request.setDevtype(DeviceType.VRS51.getValue());
+		request.setPort(port);
+		/*if(VRS.VRS_VERSION_5_1.equals(version))
+			request.setDevtype(DeviceType.VRS51.getValue());*/
+		request.setDevtype(Integer.parseInt(version));
 		
 		LoginResponse response = (LoginResponse)this.sendRequest(request);
 		int ssid = response.getSsid();
@@ -432,7 +431,7 @@ public class VRSClient {
 	
 	/**
 	 * 登出VRS
-	 * @param ssid
+	 * @param id
 	 * @return
 	 */
 	public void logout(String id){
@@ -479,4 +478,117 @@ public class VRSClient {
 		
 		return response;
 	}
+
+	/**
+	 * @author ycw
+	 * 申请录像室
+	 * @param id
+	 * @param rectaskname 录像任务名称
+	 * @param isburn 是否刻录
+	 * @param conferencetype
+	 * 0：单点会议
+	 * 1：点对点会议
+	 * 说明：
+	 * 单点会议只录本地流
+	 * 点对点会议时登录两个终端取本地流
+	 * 点对点会议时不在会议中会主动组会
+	 * @param streammode
+	 * 码流方式
+	 * 0：中间件申请
+	 * 1：SDK申请
+	 * 2：被动接收
+	 * @param mtinfo 终端信息
+	 * @param streamrtcpport
+	 * @param ctrlmt 是否控制终端组会，启用双流等 0：否 1：是
+	 * @return
+	 * @throws KMException
+	 */
+	public int getRoom(String id, String rectaskname, int isburn, int conferencetype, int streammode, List<MtInfo> mtinfo, List<StreamTcpPort> streamrtcpport, int ctrlmt) throws KMException{
+		int ssid = this.tryLogin(id);
+
+		GetRoomRequest request = new GetRoomRequest();
+		request.setSsid(ssid);
+		request.setRectaskname(rectaskname);
+		request.setIsburn(isburn);
+		request.setConferencetype(conferencetype);
+		request.setStreammode(streammode);
+		request.setMtinfo(mtinfo);
+		request.setStreamrtcpport(streamrtcpport);
+		request.setCtrlmt(ctrlmt);
+
+		GetRoomResponse response = (GetRoomResponse) this.sendRequest(request);
+		return response.getRoomid();
+	}
+
+	/**
+	 * 录像室控制
+	 * @author ycw
+	 * @param id
+	 * @param ctrltype 控制类型
+	 * 1：开始录像
+	 * 2：暂停录像
+	 * 3：恢复录像
+	 * 4：停止录像
+	 * 5：开启双流
+	 * 6：停止双流
+	 * @param roomid 录像室Id
+	 * @param islocal 是否本地 0：本地 1：远端 备注： 当ctrltype 为5或6有效
+	 * @throws KMException
+	 */
+	public void roomCtrl(String id , int ctrltype, int roomid, int islocal)throws KMException{
+		int ssid = this.tryLogin(id);
+
+		RoomCtrlRequest request = new RoomCtrlRequest();
+		request.setSsid(ssid);
+		request.setCtrltype(ctrltype);
+		request.setRoomid(roomid);
+		request.setIslocal(ssid);
+
+		this.sendRequest(request);
+	}
+
+	/**
+	 * 补刻
+	 * @author ycw
+	 * @param id
+	 * @param opertype 	刻录操作类型： 1：补刻 2：中断补刻
+	 * @param rectaskid 录像任务ID
+	 * @throws KMException
+	 */
+	public void patchBurn(String id, int opertype, int rectaskid)throws KMException{
+		int ssid = this.tryLogin(id);
+
+		PatchBurnRequest request = new PatchBurnRequest();
+		request.setSsid(ssid);
+		request.setOpertype(opertype);
+		request.setRectaskid(rectaskid);
+
+	    this.sendRequest(request);
+
+	}
+
+	/**
+	 * 播放录像
+	 * @param id
+	 * @param rectaskid 录像任务id
+	 * @param starttime 开始时间
+	 * @param endtime 结束时间
+	 * @param dstAddrs 放像视频信息
+	 * @return
+	 */
+	public int recPlay(String id, int rectaskid, int starttime, int endtime, List<DstAddr> dstAddrs)throws KMException{
+		int ssid = this.tryLogin(id);
+
+		RecPlayRequest request = new RecPlayRequest();
+		request.setSsid(ssid);
+		request.setRectaskid(rectaskid);
+		request.setStarttime(starttime);
+		request.setEndtime(endtime);
+		request.setDstAddrs(dstAddrs);
+
+		RecPlayResponse response = (RecPlayResponse) this.sendRequest(request);
+		return response.getPlaytaskid();
+	}
+
+
 }

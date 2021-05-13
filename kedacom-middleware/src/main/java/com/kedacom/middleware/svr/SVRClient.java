@@ -259,10 +259,10 @@ public class SVRClient {
     /**
      * 登录
      *
-     * @param ip       SVRIP
-     * @param port     SVR端口
+     * @param ip   SVRIP
+     * @param port SVR端口
      * @param user 用户名
-     * @param pwd 密码
+     * @param pwd  密码
      * @return 登录成功返回会话ID，登录失败返回-1或抛出异常
      * @throws KMException
      * @see #login(String)
@@ -485,12 +485,14 @@ public class SVRClient {
      * @author ycw
      * @param svr
      * @param filepathname 追加刻录的本地文件路径名
+     * @param type 0:文件名全路径  1:文件夹全路径
      * @throws KMException
      */
-    public int appendBurn(SVR svr, String filepathname) throws KMException {
+    public int appendBurn(SVR svr, String filepathname, int type) throws KMException {
         int ssid = loginBySVR(svr);
         AppendBurnRequest request = new AppendBurnRequest();
         request.setSsid(ssid);
+        request.setType(type);
         request.setFilepathname(filepathname);
 
         AppendBurnResponse response = (AppendBurnResponse) this.sendRequest(request);
@@ -502,8 +504,8 @@ public class SVRClient {
      * @author ycw
      * @param svr
      * @param starttime 开始时间
-     * @param endtime 结束时间
-     * @param mode 刻录模式 （选择DVD的模式）
+     * @param endtime   结束时间
+     * @param mode      刻录模式 （选择DVD的模式）
      * @return
      * @throws KMException
      */
@@ -557,7 +559,7 @@ public class SVRClient {
         return response.getNum();
     }
 
-    public int getBurnTask(SVR svr, String starttime, String endtime) throws KMException{
+    public int getBurnTask(SVR svr, String starttime, String endtime) throws KMException {
         int ssid = loginBySVR(svr);
         GetBurnTaskRequest request = new GetBurnTaskRequest();
         request.setSsid(ssid);
@@ -622,7 +624,7 @@ public class SVRClient {
      */
     public int remotePointOn(SVR svr, String rpname, String url, String ip, int rate, boolean dual) throws KMException {
         int ssid = loginBySVR(svr);
-        return remotePointOn(ssid, rpname, url,ip, rate, dual);
+        return remotePointOn(ssid, rpname, url, ip, rate, dual);
     }
 
     public int remotePointOn(int ssid, String rpname, String url, String ip, int rate, boolean dual) throws KMException {
