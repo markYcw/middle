@@ -4,6 +4,7 @@ import com.kedacom.middleware.client.INotify;
 import com.kedacom.middleware.client.TCPClientListenerAdapter;
 import com.kedacom.middleware.vrs.domain.VRS;
 import com.kedacom.middleware.vrs.notify.LostCntNotify;
+import com.kedacom.middleware.vrs.notify.PlayStatusNotify;
 import org.apache.log4j.Logger;
 
 /**
@@ -43,8 +44,10 @@ public class VRSClientListener extends TCPClientListenerAdapter {
 		if (notify instanceof LostCntNotify) {
 			//VRS掉线
 			this.onVRSOffine((LostCntNotify) notify);
-			
-		} 
+		} else if(notify instanceof PlayStatusNotify){
+			//录像回放状态上报
+			this.onPlayStatus((PlayStatusNotify) notify);
+		}
 
 	}
 	
@@ -70,6 +73,33 @@ public class VRSClientListener extends TCPClientListenerAdapter {
 				
 				for (VRSNotifyListener l : client.getAllListeners()) {
 					l.onVRSOffine(vrs.getId(), vrs.getIp());
+				}
+			}
+		}
+	}
+
+	/**
+	 * VRS录像回放状态上报
+	 *
+	 * @param notify
+	 */
+	private void onPlayStatus(PlayStatusNotify notify) {
+		log.error("======>VRS录像回放状态上报(PlayStatusNotify) ssid="+notify.getSsid()+"，sson="+notify.getSsno());
+
+		int ssid = notify.getSsid();
+		int playtaskid = notify.getPlaytaskid();
+		int curplaystate = notify.getCurplaystate();
+		int curplayrate = notify.getCurplayrate();
+		int curplayprog = notify.getCurplayprog();
+		VRSSession session = client.getSessionManager().removeSession(ssid);
+		if (session != null) {
+			session.setStatus(VRSSessionStatus.DISCONNECT);
+			VRS vrs = session.getVrs();
+			if(vrs != null){
+
+
+				for (VRSNotifyListener l : client.getAllListeners()) {
+					l.onPlayStatus(vrs.getId(), vrs.getIp(),playtaskid,curplaystate,curplayrate,curplayprog);
 				}
 			}
 		}

@@ -7,10 +7,7 @@ import com.kedacom.middleware.exception.ConnectException;
 import com.kedacom.middleware.exception.DataException;
 import com.kedacom.middleware.exception.KMException;
 import com.kedacom.middleware.exception.RemoteException;
-import com.kedacom.middleware.vrs.domain.DstAddr;
-import com.kedacom.middleware.vrs.domain.MtInfo;
-import com.kedacom.middleware.vrs.domain.StreamTcpPort;
-import com.kedacom.middleware.vrs.domain.VRS;
+import com.kedacom.middleware.vrs.domain.*;
 import com.kedacom.middleware.vrs.request.*;
 import com.kedacom.middleware.vrs.response.*;
 import org.apache.log4j.Logger;
@@ -22,7 +19,7 @@ import java.util.List;
 /**
  * “录播服务器”接口访问。
  * @author LinChaoYu
- *
+ * alter by ycw 2021/5/10
  */
 public class VRSClient {
 	private static final Logger log = Logger.getLogger(VRSClient.class);
@@ -542,7 +539,9 @@ public class VRSClient {
 		request.setSsid(ssid);
 		request.setCtrltype(ctrltype);
 		request.setRoomid(roomid);
-		request.setIslocal(ssid);
+		if(ctrltype==5||ctrltype==6){
+			request.setIslocal(ssid);
+		}
 
 		this.sendRequest(request);
 	}
@@ -600,7 +599,7 @@ public class VRSClient {
 	 * @param content 关键字内容
 	 * @param maxnum 最大查询数目
 	 * @param startindex 查询起始下标
-	 * @param sort 排序 (按时间) 0：降序 1：升序
+		 * @param sort 排序 (按时间) 0：降序 1：升序
 	 * @return
 	 * @throws KMException
 	 */
@@ -637,6 +636,66 @@ public class VRSClient {
 
 		this.sendRequest(request);
 	}
+
+	/**
+	 * 录像室状态获取
+	 * @param id
+	 * @return
+	 * @throws KMException
+	 */
+	public List<RoomStatus> getRoomStatus(String id)throws KMException{
+		int ssid = this.tryLogin(id);
+
+		GetRoomStatusRequest request = new GetRoomStatusRequest();
+		request.setSsid(ssid);
+
+		GetRoomStatusResponse response = (GetRoomStatusResponse) this.sendRequest(request);
+		return response.getRoomStatuses();
+	}
+
+	/**
+	 * 播放录像控制
+	 * @param id
+	 * @param playtaskid 放像任务id
+	 * @param vcrcmd 放像控制命令 0： 无效命令 1： 停止放像 2： 暂停 3： 重新开始放像,对应暂定命令 4： 单帧播放 5： 关键帧播放 6： 倒放 7： 设置播放速率 8： 拖拉定位绝对时间 9： 前跳  相对时间  10： 后跳  相对时间
+	 * @param dragtimes 拖拉时间
+	 * @param jumptime 跳动时间
+	 * @param playrate 播放速度 1：1/16速播放 2 ：1/8速播放 3：1/4速播放 4: 1/2速播放 5:正常速播放 6: 2倍速播放 7: 4倍速播放 8: 8倍速播放 9: 16倍速播放
+	 * @throws KMException
+	 */
+	public void recPlayVcr(String id, int playtaskid, int vcrcmd, String dragtimes, int jumptime, int playrate)throws KMException{
+		int ssid = this.tryLogin(id);
+
+		RecPlayVcrRequest request = new RecPlayVcrRequest();
+		request.setSsid(ssid);
+		request.setPlaytaskid(playtaskid);
+		request.setVcrcmd(vcrcmd);
+		request.setDragtimes(dragtimes);
+		request.setJumptime(jumptime);
+		request.setPlayrate(playrate);
+
+		this.sendRequest(request);
+	}
+
+	/**
+	 * 系统状态获取
+	 * @param id
+	 * @return
+	 * @throws KMException
+	 */
+	public SysStatus getSysStatus(String id)throws KMException{
+		int ssid = this.tryLogin(id);
+
+		GetSysStatusRequest request = new GetSysStatusRequest();
+		request.setSsid(ssid);
+
+		GetSysStatusResponse response = (GetSysStatusResponse) this.sendRequest(request);
+		SysStatus sysStatus = new SysStatus();
+		sysStatus.setDvdStatuses(response.getDvdStatuses());
+        sysStatus.setBurnworkmode(response.getBurnworkmode());
+        return sysStatus;
+	}
+
 
 
 

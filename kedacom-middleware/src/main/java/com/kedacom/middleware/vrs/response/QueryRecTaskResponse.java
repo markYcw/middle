@@ -40,7 +40,6 @@ public class QueryRecTaskResponse extends VRSResponse{
 
         JSONArray array = jsonData.optJSONArray("rectaskinfo");
         if(array != null && array.length() > 0){
-            recTaskInfos = new ArrayList<RecTaskInfo>();
             for (int i = 0; i< array.length(); i++){
                 JSONObject object = array.getJSONObject(i);
                 RecTaskInfo info = new RecTaskInfo();

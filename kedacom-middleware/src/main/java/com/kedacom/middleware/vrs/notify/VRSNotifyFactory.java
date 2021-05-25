@@ -22,6 +22,7 @@ public class VRSNotifyFactory {
 		//VRS2000B版本
 		NotifyFactory.register(DeviceType.VRS2000B, LostCntNotify.NAME, LostCntNotify.class);
 		NotifyFactory.register(DeviceType.VRS2000B, RecPlayNotify.NAME, RecPlayNotify.class);
+		NotifyFactory.register(DeviceType.VRS2000B, PlayStatusNotify.NAME, PlayStatusNotify.class);
 	}
 	
 }

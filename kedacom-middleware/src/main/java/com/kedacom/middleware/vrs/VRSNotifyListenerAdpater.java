@@ -12,4 +12,9 @@ public class VRSNotifyListenerAdpater implements VRSNotifyListener {
 	public void onVRSOffine(String vrsId, String vrsIp) {
 
 	}
+
+	@Override
+	public void onPlayStatus(String vrsId, String vrsIp, int playtaskid, int curplaystate, int curplayrate, int curplayprog) {
+
+	}
 }

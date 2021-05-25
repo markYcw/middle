@@ -694,17 +694,17 @@ public class SVRClient {
      * @date 2019-7-11 上午9:53:45
      * @version V1.0
      */
-    public int setSvrComposePic(SVR svr, int videoresolution, int borderwidth, int mergestyle, int picinfonum, int[] chnid) throws KMException {
+    public int setSvrComposePic(SVR svr, int videoresolution, int borderwidth, int mergestyle, int picinfonum, int[] chnid, int[] pictype) throws KMException {
         int ssid = 0;
         try {
             ssid = loginBySVR(svr);
-            return setPicStyle(ssid, svr, videoresolution, borderwidth, mergestyle, picinfonum, chnid);
+            return setPicStyle(ssid, svr, videoresolution, borderwidth, mergestyle, picinfonum, chnid, pictype);
         } catch (RemoteException e) {
             if (50006 == e.getErrorcode()) {//ssid失效
                 log.debug("失效的ssid:" + ssid);
                 sessionManager.removeSession(ssid);
                 ssid = loginBySVR(svr);
-                return setPicStyle(ssid, svr, videoresolution, borderwidth, mergestyle, picinfonum, chnid);
+                return setPicStyle(ssid, svr, videoresolution, borderwidth, mergestyle, picinfonum, chnid, pictype);
             }
             e.printStackTrace();
             log.debug("设置合成画面异常" + e.getMessage());
@@ -712,7 +712,7 @@ public class SVRClient {
         }
     }
 
-    private int setPicStyle(int ssid, SVR svr, int videoresolution, int borderwidth, int mergestyle, int picinfonum, int[] chnid) throws KMException {
+    private int setPicStyle(int ssid, SVR svr, int videoresolution, int borderwidth, int mergestyle, int picinfonum, int[] chnid, int[] pictype) throws KMException {
         //int ssid = loginBySVR(svr);
         SetComposePicRequest request = new SetComposePicRequest();
         request.setSsid(ssid);
@@ -721,6 +721,7 @@ public class SVRClient {
         request.setMergestyle(mergestyle);
         request.setPicinfonum(picinfonum);
         request.setChnid(chnid);
+        request.setPictype(pictype);
         SetComposePicRespose respose = (SetComposePicRespose) this.sendRequest(request);
         return respose.getErrorcode();
     }
@@ -1100,7 +1101,8 @@ public class SVRClient {
             svr.setPassword("admin123");
             svr.setPort(1730);
             int[] chnid = new int[]{1, 17, 3, 2, 1, 18, 4, 34};
-            int ret = client.setSvrComposePic(svr, 9, 2, 9, 8, chnid);
+            int[] pictype = new int[]{1, 0, 0, 0, 1, 0, 0, 0};
+            int ret = client.setSvrComposePic(svr, 9, 2, 9, 8, chnid, pictype);
             System.out.println(ret);
         } catch (KMException e) {
             e.printStackTrace();
