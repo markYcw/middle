@@ -63,7 +63,7 @@ public class CommonClient {
 	 * @return
 	 * @throws KMException
 	 */
-	public List<KeyInfo> readyKeys(String KEY_LICENSE_TYPE, String filekeyPath) throws KMException {
+	public List<KeyInfo> readyKeys(String filekeyPath) throws KMException {
 
 		ReadkeysRequest request = new ReadkeysRequest();
 		request.setFilekey(filekeyPath);
