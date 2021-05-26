@@ -696,6 +696,56 @@ public class VRSClient {
         return sysStatus;
 	}
 
+	/**
+	 * 中间件配置
+	 * @param id
+	 * @param ip 中间件IP
+	 * @param port 中间件端口号
+	 * @throws KMException
+	 */
+	public void gateWayCfg(String id, String ip, int port)throws KMException{
+		int ssid = this.tryLogin(id);
+
+		GateWayCfgRequest request = new GateWayCfgRequest();
+		request.setSsid(ssid);
+		request.setIp(ip);
+		request.setPort(port);
+
+		this.sendRequest(request);
+	}
+
+	/**
+	 * Dvd封盘配置
+	 * @param id
+	 * @param dvdautolock DVD是否自动封盘 0：不封 1：封盘
+	 * @throws KMException
+	 */
+	public void dvdLockCfg(String id,int dvdautolock)throws KMException{
+		int ssid = this.tryLogin(id);
+
+		DvdLockCfgRequest request = new DvdLockCfgRequest();
+		request.setSsid(ssid);
+		request.setDvdautolock(dvdautolock);
+
+		this.sendRequest(request);
+	}
+
+	/**
+	 * 刻录合成通道配置
+	 * @param id
+	 * @param isburnmerge 是否刻录合成通道 0：不刻录 1：刻录
+	 * @throws KMException
+	 */
+	public void mergeCfg(String id,int isburnmerge)throws KMException{
+		int ssid = this.tryLogin(id);
+
+		MergeCfgRequest request = new MergeCfgRequest();
+		request.setSsid(ssid);
+		request.setIsburnmerge(isburnmerge);
+
+		this.sendRequest(request);
+	}
+
 
 
 
