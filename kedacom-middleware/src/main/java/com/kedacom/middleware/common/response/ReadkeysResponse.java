@@ -8,6 +8,7 @@ import lombok.Data;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -20,7 +21,7 @@ import java.util.List;
 @Data
 public class ReadkeysResponse extends CommonResponse {
 
-    private List<KeyInfo> keyInfos;
+    private List<KeyInfo> keyInfos =new ArrayList<KeyInfo>();
 
     @Override
     public void parseData(JSONObject jsonData) throws DataException {
