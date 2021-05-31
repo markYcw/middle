@@ -5,22 +5,21 @@ import lombok.Data;
 import org.json.JSONObject;
 
 /**
- * 获取刻录任务
- *
- * @author ycw
- * @seeGetBurnTaskRequest
- * @date 2021/4/25 13:32
+ * @ClassName KillBurnResponse
+ * @Description 废止刻录返回参数
+ * @Author zlf
+ * @Date 2021/5/31 14:19
  */
 @Data
-public class GetBurnTaskResponse extends SVRResponse {
+public class KillBurnResponse extends SVRResponse {
     /**
-     * 查询总数
+     * 解析数据。
+     *
+     * @param jsonData 符合JSON规范的字符串。
+     * @throws DataException
      */
-    private int num;
-
     @Override
     public void parseData(JSONObject jsonData) throws DataException {
         super.parseResp(jsonData);
-        this.num = jsonData.optInt("sum");
     }
 }

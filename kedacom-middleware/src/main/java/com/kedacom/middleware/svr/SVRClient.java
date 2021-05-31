@@ -7,10 +7,9 @@ import com.kedacom.middleware.exception.DataException;
 import com.kedacom.middleware.exception.KMException;
 import com.kedacom.middleware.exception.RemoteException;
 import com.kedacom.middleware.svr.domain.Devinfo;
-import com.kedacom.middleware.svr.domain.RecInfo;
 import com.kedacom.middleware.svr.domain.SVR;
+import com.kedacom.middleware.svr.domain.SvrEncChnList;
 import com.kedacom.middleware.svr.domain.SvrState;
-import com.kedacom.middleware.svr.notify.QueryRecNotify;
 import com.kedacom.middleware.svr.request.*;
 import com.kedacom.middleware.svr.response.*;
 import org.apache.log4j.Logger;
@@ -409,6 +408,29 @@ public class SVRClient {
     }
 
     /**
+     * 注销SVR连接索引SSid
+     *
+     * @param ssid 终端连接索引
+     */
+    public void logoutSSid(int ssid) {
+
+        log.debug("=====> 注销SVR连接索引（logoutSSid），ssid：" + ssid);
+
+        if (ssid == -1) {
+            log.error("=====> 注销SVR连接索引（logoutSSid），ssid：" + ssid + " 失败，无效索引！");
+            return;
+        }
+
+        LogoutRequest request = new LogoutRequest();
+        request.setSsid(ssid);
+        try {
+            this.sendRequest(request);
+        } catch (KMException e) {
+            log.error("=====> 注销SVR连接索引（logoutSSid），ssid：" + ssid + " 异常：", e);
+        }
+    }
+
+    /**
      * 登出终端
      *
      * @param ip
@@ -438,180 +460,6 @@ public class SVRClient {
     }
 
     /**
-     * 注销SVR连接索引SSid
-     *
-     * @param ssid 终端连接索引
-     */
-    public void logoutSSid(int ssid) {
-
-        log.debug("=====> 注销SVR连接索引（logoutSSid），ssid：" + ssid);
-
-        if (ssid == -1) {
-            log.error("=====> 注销SVR连接索引（logoutSSid），ssid：" + ssid + " 失败，无效索引！");
-            return;
-        }
-
-        LogoutRequest request = new LogoutRequest();
-        request.setSsid(ssid);
-        try {
-            this.sendRequest(request);
-        } catch (KMException e) {
-            log.error("=====> 注销SVR连接索引（logoutSSid），ssid：" + ssid + " 异常：", e);
-        }
-    }
-
-    /**
-     * 开始录像
-     *
-     * @param svr      信息
-     * @param mode     刻录模式
-     * @param burnname 刻录名称
-     * @return
-     * @throws KMException
-     */
-    public int startBurn(SVR svr, int mode, String burnname) throws KMException {
-        int ssid = loginBySVR(svr);
-        StartBurnRequest request = new StartBurnRequest();
-        request.setSsid(ssid);
-        request.setMode(mode);
-        request.setBurnname(burnname);
-        StartBurnResponse response = (StartBurnResponse) this
-                .sendRequest(request);
-        return response.getErrorcode();
-    }
-
-    /**
-     * 追加刻录
-     * @author ycw
-     * @param svr
-     * @param filepathname 追加刻录的本地文件路径名
-     * @param type 0:文件名全路径  1:文件夹全路径
-     * @throws KMException
-     */
-    public int appendBurn(SVR svr, String filepathname, int type) throws KMException {
-        int ssid = loginBySVR(svr);
-        AppendBurnRequest request = new AppendBurnRequest();
-        request.setSsid(ssid);
-        request.setType(type);
-        request.setFilepathname(filepathname);
-
-        AppendBurnResponse response = (AppendBurnResponse) this.sendRequest(request);
-        return response.getErrorcode();
-    }
-
-    /**
-     * 9.补刻(查询+补录)
-     * @author ycw
-     * @param svr
-     * @param starttime 开始时间
-     * @param endtime   结束时间
-     * @param mode      刻录模式 （选择DVD的模式）
-     * @return
-     * @throws KMException
-     */
-    public int supplementBurn(SVR svr, String starttime, String endtime, int mode) throws KMException {
-        int ssid = loginBySVR(svr);
-        SupplementBurnRequest request = new SupplementBurnRequest();
-        request.setSsid(ssid);
-        request.setStarttime(starttime);
-        request.setEndtime(endtime);
-        request.setMode(mode);
-
-        SupplementBurnResponse Response = (SupplementBurnResponse) this.sendRequest(request);
-        return Response.getBurntaskid();
-    }
-
-    /**
-     * 获取SVR时间
-     *
-     * @param svr
-     * @return
-     * @throws KMException
-     * @author ycw
-     */
-    public String getBurnTime(SVR svr) throws KMException {
-        int ssid = loginBySVR(svr);
-        GetBurnTimeRequest request = new GetBurnTimeRequest();
-        request.setSsid(ssid);
-        GetBurnTimeResponse response = (GetBurnTimeResponse) this.sendRequest(request);
-        return response.getTime();
-    }
-
-    /**
-     * 查询svr录像
-     *
-     * @param svr
-     * @param chnid     查询录像的通道id，0表示合成通道
-     * @param starttime 开始时间
-     * @param endtime   结束时间
-     * @return
-     * @throws KMException
-     * @author ycw
-     */
-    public int queryRec(SVR svr, int chnid, String starttime, String endtime) throws KMException {
-        int ssid = loginBySVR(svr);
-        QueryRecRequest request = new QueryRecRequest();
-        request.setSsid(ssid);
-        request.setChnid(chnid);
-        request.setStarttime(starttime);
-        request.setEndtime(endtime);
-        QueryRecResponse response = (QueryRecResponse) this.sendRequest(request);
-        return response.getNum();
-    }
-
-    public int getBurnTask(SVR svr, String starttime, String endtime) throws KMException {
-        int ssid = loginBySVR(svr);
-        GetBurnTaskRequest request = new GetBurnTaskRequest();
-        request.setSsid(ssid);
-        request.setStarttime(starttime);
-        request.setEndtime(endtime);
-        GetBurnTaskResponse response = (GetBurnTaskResponse) this.sendRequest(request);
-        return response.getNum();
-    }
-
-    /**
-     * 停止刻录
-     *
-     * @param svr
-     * @return
-     * @throws KMException
-     */
-    public int stopBurn(SVR svr) throws KMException {
-        int ssid = loginBySVR(svr);
-        StopBurnRequest request = new StopBurnRequest();
-        request.setSsid(ssid);
-        StopBurnResponse response = (StopBurnResponse) this
-                .sendRequest(request);
-        return response.getErrorcode();
-    }
-
-    /**
-     * 下载SVR录像
-     *
-     * @param svr      设备信息
-     * @param chnid    下载录像通道
-     * @param stime    开始时间
-     * @param etime    结束时间
-     * @param path     路径
-     * @param filename 文件名
-     * @return
-     * @throws KMException
-     */
-    public int startDownloadrec(SVR svr, int chnid, String stime, String etime,
-                                String path, String filename) throws KMException {
-        int ssid = loginBySVR(svr);
-        StartDownloadrecRequest request = new StartDownloadrecRequest();
-        request.setSsid(ssid);
-        request.setChnid(chnid);
-        request.setStarttime(stime);
-        request.setEndtime(etime);
-        request.setDownloadfiledir(path);
-        request.setDownloadfilename(filename);
-        StartDownloadrecResponse response = (StartDownloadrecResponse) this.sendRequest(request);
-        return response.getDownloadhandle();
-    }
-
-    /**
      * 添加和开启远程点
      *
      * @param svr
@@ -627,7 +475,10 @@ public class SVRClient {
         return remotePointOn(ssid, rpname, url, ip, rate, dual);
     }
 
-    public int remotePointOn(int ssid, String rpname, String url, String ip, int rate, boolean dual) throws KMException {
+    /*
+    添加和开启远程点
+     */
+    public int remotePointOn(int ssid, String rpname, String url, String ip, int rate, boolean dual) {
         try {
             RemotePointOnRequest request = new RemotePointOnRequest();
             request.setSsid(ssid);
@@ -659,6 +510,9 @@ public class SVRClient {
         remotePointOff(ssid, rpname, url, ip, rate);
     }
 
+    /*
+    停用和删除远程点
+     */
     public void remotePointOff(int ssid, String rpname, String url, String ip, int rate) throws KMException {
         RemotePointOffRequest request = new RemotePointOffRequest();
         request.setSsid(ssid);
@@ -668,6 +522,155 @@ public class SVRClient {
         request.setRpname(rpname);
 
         this.sendRequest(request);//RemotePointOffResponse
+    }
+
+    /**
+     * 开始录像
+     *
+     * @param svr      信息
+     * @param mode     刻录模式
+     * @param burnname 刻录名称
+     * @return
+     * @throws KMException
+     */
+    public int startBurn(SVR svr, int mode, String burnname) throws KMException {
+        int ssid = loginBySVR(svr);
+        StartBurnRequest request = new StartBurnRequest();
+        request.setSsid(ssid);
+        request.setMode(mode);
+        request.setBurnname(burnname);
+        StartBurnResponse response = (StartBurnResponse) this
+                .sendRequest(request);
+        return response.getErrorcode();
+    }
+
+    /**
+     * 追加刻录
+     *
+     * @param svr
+     * @param filepathname 追加刻录的本地文件路径名
+     * @param type         0:文件名全路径  1:文件夹全路径
+     * @throws KMException
+     * @author ycw
+     */
+    public int appendBurn(SVR svr, String filepathname, int type) throws KMException {
+        int ssid = loginBySVR(svr);
+        AppendBurnRequest request = new AppendBurnRequest();
+        request.setSsid(ssid);
+        request.setType(type);
+        request.setFilepathname(filepathname);
+
+        AppendBurnResponse response = (AppendBurnResponse) this.sendRequest(request);
+        return response.getErrorcode();
+    }
+
+    /**
+     * 停止刻录
+     *
+     * @param svr
+     * @return
+     * @throws KMException
+     */
+    public int stopBurn(SVR svr) throws KMException {
+        int ssid = loginBySVR(svr);
+        StopBurnRequest request = new StopBurnRequest();
+        request.setSsid(ssid);
+        StopBurnResponse response = (StopBurnResponse) this
+                .sendRequest(request);
+        return response.getErrorcode();
+    }
+
+    /**
+     * 获取SVR时间
+     *
+     * @param svr
+     * @return
+     * @throws KMException
+     * @author ycw
+     */
+    public String getBurnTime(SVR svr) throws KMException {
+        int ssid = loginBySVR(svr);
+        GetBurnTimeRequest request = new GetBurnTimeRequest();
+        request.setSsid(ssid);
+        GetBurnTimeResponse response = (GetBurnTimeResponse) this.sendRequest(request);
+        return response.getTime();
+    }
+
+    /**
+     * 9.补刻(查询+补录)
+     *
+     * @param svr
+     * @param starttime 开始时间
+     * @param endtime   结束时间
+     * @param mode      刻录模式 （选择DVD的模式）
+     * @return
+     * @throws KMException
+     * @author ycw
+     */
+    public int supplementBurn(SVR svr, String starttime, String endtime, int mode) throws KMException {
+        int ssid = loginBySVR(svr);
+        SupplementBurnRequest request = new SupplementBurnRequest();
+        request.setSsid(ssid);
+        request.setStarttime(starttime);
+        request.setEndtime(endtime);
+        request.setMode(mode);
+
+        SupplementBurnResponse Response = (SupplementBurnResponse) this.sendRequest(request);
+        return Response.getBurntaskid();
+    }
+
+    /**
+     * @param starttime 开始时间
+     * @param endtime   结束时间
+     * @param mode      刻录模式 （选择DVD的模式）
+     * @Description 新建刻录（专职用来生成MP4文件）
+     * @return:
+     * @author:zlf
+     * @date:
+     */
+    public void createBurn(SVR svr, String starttime, String endtime, int mode) throws KMException {
+        int ssid = loginBySVR(svr);
+        CreateBurnRequest request = new CreateBurnRequest();
+        request.setSsid(ssid);
+        request.setStarttime(starttime);
+        request.setEndtime(endtime);
+        request.setMode(mode);
+
+        CreateBurnResponse Response = (CreateBurnResponse) this.sendRequest(request);
+    }
+
+    /**
+     * @Description 废止刻录
+     * @param:
+     * @return:
+     * @author:zlf
+     * @date:
+     */
+    public void killBurn(SVR svr) throws KMException {
+        int ssid = loginBySVR(svr);
+        KillBurnRequest request = new KillBurnRequest();
+        request.setSsid(ssid);
+
+        KillBurnResponse Response = (KillBurnResponse) this.sendRequest(request);
+    }
+
+    /**
+     * @Description 获取刻录任务
+     * @param: starttime    开始时间
+     * @param: endtime      结束时间
+     * @return:
+     * @author:zlf
+     * @date:
+     */
+    public int getBurnTask(SVR svr, String starttime, String endtime) throws KMException {
+        int ssid = loginBySVR(svr);
+        GetBurnTaskRequest request = new GetBurnTaskRequest();
+        request.setSsid(ssid);
+        request.setStarttime(starttime);
+        request.setEndtime(endtime);
+
+        GetBurnTaskResponse response = (GetBurnTaskResponse) this.sendRequest(request);
+        return response.getNum();
     }
 
     /**
@@ -686,9 +689,49 @@ public class SVRClient {
     }
 
     /**
-     * @param @throws KMException入参
-     * @return int    返回类型
-     * @Title: setSvrComposePic
+     * 查询svr录像
+     *
+     * @param svr
+     * @param chnid     查询录像的通道id，0表示合成通道
+     * @param starttime 开始时间
+     * @param endtime   结束时间
+     * @return
+     * @throws KMException
+     * @author ycw
+     */
+    public int queryRec(SVR svr, int chnid, String starttime, String endtime) throws KMException {
+        int ssid = loginBySVR(svr);
+        QueryRecRequest request = new QueryRecRequest();
+        request.setSsid(ssid);
+        request.setChnid(chnid);
+        request.setStarttime(starttime);
+        request.setEndtime(endtime);
+        QueryRecResponse response = (QueryRecResponse) this.sendRequest(request);
+        return response.getNum();
+    }
+
+    /**
+     * @Description 获取画面合成设置
+     * @param:
+     * @return:
+     * @author:zlf
+     * @date:
+     */
+    public void getSvrComposePic(SVR svr) throws KMException {
+        int ssid = loginBySVR(svr);
+        GetSvrComposePicRequest request = new GetSvrComposePicRequest();
+        request.setSsid(ssid);
+
+        GetSvrComposePicResponse response = (GetSvrComposePicResponse) this.sendRequest(request);
+    }
+
+    /**
+     * @param videoresolution 分辨率
+     * @param borderwidth     边框宽度
+     * @param mergestyle      自定义画面风格所使用的基础画面风格。 2816 1.0不支持
+     * @param picinfonum      有效合成通道数
+     * @param chnid
+     * @param pictype
      * @Description: 设置合成画面
      * @author lzs
      * @date 2019-7-11 上午9:53:45
@@ -712,6 +755,9 @@ public class SVRClient {
         }
     }
 
+    /*
+    设置合成画面
+     */
     private int setPicStyle(int ssid, SVR svr, int videoresolution, int borderwidth, int mergestyle, int picinfonum, int[] chnid, int[] pictype) throws KMException {
         //int ssid = loginBySVR(svr);
         SetComposePicRequest request = new SetComposePicRequest();
@@ -724,6 +770,150 @@ public class SVRClient {
         request.setPictype(pictype);
         SetComposePicRespose respose = (SetComposePicRespose) this.sendRequest(request);
         return respose.getErrorcode();
+    }
+
+    /**
+     * @Description PTZ控制
+     * @param: cmd      控制命令Id
+     * @param: chnid    通道Id
+     * @param: param1
+     * @return:
+     * @author:zlf
+     * @date:
+     */
+    public void ptzctrl(SVR svr, int cmd, int chnid, int param1) throws KMException {
+        int ssid = loginBySVR(svr);
+        SvrPtzCtrlRequest request = new SvrPtzCtrlRequest();
+        request.setSsid(ssid);
+        request.setCmd(cmd);
+        request.setChnid(chnid);
+        request.setParam1(param1);
+
+        SvrPtzCtrlResponse response = (SvrPtzCtrlResponse) this.sendRequest(request);
+    }
+
+    /**
+     * @Description 发送双流
+     * @param: chnid   远程点通道号
+     * @param: dual    true表示发送双流，false表示不发送或停止发送
+     * @return:
+     * @author:zlf
+     * @date:
+     */
+    public void startDual(SVR svr, int chnid, boolean dual) throws KMException {
+        int ssid = loginBySVR(svr);
+        StartDualRequest request = new StartDualRequest();
+        request.setSsid(ssid);
+        request.setChnid(chnid);
+        request.setDual(dual);
+
+        StartDualResponse response = (StartDualResponse) this.sendRequest(request);
+    }
+
+    /**
+     * 下载SVR录像（由于底层SDK的限制，该信令同一时刻只能有一个过程在执行，否则会崩溃）
+     *
+     * @param svr      设备信息
+     * @param chnid    下载录像通道
+     * @param stime    开始时间
+     * @param etime    结束时间
+     * @param path     路径
+     * @param filename 文件名
+     * @return
+     * @throws KMException
+     */
+    public int startDownloadrec(SVR svr, int chnid, String stime, String etime,
+                                String path, String filename) throws KMException {
+        int ssid = loginBySVR(svr);
+        StartDownloadrecRequest request = new StartDownloadrecRequest();
+        request.setSsid(ssid);
+        request.setChnid(chnid);
+        request.setStarttime(stime);
+        request.setEndtime(etime);
+        request.setDownloadfiledir(path);
+        request.setDownloadfilename(filename);
+
+        StartDownloadrecResponse response = (StartDownloadrecResponse) this.sendRequest(request);
+        return response.getDownloadhandle();
+    }
+
+    /**
+     * @Description 停止下载SVR录像
+     * @param: downloadhandle   下载句柄标示一个下载操作
+     * @return:
+     * @author:zlf
+     * @date:
+     */
+    public void stopDownloadRec(SVR svr, int downloadhandle) throws KMException {
+        int ssid = loginBySVR(svr);
+        StopDownloadrecRequest request = new StopDownloadrecRequest();
+        request.setSsid(ssid);
+        request.setDownloadhandle(downloadhandle);
+
+        StopDownloadrecResponse response = (StopDownloadrecResponse) this.sendRequest(request);
+    }
+
+    /**
+     * @param @param  svr
+     * @param @param  isnty
+     * @param @return
+     * @param @throws KMException
+     * @return int 返回类型
+     * @throws
+     * @Title: voiceActive
+     * @Description: 是否开启语音激励状态 ，全局生效，语音激励状态开启/关闭
+     * @author lzs
+     * @date 2019-9-24 下午4:23:00
+     * @version V1.0
+     */
+    public int voiceActive(SVR svr, boolean isnty) throws KMException {
+        int ssid = loginBySVR(svr);
+        VoiceActiveRequest request = new VoiceActiveRequest();
+        request.setSsid(ssid);
+        request.setIsnty(isnty);
+
+        VoiceActiveRespose respose = (VoiceActiveRespose) this.sendRequest(request);
+        return respose.getErrorcode();
+    }
+
+    /**
+     * @param @param  svr
+     * @param @return
+     * @param @throws KMException
+     * @return int 返回类型
+     * @throws
+     * @Title: getDecoderNum
+     * @Description: 获取解码器能力集
+     * @author lzs
+     * @date 2019-8-8 上午10:30:24
+     * @version V1.0
+     */
+    public int getDecoderNum(SVR svr) throws KMException {
+        int ssid = loginBySVR(svr);
+        GetDecoderNumRequest request = new GetDecoderNumRequest();
+        request.setSsid(ssid);
+        GetDecoderNumRespose respose = (GetDecoderNumRespose) this.sendRequest(request);
+        return respose.getNum();
+    }
+
+    /**
+     * @param @param  svr
+     * @param @return
+     * @param @throws KMException
+     * @return int 返回类型
+     * @throws
+     * @Title: getEncoderNum
+     * @Description: 获取编码器能力集
+     * @author lzs
+     * @date 2019-8-8 上午10:33:54
+     * @version V1.0
+     */
+    public int getEncoderNum(SVR svr) throws KMException {
+        int ssid = loginBySVR(svr);
+        GetEncoderNumRequest request = new GetEncoderNumRequest();
+        request.setSsid(ssid);
+        GetEncoderNumRespose respose = (GetEncoderNumRespose) this.sendRequest(request);
+        return respose.getNum();
     }
 
     /**
@@ -776,92 +966,6 @@ public class SVRClient {
         //this.sendRequest(request);
         DeleteDecoderRespose respose = (DeleteDecoderRespose) this.sendRequest(request);
         return respose.getErrorcode();
-    }
-
-    /**
-     * @param @param  svr
-     * @param @param  chnid
-     * @param @param  devinfo
-     * @param @return
-     * @param @throws KMException
-     * @return int 返回类型
-     * @throws
-     * @Title: AddEncoder
-     * @Description: 添加编码通道
-     * @author lzs
-     * @date 2019-8-8 上午10:16:14
-     * @version V1.0
-     */
-    public int addEncoder(SVR svr, int chnid, Devinfo devinfo) throws KMException {
-        int ssid = loginBySVR(svr);
-        AddEncoderRequest request = new AddEncoderRequest();
-        request.setSsid(ssid);
-        request.setChnid(chnid);
-        request.setDevinfo(devinfo);
-        AddEncoderRespose respose = (AddEncoderRespose) this.sendRequest(request);
-        return respose.getErrorcode();
-    }
-
-    /**
-     * @param @param  svr
-     * @param @param  chnid
-     * @param @return
-     * @param @throws KMException
-     * @return int 返回类型
-     * @throws
-     * @Title: deleteEncoder
-     * @Description: 删除编码通道
-     * @author lzs
-     * @date 2019-8-8 上午10:20:04
-     * @version V1.0
-     */
-    public int deleteEncoder(SVR svr, int chnid) throws KMException {
-        int ssid = loginBySVR(svr);
-        DeleteEncoderRequest request = new DeleteEncoderRequest();
-        request.setSsid(ssid);
-        request.setChnid(chnid);
-        DeleteEncoderRespose respose = (DeleteEncoderRespose) this.sendRequest(request);
-        return respose.getErrorcode();
-    }
-
-    /**
-     * @param @param  svr
-     * @param @return
-     * @param @throws KMException
-     * @return int 返回类型
-     * @throws
-     * @Title: getDecoderNum
-     * @Description: 获取解码器能力集
-     * @author lzs
-     * @date 2019-8-8 上午10:30:24
-     * @version V1.0
-     */
-    public int getDecoderNum(SVR svr) throws KMException {
-        int ssid = loginBySVR(svr);
-        GetDecoderNumRequest request = new GetDecoderNumRequest();
-        request.setSsid(ssid);
-        GetDecoderNumRespose respose = (GetDecoderNumRespose) this.sendRequest(request);
-        return respose.getNum();
-    }
-
-    /**
-     * @param @param  svr
-     * @param @return
-     * @param @throws KMException
-     * @return int 返回类型
-     * @throws
-     * @Title: getEncoderNum
-     * @Description: 获取编码器能力集
-     * @author lzs
-     * @date 2019-8-8 上午10:33:54
-     * @version V1.0
-     */
-    public int getEncoderNum(SVR svr) throws KMException {
-        int ssid = loginBySVR(svr);
-        GetEncoderNumRequest request = new GetEncoderNumRequest();
-        request.setSsid(ssid);
-        GetEncoderNumRespose respose = (GetEncoderNumRespose) this.sendRequest(request);
-        return respose.getNum();
     }
 
     /**
@@ -921,22 +1025,46 @@ public class SVRClient {
     /**
      * @param @param  svr
      * @param @param  chnid
+     * @param @param  devinfo
      * @param @return
      * @param @throws KMException
      * @return int 返回类型
      * @throws
-     * @Title: getEncoderSite
-     * @Description: 获取编码器的预置位
+     * @Title: AddEncoder
+     * @Description: 添加编码通道
      * @author lzs
-     * @date 2019-8-8 下午1:49:58
+     * @date 2019-8-8 上午10:16:14
      * @version V1.0
      */
-    public int getEncoderSite(SVR svr, int chnid) throws KMException {
+    public int addEncoder(SVR svr, int chnid, Devinfo devinfo) throws KMException {
         int ssid = loginBySVR(svr);
-        GetEncoderSiteRequest request = new GetEncoderSiteRequest();
+        AddEncoderRequest request = new AddEncoderRequest();
         request.setSsid(ssid);
         request.setChnid(chnid);
-        GetEncoderSiteRespose respose = (GetEncoderSiteRespose) this.sendRequest(request);
+        request.setDevinfo(devinfo);
+        AddEncoderRespose respose = (AddEncoderRespose) this.sendRequest(request);
+        return respose.getErrorcode();
+    }
+
+    /**
+     * @param @param  svr
+     * @param @param  chnid
+     * @param @return
+     * @param @throws KMException
+     * @return int 返回类型
+     * @throws
+     * @Title: deleteEncoder
+     * @Description: 删除编码通道
+     * @author lzs
+     * @date 2019-8-8 上午10:20:04
+     * @version V1.0
+     */
+    public int deleteEncoder(SVR svr, int chnid) throws KMException {
+        int ssid = loginBySVR(svr);
+        DeleteEncoderRequest request = new DeleteEncoderRequest();
+        request.setSsid(ssid);
+        request.setChnid(chnid);
+        DeleteEncoderRespose respose = (DeleteEncoderRespose) this.sendRequest(request);
         return respose.getErrorcode();
     }
 
@@ -966,21 +1094,23 @@ public class SVRClient {
 
     /**
      * @param @param  svr
+     * @param @param  chnid
      * @param @return
      * @param @throws KMException
      * @return int 返回类型
      * @throws
-     * @Title: getRemotePointVideoSourceRequest
-     * @Description: 获取远程点输出视频源和双流视频源
+     * @Title: getEncoderSite
+     * @Description: 获取编码器的预置位
      * @author lzs
-     * @date 2019-8-8 下午1:59:17
+     * @date 2019-8-8 下午1:49:58
      * @version V1.0
      */
-    public int getRemotePointVideoSourceRequest(SVR svr) throws KMException {
+    public int getEncoderSite(SVR svr, int chnid) throws KMException {
         int ssid = loginBySVR(svr);
-        GetRemotePointVideoSourceRequest request = new GetRemotePointVideoSourceRequest();
+        GetEncoderSiteRequest request = new GetEncoderSiteRequest();
         request.setSsid(ssid);
-        GetRemotePointVideoSourceRespose respose = (GetRemotePointVideoSourceRespose) this.sendRequest(request);
+        request.setChnid(chnid);
+        GetEncoderSiteRespose respose = (GetEncoderSiteRespose) this.sendRequest(request);
         return respose.getErrorcode();
     }
 
@@ -1022,6 +1152,26 @@ public class SVRClient {
      * @param @throws KMException
      * @return int 返回类型
      * @throws
+     * @Title: getRemotePointVideoSourceRequest
+     * @Description: 获取远程点输出视频源和双流视频源
+     * @author lzs
+     * @date 2019-8-8 下午1:59:17
+     * @version V1.0
+     */
+    public int getRemotePointVideoSourceRequest(SVR svr) throws KMException {
+        int ssid = loginBySVR(svr);
+        GetRemotePointVideoSourceRequest request = new GetRemotePointVideoSourceRequest();
+        request.setSsid(ssid);
+        GetRemotePointVideoSourceRespose respose = (GetRemotePointVideoSourceRespose) this.sendRequest(request);
+        return respose.getErrorcode();
+    }
+
+    /**
+     * @param @param  svr
+     * @param @return
+     * @param @throws KMException
+     * @return int 返回类型
+     * @throws
      * @Title: searchEncoderAnDecoder
      * @Description:搜索svr上的编码器和解码器
      * @author lzs
@@ -1034,29 +1184,6 @@ public class SVRClient {
         request.setSsid(ssid);
         SearchEncoderAndDecoderRespose respose = (SearchEncoderAndDecoderRespose) this.sendRequest(request);
         return respose.getErrorcode();
-    }
-
-    /**
-     * @param @param  svr
-     * @param @param  isnty
-     * @param @return
-     * @param @throws KMException
-     * @return int 返回类型
-     * @throws
-     * @Title: voiceActive
-     * @Description: 是否开启语音激励状态 ，全局生效
-     * @author lzs
-     * @date 2019-9-24 下午4:23:00
-     * @version V1.0
-     */
-    public int voiceActive(SVR svr, boolean isnty) throws KMException {
-        int ssid = loginBySVR(svr);
-        VoiceActiveRequest request = new VoiceActiveRequest();
-        request.setSsid(ssid);
-        request.setIsnty(isnty);
-        VoiceActiveRespose respose = (VoiceActiveRespose) this.sendRequest(request);
-        return respose.getErrorcode();
-
     }
 
     /**
@@ -1082,6 +1209,22 @@ public class SVRClient {
         request.setDownloadfilename(filename);
         StartDownloadrecResponse response = (StartDownloadrecResponse) this.sendRequest(request);
         return ssid;
+    }
+
+    /**
+     * @Description 获取编码通道列表
+     * @param:
+     * @return:
+     * @author:zlf
+     * @date:
+     */
+    public List<SvrEncChnList> getEncChnList(SVR svr) throws KMException {
+        int ssid = loginBySVR(svr);
+        GetEncChnListRequest request = new GetEncChnListRequest();
+        request.setSsid(ssid);
+
+        GetEncChnListResponse respose = (GetEncChnListResponse) this.sendRequest(request);
+        return respose.getEncChnList();
     }
 
     public static synchronized KM getKm() {
