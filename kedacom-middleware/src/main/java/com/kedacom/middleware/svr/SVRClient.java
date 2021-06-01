@@ -719,12 +719,13 @@ public class SVRClient {
      * @author:zlf
      * @date:
      */
-    public void getSvrComposePic(SVR svr) throws KMException {
+    public GetSvrComposePicResponse getSvrComposePic(SVR svr) throws KMException {
         int ssid = loginBySVR(svr);
         GetSvrComposePicRequest request = new GetSvrComposePicRequest();
         request.setSsid(ssid);
 
         GetSvrComposePicResponse response = (GetSvrComposePicResponse) this.sendRequest(request);
+        return response;
     }
 
     /**
