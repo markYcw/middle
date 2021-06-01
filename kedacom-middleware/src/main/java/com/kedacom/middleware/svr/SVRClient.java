@@ -628,7 +628,7 @@ public class SVRClient {
      * @author:zlf
      * @date:
      */
-    public void createBurn(SVR svr, String starttime, String endtime, int mode) throws KMException {
+    public int createBurn(SVR svr, String starttime, String endtime, int mode) throws KMException {
         int ssid = loginBySVR(svr);
         CreateBurnRequest request = new CreateBurnRequest();
         request.setSsid(ssid);
@@ -637,6 +637,7 @@ public class SVRClient {
         request.setMode(mode);
 
         CreateBurnResponse Response = (CreateBurnResponse) this.sendRequest(request);
+        return Response.getErrorcode();
     }
 
     /**
@@ -646,12 +647,13 @@ public class SVRClient {
      * @author:zlf
      * @date:
      */
-    public void killBurn(SVR svr) throws KMException {
+    public int killBurn(SVR svr) throws KMException {
         int ssid = loginBySVR(svr);
         KillBurnRequest request = new KillBurnRequest();
         request.setSsid(ssid);
 
         KillBurnResponse Response = (KillBurnResponse) this.sendRequest(request);
+        return Response.getErrorcode();
     }
 
     /**
@@ -781,7 +783,7 @@ public class SVRClient {
      * @author:zlf
      * @date:
      */
-    public void ptzctrl(SVR svr, int cmd, int chnid, int param1) throws KMException {
+    public int ptzctrl(SVR svr, int cmd, int chnid, int param1) throws KMException {
         int ssid = loginBySVR(svr);
         SvrPtzCtrlRequest request = new SvrPtzCtrlRequest();
         request.setSsid(ssid);
@@ -790,6 +792,7 @@ public class SVRClient {
         request.setParam1(param1);
 
         SvrPtzCtrlResponse response = (SvrPtzCtrlResponse) this.sendRequest(request);
+        return response.getErrorcode();
     }
 
     /**
@@ -800,7 +803,7 @@ public class SVRClient {
      * @author:zlf
      * @date:
      */
-    public void startDual(SVR svr, int chnid, boolean dual) throws KMException {
+    public int startDual(SVR svr, int chnid, boolean dual) throws KMException {
         int ssid = loginBySVR(svr);
         StartDualRequest request = new StartDualRequest();
         request.setSsid(ssid);
@@ -808,6 +811,7 @@ public class SVRClient {
         request.setDual(dual);
 
         StartDualResponse response = (StartDualResponse) this.sendRequest(request);
+        return response.getErrorcode();
     }
 
     /**
@@ -844,13 +848,14 @@ public class SVRClient {
      * @author:zlf
      * @date:
      */
-    public void stopDownloadRec(SVR svr, int downloadhandle) throws KMException {
+    public int stopDownloadRec(SVR svr, int downloadhandle) throws KMException {
         int ssid = loginBySVR(svr);
         StopDownloadrecRequest request = new StopDownloadrecRequest();
         request.setSsid(ssid);
         request.setDownloadhandle(downloadhandle);
 
         StopDownloadrecResponse response = (StopDownloadrecResponse) this.sendRequest(request);
+        return response.getErrorcode();
     }
 
     /**

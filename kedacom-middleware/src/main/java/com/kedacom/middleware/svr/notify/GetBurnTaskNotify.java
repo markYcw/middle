@@ -20,7 +20,7 @@ public class GetBurnTaskNotify extends SVRNotify {
     /**
      * 命令值
      */
-    public static final String NAME = "getburntask";
+    public static final String NAME = "getburntasknty";
 
     /**
      * 录像集合
