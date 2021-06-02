@@ -13,17 +13,17 @@ import org.json.JSONObject;
 @Data
 public class GetSvrComposePicResponse extends SVRResponse {
 
-    private Integer videoresolution;//分辨率
+    private int videoresolution;//分辨率
 
-    private Integer borderwidth;//边框宽度
+    private int borderwidth;//边框宽度
 
-    private Integer mergestyle;//自定义画面风格所使用的基础画面风格。 2816 1.0不支持
+    private int mergestyle;//自定义画面风格所使用的基础画面风格。 2816 1.0不支持
 
-    private Integer picinfonum;//有效合成通道数
+    private int picinfonum;//有效合成通道数
 
-    private Integer[] chnid;//各画面信息配置
+    private int[] chnid;//各画面信息配置
 
-    private Integer[] pictype;//各个画面主辅流配置0：主流 1：辅流
+    private int[] pictype;//各个画面主辅流配置0：主流 1：辅流
 
     /**
      * 解析数据。
@@ -40,10 +40,10 @@ public class GetSvrComposePicResponse extends SVRResponse {
         this.mergestyle = jsonData.optInt("mergestyle");
         this.picinfonum = jsonData.optInt("picinfonum");
 
-        Integer[] picinfo = (Integer[]) jsonData.opt("picinfo");
+        int[] picinfo = (int[]) jsonData.opt("picinfo");
         this.chnid = picinfo;
 
-        Integer[] pictype = (Integer[]) jsonData.opt("pictype");
+        int[] pictype = (int[]) jsonData.opt("pictype");
         this.pictype = pictype;
     }
 
