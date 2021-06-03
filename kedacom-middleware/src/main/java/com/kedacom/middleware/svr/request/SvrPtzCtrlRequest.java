@@ -27,6 +27,12 @@ public class SvrPtzCtrlRequest extends SVRRequest {
 
     /*
     参数1,命令参数表
+    SVRSDK_PTZ_COMMAND_MOVEUP    = 1,   //向上移动
+    SVRSDK_PTZ_COMMAND_ZOOMTELE  = 7,   //拉近摄像头
+    SVRSDK_PTZ_COMMAND_PRESETSET    = 14,   //摄象头预存
+    SVRSDK_PTZ_COMMAND_GOTOPOINT    = 20,   //中心定位
+    SVRSDK_PTZ_COMMAND_ZOOMPART = 21,   //局部放大
+    SVRSDK_PTZ_COMMAND_ZOOMWHOLE    = 26,   //局部缩小
      */
     private int param1;
 
