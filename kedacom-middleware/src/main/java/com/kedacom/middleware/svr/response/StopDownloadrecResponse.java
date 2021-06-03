@@ -6,29 +6,16 @@ import org.json.JSONObject;
 
 /**
  * SVR停止录像下载
- * 
- * @see StartDownloadrecRequest
+ *
  * @author DengJie
- * 
+ * @see StartDownloadrecRequest
  */
 public class StopDownloadrecResponse extends SVRResponse {
-	/**
-	 * 
-	 */
-	private Integer downloadhandle;
 
-	@Override
-	public void parseData(JSONObject jsonData) throws DataException {
-		super.parseResp(jsonData);
-		this.downloadhandle = jsonData.optInt("downloadhandle");
-	}
+    @Override
+    public void parseData(JSONObject jsonData) throws DataException {
+        super.parseResp(jsonData);
+    }
 
-	public Integer getDownloadhandle() {
-		return downloadhandle;
-	}
-
-	public void setDownloadhandle(Integer downloadhandle) {
-		this.downloadhandle = downloadhandle;
-	}
 
 }

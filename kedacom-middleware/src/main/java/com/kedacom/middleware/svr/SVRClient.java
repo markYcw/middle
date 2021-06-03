@@ -575,8 +575,8 @@ public class SVRClient {
         int ssid = loginBySVR(svr);
         StopBurnRequest request = new StopBurnRequest();
         request.setSsid(ssid);
-        StopBurnResponse response = (StopBurnResponse) this
-                .sendRequest(request);
+
+        StopBurnResponse response = (StopBurnResponse) this.sendRequest(request);
         return response.getErrorcode();
     }
 
@@ -592,6 +592,7 @@ public class SVRClient {
         int ssid = loginBySVR(svr);
         GetBurnTimeRequest request = new GetBurnTimeRequest();
         request.setSsid(ssid);
+
         GetBurnTimeResponse response = (GetBurnTimeResponse) this.sendRequest(request);
         return response.getTime();
     }
@@ -686,6 +687,7 @@ public class SVRClient {
         int ssid = loginBySVR(svr);
         GetStateRequest request = new GetStateRequest();
         request.setSsid(ssid);
+
         GetStateResponse response = (GetStateResponse) this.sendRequest(request);
         return response.getSvrState();
     }
@@ -708,6 +710,7 @@ public class SVRClient {
         request.setChnid(chnid);
         request.setStarttime(starttime);
         request.setEndtime(endtime);
+
         QueryRecResponse response = (QueryRecResponse) this.sendRequest(request);
         return response.getNum();
     }
@@ -740,7 +743,8 @@ public class SVRClient {
      * @date 2019-7-11 上午9:53:45
      * @version V1.0
      */
-    public int setSvrComposePic(SVR svr, int videoresolution, int borderwidth, int mergestyle, int picinfonum, int[] chnid, int[] pictype) throws KMException {
+    public int setSvrComposePic(SVR svr, int videoresolution, int borderwidth, int mergestyle,
+                                int picinfonum, int[] chnid, int[] pictype) throws KMException {
         int ssid = 0;
         try {
             ssid = loginBySVR(svr);
@@ -761,7 +765,8 @@ public class SVRClient {
     /*
     设置合成画面
      */
-    private int setPicStyle(int ssid, SVR svr, int videoresolution, int borderwidth, int mergestyle, int picinfonum, int[] chnid, int[] pictype) throws KMException {
+    private int setPicStyle(int ssid, SVR svr, int videoresolution, int borderwidth, int mergestyle,
+                            int picinfonum, int[] chnid, int[] pictype) throws KMException {
         //int ssid = loginBySVR(svr);
         SetComposePicRequest request = new SetComposePicRequest();
         request.setSsid(ssid);
@@ -771,6 +776,7 @@ public class SVRClient {
         request.setPicinfonum(picinfonum);
         request.setChnid(chnid);
         request.setPictype(pictype);
+
         SetComposePicRespose respose = (SetComposePicRespose) this.sendRequest(request);
         return respose.getErrorcode();
     }
@@ -898,6 +904,7 @@ public class SVRClient {
         int ssid = loginBySVR(svr);
         GetDecoderNumRequest request = new GetDecoderNumRequest();
         request.setSsid(ssid);
+
         GetDecoderNumRespose respose = (GetDecoderNumRespose) this.sendRequest(request);
         return respose.getNum();
     }
@@ -918,6 +925,7 @@ public class SVRClient {
         int ssid = loginBySVR(svr);
         GetEncoderNumRequest request = new GetEncoderNumRequest();
         request.setSsid(ssid);
+
         GetEncoderNumRespose respose = (GetEncoderNumRespose) this.sendRequest(request);
         return respose.getNum();
     }
@@ -943,6 +951,7 @@ public class SVRClient {
                 request.setSsid(ssid);
                 request.setChnid(chnid);
                 request.setDevinfo(devinfo);
+
                 AddDecoderRespose respose = (AddDecoderRespose) this.sendRequest(request);
                 return respose.getErrorcode();
             }
@@ -970,6 +979,7 @@ public class SVRClient {
         request.setSsid(ssid);
         request.setChnid(chnid);
         //this.sendRequest(request);
+
         DeleteDecoderRespose respose = (DeleteDecoderRespose) this.sendRequest(request);
         return respose.getErrorcode();
     }
@@ -987,13 +997,14 @@ public class SVRClient {
      * @date 2019-8-8 下午1:21:35
      * @version V1.0
      */
-    public int getDecoderMainAndAuxiliary(SVR svr, int chnid) throws KMException {
+    public GetDecoderMainAndAuxiliaryRespose getDecoderMainAndAuxiliary(SVR svr, int chnid) throws KMException {
         int ssid = loginBySVR(svr);
         GetDecoderMainAndAuxiliaryRequest request = new GetDecoderMainAndAuxiliaryRequest();
         request.setSsid(ssid);
         request.setChnid(chnid);
+
         GetDecoderMainAndAuxiliaryRespose respose = (GetDecoderMainAndAuxiliaryRespose) this.sendRequest(request);
-        return respose.getErrorcode();
+        return respose;
     }
 
     /**
@@ -1019,6 +1030,7 @@ public class SVRClient {
             request.setChnid(chnid);
             request.setEncchnid(encchnid);
             request.setSecstream(secstream);
+
             SetDecoderMainAndAuxiliaryRespose respose = (SetDecoderMainAndAuxiliaryRespose) this.sendRequest(request);
             return respose.getErrorcode();
         } catch (Exception e) {
@@ -1048,6 +1060,7 @@ public class SVRClient {
         request.setSsid(ssid);
         request.setChnid(chnid);
         request.setDevinfo(devinfo);
+
         AddEncoderRespose respose = (AddEncoderRespose) this.sendRequest(request);
         return respose.getErrorcode();
     }
@@ -1070,6 +1083,7 @@ public class SVRClient {
         DeleteEncoderRequest request = new DeleteEncoderRequest();
         request.setSsid(ssid);
         request.setChnid(chnid);
+
         DeleteEncoderRespose respose = (DeleteEncoderRespose) this.sendRequest(request);
         return respose.getErrorcode();
     }
@@ -1094,6 +1108,7 @@ public class SVRClient {
         request.setSsid(ssid);
         request.setChnid(chnid);
         request.setPreset(preset);
+
         SetEncoderSiteRespose respose = (SetEncoderSiteRespose) this.sendRequest(request);
         return respose.getErrorcode();
     }
@@ -1116,8 +1131,9 @@ public class SVRClient {
         GetEncoderSiteRequest request = new GetEncoderSiteRequest();
         request.setSsid(ssid);
         request.setChnid(chnid);
+
         GetEncoderSiteRespose respose = (GetEncoderSiteRespose) this.sendRequest(request);
-        return respose.getErrorcode();
+        return respose.getPreset();
     }
 
     /**
@@ -1143,6 +1159,7 @@ public class SVRClient {
             request.setOutvideochnid(outvideochnid);
             request.setH323secvideochnid(h323secvideochnid);
             request.setRemmergestate(remmergestate);
+
             SetRemotePointVideoSourceRespose respose = (SetRemotePointVideoSourceRespose) this.sendRequest(request);
             return respose.getErrorcode();
         } catch (Exception e) {
@@ -1168,6 +1185,7 @@ public class SVRClient {
         int ssid = loginBySVR(svr);
         GetRemotePointVideoSourceRequest request = new GetRemotePointVideoSourceRequest();
         request.setSsid(ssid);
+
         GetRemotePointVideoSourceRespose respose = (GetRemotePointVideoSourceRespose) this.sendRequest(request);
         return respose.getErrorcode();
     }
@@ -1188,6 +1206,7 @@ public class SVRClient {
         int ssid = loginBySVR(svr);
         SearchEncoderAndDecoderRequest request = new SearchEncoderAndDecoderRequest();
         request.setSsid(ssid);
+
         SearchEncoderAndDecoderRespose respose = (SearchEncoderAndDecoderRespose) this.sendRequest(request);
         return respose.getErrorcode();
     }
@@ -1204,18 +1223,19 @@ public class SVRClient {
      * @return
      * @throws KMException
      */
-    public int startHBDownloadrec(SVR svr, int chnid, String stime, String etime, String path, String filename) throws KMException {
-        int ssid = this.login0(svr.getIp(), svr.getPort(), svr.getUsername(), svr.getPassword());
-        StartDownloadrecRequest request = new StartDownloadrecRequest();
-        request.setSsid(ssid);
-        request.setChnid(chnid);
-        request.setStarttime(stime);
-        request.setEndtime(etime);
-        request.setDownloadfiledir(path);
-        request.setDownloadfilename(filename);
-        StartDownloadrecResponse response = (StartDownloadrecResponse) this.sendRequest(request);
-        return ssid;
-    }
+//    public int startHBDownloadrec(SVR svr, int chnid, String stime, String etime, String path, String filename) throws KMException {
+//        int ssid = this.login0(svr.getIp(), svr.getPort(), svr.getUsername(), svr.getPassword());
+//        StartDownloadrecRequest request = new StartDownloadrecRequest();
+//        request.setSsid(ssid);
+//        request.setChnid(chnid);
+//        request.setStarttime(stime);
+//        request.setEndtime(etime);
+//        request.setDownloadfiledir(path);
+//        request.setDownloadfilename(filename);
+//
+//        StartDownloadrecResponse response = (StartDownloadrecResponse) this.sendRequest(request);
+//        return response.getDownloadhandle();
+//    }
 
     /**
      * @Description 获取编码通道列表

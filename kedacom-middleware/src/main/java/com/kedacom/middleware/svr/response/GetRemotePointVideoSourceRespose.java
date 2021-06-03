@@ -15,8 +15,6 @@ import org.json.JSONObject;
  */
 public class GetRemotePointVideoSourceRespose extends SVRResponse{
 	
-	private int errorcode;//返回值code
-	
 	private int outvideochnid;//作为远程点的输出画面通道
 	
 	private int h323secvideochnid; //启用双流时第二路码流通道
@@ -26,18 +24,9 @@ public class GetRemotePointVideoSourceRespose extends SVRResponse{
 	@Override
 	public void parseData(JSONObject jsonData) throws DataException {
 		super.parseResp(jsonData);
-		this.errorcode = jsonData.optInt("errorcode");
 		this.outvideochnid = jsonData.optInt("outvideochnid");
 		this.h323secvideochnid = jsonData.optInt("h323secvideochnid");
 		this.remmergestate = jsonData.optInt("remmergestate");
-	}
-
-	public int getErrorcode() {
-		return errorcode;
-	}
-
-	public void setErrorcode(int errorcode) {
-		this.errorcode = errorcode;
 	}
 
 	public int getOutvideochnid() {
