@@ -785,7 +785,7 @@ public class SVRClient {
      * @Description PTZ控制
      * @param: cmd      控制命令Id
      * @param: chnid    通道Id
-     * @param: param1
+     * @param: param1   1：向上移动；2：向下移动；3：向左移动；4：向右移动；5：回归；6：停止移动；7：拉近摄像头；8：拉远摄像头；14：摄象头预存；15：调摄象头预存；20：中心定位；21：局部放大；26：局部缩小
      * @return:
      * @author:zlf
      * @date:
