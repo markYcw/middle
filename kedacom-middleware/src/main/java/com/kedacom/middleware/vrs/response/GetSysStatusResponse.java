@@ -6,6 +6,7 @@ import lombok.Data;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,7 +24,7 @@ public class GetSysStatusResponse extends VRSResponse{
      */
     private int burnworkmode;
 
-    private List<DvdStatus> dvdStatuses;
+    private List<DvdStatus> dvdStatuses = new ArrayList<DvdStatus>();
 
     @Override
     public void parseData(JSONObject jsonData) throws DataException {

@@ -28,7 +28,7 @@ public class QueryRecTaskResponse extends VRSResponse{
     private int totalnum;
 
     //录像信息
-    private List<RecTaskInfo> recTaskInfos;
+    private List<RecTaskInfo> recTaskInfos = new ArrayList<RecTaskInfo>();
 
 
     @Override

@@ -5,6 +5,8 @@ import com.kedacom.middleware.vrs.domain.RoomStatus;
 import lombok.Data;
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,7 +16,7 @@ import java.util.List;
  */
 @Data
 public class GetRoomStatusResponse extends VRSResponse{
-    private List<RoomStatus> roomStatuses;
+    private List<RoomStatus> roomStatuses = new ArrayList<RoomStatus>();
     @Override
     public void parseData(JSONObject jsonData) throws DataException {
         super.parseResp(jsonData);

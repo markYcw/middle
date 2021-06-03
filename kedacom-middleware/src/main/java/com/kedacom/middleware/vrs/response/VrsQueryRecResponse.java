@@ -25,7 +25,7 @@ public class VrsQueryRecResponse extends VRSResponse {
 	/**
 	 * 录像集合
 	 */
-	private List<VRSRecInfo> resInfos;
+	private List<VRSRecInfo> resInfos = new ArrayList<VRSRecInfo>();
 	
 	@Override
 	public void parseData(JSONObject jsonData) throws DataException {
