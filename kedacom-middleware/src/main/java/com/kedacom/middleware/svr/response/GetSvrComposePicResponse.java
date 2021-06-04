@@ -39,12 +39,18 @@ public class GetSvrComposePicResponse extends SVRResponse {
         this.borderwidth = jsonData.optInt("borderwidth");
         this.mergestyle = jsonData.optInt("mergestyle");
         this.picinfonum = jsonData.optInt("picinfonum");
+        this.chnid = getData(jsonData.opt("picinfo"));
+        this.pictype = getData(jsonData.opt("pictype"));
+    }
 
-        int[] picinfo = (int[]) jsonData.opt("picinfo");
-        this.chnid = picinfo;
-
-        int[] pictype = (int[]) jsonData.opt("pictype");
-        this.pictype = pictype;
+    private static int[] getData(Object o) {
+        String str = o.toString();
+        String[] split = str.substring(str.indexOf("[") + 1, str.length() - 1).split(",");
+        int[] arr = new int[split.length];
+        for (int i = 0; i < split.length; i++) {
+            arr[i] = Integer.valueOf(split[i]);
+        }
+        return arr;
     }
 
 }
