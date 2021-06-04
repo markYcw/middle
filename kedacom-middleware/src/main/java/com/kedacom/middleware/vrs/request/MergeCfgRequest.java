@@ -1,6 +1,7 @@
 package com.kedacom.middleware.vrs.request;
 
 import com.kedacom.middleware.client.IResponse;
+import com.kedacom.middleware.vrs.response.MergeCfgResponse;
 import lombok.Data;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -32,6 +33,6 @@ public class MergeCfgRequest extends VRSRequest{
 
     @Override
     public IResponse getResponse() {
-        return null;
+        return new MergeCfgResponse();
     }
 }
