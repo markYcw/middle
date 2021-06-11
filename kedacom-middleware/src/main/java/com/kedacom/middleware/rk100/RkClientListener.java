@@ -3,7 +3,7 @@ package com.kedacom.middleware.rk100;
 import com.kedacom.middleware.client.INotify;
 import com.kedacom.middleware.client.TCPClientListenerAdapter;
 import com.kedacom.middleware.rk100.domain.RK;
-import com.kedacom.middleware.svr.notify.LostCntNotify;
+import com.kedacom.middleware.rk100.notify.LostCntNotify;
 import org.apache.log4j.Logger;
 
 /**
