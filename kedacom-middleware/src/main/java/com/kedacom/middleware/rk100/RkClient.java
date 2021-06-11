@@ -438,7 +438,7 @@ public class RkClient {
      * @author:zlf
      * @date:
      */
-    public void logout(String id) {
+    public int logout(String id) {
         int ssid = -1;
         try {
             ssid = this.tryGetSSIDByIDForLogout(id);
@@ -452,12 +452,14 @@ public class RkClient {
                 LogoutRequest request = new LogoutRequest();
                 request.setSsid(ssid);
                 try {
-                    this.sendRequest(request);
+                    RkResponse rkResponse = this.sendRequest(request);
+                    return rkResponse.getErrorcode();
                 } catch (KMException e) {
                     log.warn("logout failed", e);
                 }
             }
         }
+        return -1;
     }
 
     /**
