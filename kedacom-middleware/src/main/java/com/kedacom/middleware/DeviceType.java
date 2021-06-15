@@ -72,6 +72,11 @@ public enum DeviceType {
 	 * 人脸对比服务
 	 */
 	FACE(20),
+
+	/**
+	 * RK100
+	 */
+	RK100(22),
 	
 	/**
 	 * UPU
