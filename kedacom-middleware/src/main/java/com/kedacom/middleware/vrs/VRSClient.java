@@ -540,7 +540,7 @@ public class VRSClient {
 		request.setCtrltype(ctrltype);
 		request.setRoomid(roomid);
 		if(ctrltype==5||ctrltype==6){
-			request.setIslocal(ssid);
+			request.setIslocal(islocal);
 		}
 
 		this.sendRequest(request);

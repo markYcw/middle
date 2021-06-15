@@ -33,7 +33,7 @@ public class ReadkeysResponse extends CommonResponse {
                 KeyInfo keyInfo = new KeyInfo();
                 JSONObject jsonObject = array.optJSONObject(i);
                 keyInfo.setKeystate(jsonObject.optInt("keystate"));
-                int isusbkey = jsonData.optInt("isusbkey");
+                int isusbkey = jsonObject.optInt("isusbkey");
                 if(isusbkey == 1)
                     keyInfo.setUsbkey(true);
                 else
