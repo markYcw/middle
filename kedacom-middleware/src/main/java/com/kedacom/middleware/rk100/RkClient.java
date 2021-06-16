@@ -10,9 +10,6 @@ import com.kedacom.middleware.exception.RemoteException;
 import com.kedacom.middleware.rk100.domain.RK;
 import com.kedacom.middleware.rk100.request.*;
 import com.kedacom.middleware.rk100.response.*;
-import com.kedacom.middleware.svr.domain.SVR;
-import com.kedacom.middleware.svr.request.GetSvrComposePicRequest;
-import com.kedacom.middleware.svr.response.GetSvrComposePicResponse;
 import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
