@@ -1,10 +1,14 @@
 package com.kedacom.middleware.rk100;
 
+import com.alibaba.fastjson.JSON;
 import com.kedacom.middleware.KM;
 import com.kedacom.middleware.exception.KMException;
 import com.kedacom.middleware.rk100.domain.RK;
+import com.kedacom.middleware.rk100.response.GetAllLiveStateDetailResponse;
 import com.kedacom.middleware.rk100.response.ListRkResponse;
 import keda.common.util.ATaskThread;
+
+import java.util.List;
 
 /**
  * @ClassName RkDemo
@@ -47,8 +51,14 @@ public class RkDemo {
         ATaskThread thread = new ATaskThread() {
             @Override
             public void doWork() throws Exception {
-                ListRkResponse listRkResponse = rkClient.listRkInfos(rk);
-                System.out.println("返回值：" + listRkResponse);
+//                ListRkResponse listRkResponse = rkClient.listRkInfos(rk);
+//                System.out.println("返回值：" + listRkResponse);
+
+//                List<GetAllLiveStateDetailResponse> allLiveState = rkClient.getAllLiveState(rk, "1");
+//                System.out.println("返回值：" + JSON.toJSONString(allLiveState));
+
+                int on = rkClient.devOnOff(rk, "1", "on", "2");
+                System.out.println("返回值：" + on);
             }
         };
         thread.setName("RK-work");

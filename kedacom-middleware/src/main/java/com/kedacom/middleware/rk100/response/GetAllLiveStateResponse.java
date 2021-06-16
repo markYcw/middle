@@ -20,7 +20,7 @@ public class GetAllLiveStateResponse extends RkResponse {
     /*
     状态集合
      */
-    private List<GetAllLiveStateDetailResponse> states = new ArrayList<>();
+    private List<GetAllLiveStateDetailResponse> states;
 
     /**
      * 解析数据。
@@ -32,6 +32,10 @@ public class GetAllLiveStateResponse extends RkResponse {
     public void parseData(JSONObject jsonData) throws DataException {
         super.parseResp(jsonData);
         JSONArray jsonArray = jsonData.optJSONArray("states");
+        if (null == jsonArray || jsonArray.isEmpty()) {
+            return;
+        }
+        states = new ArrayList<>();
         for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject jsonObject = jsonArray.optJSONObject(i);
             GetAllLiveStateDetailResponse stateDetailResponse = GetAllLiveStateDetailResponse.builder()
