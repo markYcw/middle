@@ -6,6 +6,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -46,15 +47,22 @@ public class ListRkResponse extends RkResponse {
     @Override
     public void parseData(JSONObject jsonData) throws DataException {
         super.parseResp(jsonData);
-
+        if (jsonData.optInt("totlerk") <= 0) {
+            return;
+        }
         this.name = jsonData.optString("name");
         this.deviceSn = jsonData.optString("device_sn");
         this.deviceModel = jsonData.optString("device_model");
-        this.virtualDeviceList = getListRkVirtualDeviceResponse(jsonData.optJSONArray("virtual_device_list"));
+        if (jsonData.toMap().containsKey("virtual_device_list")) {
+            this.virtualDeviceList = getListRkVirtualDeviceResponse(jsonData.optJSONArray("virtual_device_list"));
+        }
     }
 
     private List<ListRkVirtualDeviceResponse> getListRkVirtualDeviceResponse(JSONArray jsonArray) {
         List<ListRkVirtualDeviceResponse> virtualDeviceResponses = new ArrayList<>();
+        if (jsonArray.isEmpty()) {
+            return Collections.emptyList();
+        }
         for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject jsonObject = jsonArray.optJSONObject(i);
             ListRkVirtualDeviceResponse virtualDeviceResponse = ListRkVirtualDeviceResponse.builder()
@@ -69,6 +77,9 @@ public class ListRkResponse extends RkResponse {
 
     private List<ListRkVirtualDeviceComponentResponse> getListRkVirtualDeviceComponentResponse(JSONArray jsonArray) {
         List<ListRkVirtualDeviceComponentResponse> componentResponses = new ArrayList<>();
+        if (jsonArray.isEmpty()) {
+            return Collections.emptyList();
+        }
         for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject jsonObject = jsonArray.optJSONObject(i);
             ListRkVirtualDeviceComponentResponse componentResponse = ListRkVirtualDeviceComponentResponse.builder()
@@ -84,6 +95,9 @@ public class ListRkResponse extends RkResponse {
 
     private List<ListRkVirtualDeviceComponentItemResponse> getListRkVirtualDeviceComponentItemResponse(JSONArray jsonArray) {
         List<ListRkVirtualDeviceComponentItemResponse> itemResponses = new ArrayList<>();
+        if (jsonArray.isEmpty()) {
+            return Collections.emptyList();
+        }
         for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject jsonObject = jsonArray.optJSONObject(i);
             ListRkVirtualDeviceComponentItemResponse itemResponse = ListRkVirtualDeviceComponentItemResponse.builder()

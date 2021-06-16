@@ -35,7 +35,7 @@ public class RkDemo {
 
         String id = "1";
         String ip = "172.16.129.214";
-        int port = 5672;
+        int port = 1883;
 
         final RK rk = new RK();
         rk.setId(id);
