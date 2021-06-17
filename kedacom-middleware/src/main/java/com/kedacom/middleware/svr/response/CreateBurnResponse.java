@@ -12,6 +12,12 @@ import org.json.JSONObject;
  */
 @Data
 public class CreateBurnResponse extends SVRResponse {
+
+    /**
+     * 会话标识
+     */
+    private int netId;
+
     /**
      * 解析数据。
      *
@@ -21,5 +27,10 @@ public class CreateBurnResponse extends SVRResponse {
     @Override
     public void parseData(JSONObject jsonData) throws DataException {
         super.parseResp(jsonData);
+
+        JSONObject req = jsonData.optJSONObject("resp");
+        if (req != null) {
+            this.netId = req.optInt("netid");
+        }
     }
 }
