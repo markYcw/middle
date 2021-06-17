@@ -31,6 +31,12 @@ public class MtInfo {
     //4: 5.0MCU
     private int type;
 
+    //("认证软件的Key  备：仅终端类型为4有效 5.0MCU平台获取token用")
+    private String key;
+
+    //("认证软件的Key的值value 备： 仅终端类型为4有效 5.0MCU平台获取token用")
+    private String secret;
+
     //中间件IP
     private String midip;
 
