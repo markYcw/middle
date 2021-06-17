@@ -38,12 +38,12 @@ public class TCPClientDataReciver {
 					log.debug("socket is closed");
 					continue;
 				}
-				
+
 				log.debug("======> TCPPackageUtil readPack socket InputStream");
 				
 				String data = TCPPackageUtil.readPack(socket.getInputStream());//此操作是阻塞的。
 				
-				log.debug("======> TCPPackageUtil readPack socket InputStream data="+data);
+				log.debug("收到 ======> TCPPackageUtil readPack socket InputStream data ="+data);
 				try{
 					this.onData(data);
 				}catch(JSONException e){
@@ -81,7 +81,7 @@ public class TCPClientDataReciver {
 			t = t.substring(0, 1000);
 		}
 //		log.debug(TCPClient.concat("收到 <== ", t)); //只打印前1000个字符。
-		log.debug(TCPClient.concat("收到 <== ", data));//打印全部字符
+		//log.debug(TCPClient.concat("收到 <== ", data));//打印全部字符
 		
 		JSONObject json = new JSONObject(data);
 		
