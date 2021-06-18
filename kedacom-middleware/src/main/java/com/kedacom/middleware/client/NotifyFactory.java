@@ -70,9 +70,9 @@ public class NotifyFactory {
 		String name = nty.optString("name");
 //		int ssid = nty.optInt("ssid");
 		int deviceType = nty.optInt("devtype");
-		if(name.contains("burn")){
-			deviceType = 2;//请求状态作终端临时处理
-		}
+//		if(name.contains("burn")){
+//			deviceType = 2;//请求状态作终端临时处理
+//		}
 		DeviceType dt = DeviceType.parse(deviceType);
 		if(dt == null){
 			throw new DataException("设备类型未知：" + deviceType);
