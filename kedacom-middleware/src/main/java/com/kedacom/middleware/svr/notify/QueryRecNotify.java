@@ -18,7 +18,7 @@ public class QueryRecNotify extends SVRNotify{
     /**
      * 命令值
      */
-    public static final String NAME = "queryrec";
+    public static final String NAME = "queryrecnty";
 
     /**
      * 录像集合
