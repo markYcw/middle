@@ -16,7 +16,9 @@ public class SVRNotifyFactory {
 		NotifyFactory.register(DeviceType.SVR, BurnStatusNotify.NAME, BurnStatusNotify.class);
 		NotifyFactory.register(DeviceType.SVR, DownloadrecntyNotify.NAME, DownloadrecntyNotify.class);
 		NotifyFactory.register(DeviceType.SVR, SearchEncoderAndDecoderNotify.NAME, SearchEncoderAndDecoderNotify.class);
-		NotifyFactory.register(DeviceType.SVR,QueryRecNotify.NAME, QueryRecNotify.class);
+		NotifyFactory.register(DeviceType.SVR, QueryRecNotify.NAME, QueryRecNotify.class);
+		NotifyFactory.register(DeviceType.SVR, GetBurnTaskNotify.NAME, GetBurnTaskNotify.class);
+		NotifyFactory.register(DeviceType.SVR, CreateBurnNotify.NAME, CreateBurnNotify.class);
 	}
 	
 }
