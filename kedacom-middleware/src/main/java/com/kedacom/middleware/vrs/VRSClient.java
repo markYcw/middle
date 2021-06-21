@@ -456,9 +456,9 @@ public class VRSClient {
 	/**
 	 * 分页查询录像列表
 	 * @param id
-	 * @param pagenum
-	 * @param pagesize
-	 * @param recname
+	 * @param pagenum 查询的页码（从1开始）
+	 * @param pagesize 每页的大小
+	 * @param recname 模糊匹配的录像名字
 	 * @return
 	 * @throws KMException
 	 */
@@ -475,6 +475,56 @@ public class VRSClient {
 		
 		return response;
 	}
+
+	/**
+	 * 分页查询http录像列表
+	 * @author ycw
+	 * @param id
+	 * @param pagenum 查询的页码（从1开始）
+	 * @param pagesize 每页的大小
+	 * @param recname 模糊匹配的录像名字
+	 * @return
+	 * @throws KMException
+	 */
+	public VrsQueryHttpRecResponse vrsQueryHttpRec(String id, int pagenum, int pagesize, String recname) throws KMException{
+		int ssid = this.tryLogin(id);
+
+		VrsQueryHttpRecRequest request = new VrsQueryHttpRecRequest();
+		request.setSsid(ssid);
+		request.setPagenum(pagenum);
+		request.setPagesize(pagesize);
+		request.setIncludename(recname);
+
+		VrsQueryHttpRecResponse response = (VrsQueryHttpRecResponse)this.sendRequest(request);
+
+		return response;
+	}
+
+	/**
+	 * 直播查询
+	 * @author ycw
+	 * @param id
+	 * @param pagenum 查询的页码（从1开始）
+	 * @param pagesize 每页的大小
+	 * @param recname 开始录像时候填写的名称
+	 * @return
+	 * @throws KMException
+	 */
+	public VrsQueryLiveResponse vrsQueryLive(String id, int pagenum, int pagesize, String recname) throws KMException{
+		int ssid = this.tryLogin(id);
+
+		VrsQueryLiveRequest request = new VrsQueryLiveRequest();
+		request.setSsid(ssid);
+		request.setPagenum(pagenum);
+		request.setPagesize(pagesize);
+		request.setIncludename(recname);
+
+		VrsQueryLiveResponse response = (VrsQueryLiveResponse)this.sendRequest(request);
+
+		return response;
+	}
+
+
 
 	/**
 	 * @author ycw
@@ -568,6 +618,7 @@ public class VRSClient {
 
 	/**
 	 * 播放录像
+	 * @author ycw
 	 * @param id
 	 * @param rectaskid 录像任务id
 	 * @param starttime 开始时间
@@ -591,6 +642,7 @@ public class VRSClient {
 
 	/**
 	 * 查询录像任务
+	 * @author ycw
 	 * @param id
 	 * @param querytype 查询类型 0:获取总条目数以及按照索引和返回数目获取对应的条目 1：获取总条目数 2：按照索引和返回数目获取对应的条目
 	 * @param querymask 查询条件 0：无效 // 0x0001 : by 时间 // 0x0002 : by 关键字  // 0x0004 :by 组名
@@ -623,6 +675,7 @@ public class VRSClient {
 
 	/**
 	 * 刻录附件
+	 * @author ycw
 	 * @param id
 	 * @param recorddirname 笔录/附件目录名
 	 * @throws KMException
@@ -639,6 +692,7 @@ public class VRSClient {
 
 	/**
 	 * 录像室状态获取
+	 * @author ycw
 	 * @param id
 	 * @return
 	 * @throws KMException
@@ -655,6 +709,7 @@ public class VRSClient {
 
 	/**
 	 * 播放录像控制
+	 * @author ycw
 	 * @param id
 	 * @param playtaskid 放像任务id
 	 * @param vcrcmd 放像控制命令 0： 无效命令 1： 停止放像 2： 暂停 3： 重新开始放像,对应暂定命令 4： 单帧播放 5： 关键帧播放 6： 倒放 7： 设置播放速率 8： 拖拉定位绝对时间 9： 前跳  相对时间  10： 后跳  相对时间
@@ -679,6 +734,7 @@ public class VRSClient {
 
 	/**
 	 * 系统状态获取
+	 * @author ycw
 	 * @param id
 	 * @return
 	 * @throws KMException
@@ -698,6 +754,7 @@ public class VRSClient {
 
 	/**
 	 * 中间件配置
+	 * @author ycw
 	 * @param id
 	 * @param ip 中间件IP
 	 * @param port 中间件端口号
@@ -716,6 +773,7 @@ public class VRSClient {
 
 	/**
 	 * Dvd封盘配置
+	 * @author ycw
 	 * @param id
 	 * @param dvdautolock DVD是否自动封盘 0：不封 1：封盘
 	 * @throws KMException
@@ -732,6 +790,7 @@ public class VRSClient {
 
 	/**
 	 * 刻录合成通道配置
+	 * @author ycw
 	 * @param id
 	 * @param isburnmerge 是否刻录合成通道 0：不刻录 1：刻录
 	 * @throws KMException
