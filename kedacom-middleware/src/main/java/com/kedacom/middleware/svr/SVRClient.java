@@ -638,7 +638,7 @@ public class SVRClient {
         request.setMode(mode);
 
         CreateBurnResponse Response = (CreateBurnResponse) this.sendRequest(request);
-        return Response.getErrorcode();
+        return Response.getNetId();
     }
 
     /**
