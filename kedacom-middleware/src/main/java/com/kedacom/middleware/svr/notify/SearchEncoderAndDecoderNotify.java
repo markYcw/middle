@@ -33,7 +33,7 @@ public class SearchEncoderAndDecoderNotify extends SVRNotify {
 	
 	private int totaldevnum;
 	
-	private int blast;
+	public volatile static int blast;
 	
 	public int getErrorcode() {
 		return errorcode;
@@ -70,7 +70,7 @@ public class SearchEncoderAndDecoderNotify extends SVRNotify {
 	@Override
 	public void parseData(JSONObject jsonData) throws DataException {
 		super.parseNty(jsonData);
-		this.blast = jsonData.optInt("blast");
+		blast = jsonData.optInt("blast");
 
  		JSONArray array = jsonData.optJSONArray("devinfo");
 		if(array != null){
