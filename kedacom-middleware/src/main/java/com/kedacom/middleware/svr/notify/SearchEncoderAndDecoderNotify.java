@@ -70,6 +70,8 @@ public class SearchEncoderAndDecoderNotify extends SVRNotify {
 	@Override
 	public void parseData(JSONObject jsonData) throws DataException {
 		super.parseNty(jsonData);
+		this.blast = jsonData.optInt("blast");
+
  		JSONArray array = jsonData.optJSONArray("devinfo");
 		if(array != null){
 			for(int i = 0 ; i < array.length() ; i++){
