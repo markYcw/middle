@@ -91,7 +91,7 @@ public enum DeviceType {
 	/**
 	 * 软终端（科达天行）
 	 */
-	SKY(25)
+	SKY(25),
 	;
 
 	private int value; 
