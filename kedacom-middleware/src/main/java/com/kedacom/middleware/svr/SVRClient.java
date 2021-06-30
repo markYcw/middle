@@ -368,7 +368,7 @@ public class SVRClient {
         request.setUser(username);
         request.setPwd(password);
         // 当devType为1时，设定类型为2931的类型，其他的都还是svr默认的类型
-        request.setDevtype(1 == devType ? DeviceType.SVR_2931.getValue() : DeviceType.SVR.getValue());
+        request.setDevtype(1 == devType ? DeviceType.SVR_NVRV7.getValue() : DeviceType.SVR.getValue());
 
         LoginResponse response = (LoginResponse) this.sendRequest(request);
         int ssid = response.getSsid();

@@ -51,7 +51,7 @@ public enum DeviceType {
 	/**
 	 * SVR_2931
 	 */
-	SVR_2931(30),
+	SVR_NVRV7(30),
 	
 	/**
 	 * 会议终端5.0
