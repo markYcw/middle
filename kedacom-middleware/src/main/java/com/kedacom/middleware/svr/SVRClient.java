@@ -1,5 +1,6 @@
 package com.kedacom.middleware.svr;
 
+import com.kedacom.middleware.DeviceType;
 import com.kedacom.middleware.KM;
 import com.kedacom.middleware.client.IClient;
 import com.kedacom.middleware.client.TCPClient;
@@ -267,7 +268,7 @@ public class SVRClient {
      * @see #login(String)
      * @see #logout(String)
      */
-    public int login(String ip, int port, String user, String pwd)
+    public int login(String ip, int port, String user, String pwd, int devType)
             throws KMException {
 
         SVRSession session = sessionManager.getSessionByIP(ip);
@@ -278,7 +279,7 @@ public class SVRClient {
             return session.getSsid();
         }
 
-        int ssid = this.login0(ip, port, user, pwd);
+        int ssid = this.login0(ip, port, user, pwd, devType);
         if (ssid > 0) {
             // 登录成功
             session = new SVRSession();
@@ -313,13 +314,14 @@ public class SVRClient {
         int port = svr.getPort();
         String user = svr.getUsername();
         String pwd = svr.getPassword();
+        int devType = svr.getDevType();
 
         SVRSession session = sessionManager.getSessionByIP(ip);
         if (session != null) {
             // 已登录
             return session.getSsid();
         }
-        int ssid = this.login(ip, port, user, pwd);
+        int ssid = this.login(ip, port, user, pwd, devType);
         if (ssid > 0) {
             // 登录成功
             session = new SVRSession();
@@ -345,19 +347,19 @@ public class SVRClient {
      * @return
      * @throws KMException
      */
-    public int getSvrSSid(String ip, int port, String user, String pwd)
+    public int getSvrSSid(String ip, int port, String user, String pwd, int devType)
             throws KMException {
 
         log.debug("=====> 获取SVR连接索引（getSvrSSid），ip：" + ip + "，port：" + port + "，user：" + user + "，pwd：" + pwd);
 
-        int ssid = this.login0(ip, port, user, pwd);
+        int ssid = this.login0(ip, port, user, pwd, devType);
 
         log.debug("=====> 获取SVR连接索引（getSvrSSid），ip：" + ip + "，port：" + port + "，user：" + user + "，pwd：" + pwd);
 
         return ssid;
     }
 
-    private int login0(String ip, int port, String username, String password)
+    private int login0(String ip, int port, String username, String password, int devType)
             throws KMException {
 
         LoginRequest request = new LoginRequest();
@@ -365,6 +367,8 @@ public class SVRClient {
         request.setPort(port);
         request.setUser(username);
         request.setPwd(password);
+        // 当devType为1时，设定类型为2931的类型，其他的都还是svr默认的类型
+        request.setDevtype(1 == devType ? DeviceType.SVR_2931.getValue() : DeviceType.SVR.getValue());
 
         LoginResponse response = (LoginResponse) this.sendRequest(request);
         int ssid = response.getSsid();

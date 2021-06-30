@@ -37,6 +37,11 @@ public class SVR {
 	 * 密码
 	 */
 	private String password;
+
+	/*
+	类型
+	 */
+	private int devType;
 	
 	
 	public void update(SVR svr){
@@ -45,6 +50,7 @@ public class SVR {
 		this.setUsername(svr.getUsername());
 		this.setPassword(svr.getPassword());
 		this.setPort(svr.getPort());
+		this.setDevType(svr.getDevType());
 	}
 	
 	public int getSsid() {
@@ -95,4 +101,11 @@ public class SVR {
 		this.password = password;
 	}
 
+	public int getDevType() {
+		return devType;
+	}
+
+	public void setDevType(int devType) {
+		this.devType = devType;
+	}
 }
