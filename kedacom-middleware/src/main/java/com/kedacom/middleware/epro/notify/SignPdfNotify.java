@@ -16,7 +16,7 @@ public class SignPdfNotify extends EProNotify{
     public static final String NAME = "signpdf";
 
     //签名文件路径
-    private String signPdf;
+    public String signPdf;
 
     @Override
     public void parseData(JSONObject jsonData) throws DataException {

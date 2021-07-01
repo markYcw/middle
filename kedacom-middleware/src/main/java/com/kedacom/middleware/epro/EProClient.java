@@ -380,7 +380,7 @@ public class EProClient {
     public int login(String id) throws KMException {
         EPro ePro = EProCacheByID.get(id);
         if (ePro == null) {
-            throw new DataException("Rk信息不存在,ID=" + id);
+            throw new DataException("EPro信息不存在,ID=" + id);
         }
         return this.loginByEPro(ePro);
     }

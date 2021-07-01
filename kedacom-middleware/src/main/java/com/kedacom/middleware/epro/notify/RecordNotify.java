@@ -15,7 +15,7 @@ public class RecordNotify extends EProNotify{
     public static final String NAME = "record";
 
     //录像文件保存路径
-    private String recordPath;
+    public String recordPath;
 
     @Override
     public void parseData(JSONObject jsonData) throws DataException {
