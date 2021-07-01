@@ -5,6 +5,7 @@ import com.kedacom.middleware.client.IClient;
 import com.kedacom.middleware.client.TCPClient;
 import com.kedacom.middleware.common.CommonClient;
 import com.kedacom.middleware.cu.CuClient;
+import com.kedacom.middleware.epro.EProClient;
 import com.kedacom.middleware.gk.GKClient;
 import com.kedacom.middleware.mcu.McuClient;
 import com.kedacom.middleware.mt.MTClient;
@@ -92,6 +93,11 @@ public class KM {
 	 */
 	private RkClient rkClient;
 
+	/**
+	 * E10Pro接口访问
+	 */
+	private EProClient eProClient;
+
 	
 	public IClient getClient(){
 		return iclient;
@@ -158,6 +164,13 @@ public class KM {
 			rkClient = new RkClient(this);
 		}
 		return rkClient;
+	}
+
+	public EProClient getEProClient(){
+		if(eProClient == null){
+			eProClient = new EProClient(this);
+		}
+		return eProClient;
 	}
 	
 	/**
@@ -226,6 +239,10 @@ public class KM {
 
 		if(this.rkClient != null){
 			this.rkClient.stop();
+		}
+
+		if(this.eProClient != null){
+			this.eProClient.stop();
 		}
 	}
 

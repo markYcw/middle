@@ -2,6 +2,7 @@ package com.kedacom.middleware.client;
 
 import com.kedacom.middleware.DeviceType;
 import com.kedacom.middleware.cu.notify.CuNotifyFactory;
+import com.kedacom.middleware.epro.notify.EProNotifyFactory;
 import com.kedacom.middleware.exception.DataException;
 import com.kedacom.middleware.gk.notify.GKNotifyFactory;
 import com.kedacom.middleware.mcu.notify.McuNotifyFactory;
@@ -48,6 +49,7 @@ public class NotifyFactory {
 		//CommonNotifyInit.init();
 		SVRNotifyFactory.init();
 		RKNotifyFactory.init();
+		EProNotifyFactory.init();
 	}
 	static{
 		init();

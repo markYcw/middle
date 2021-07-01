@@ -97,6 +97,11 @@ public enum DeviceType {
 	 * 软终端（科达天行）
 	 */
 	SKY(25),
+
+	/**
+	 * 签名板PRO
+	 */
+	E10PRO(31),
 	;
 
 	private int value; 
