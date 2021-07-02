@@ -3,10 +3,6 @@ package com.kedacom.middleware.epro.notify;
 import com.kedacom.middleware.exception.DataException;
 import lombok.Data;
 import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * @ClassName SignPdfNotify
  * @Description E10Pro服务器签名文件通知
@@ -19,11 +15,11 @@ public class SignPdfNotify extends EProNotify{
     public static final String NAME = "signpdf";
 
     //签名文件路径
-    public static Map<String,String> signPdf = new HashMap();
+    public String signPdf;
 
     @Override
     public void parseData(JSONObject jsonData) throws DataException {
         super.parseNty(jsonData);
-        signPdf.put("signPdf",jsonData.optString("signpdf_path"));
+        this.signPdf = jsonData.optString("signpdf_path");
     }
 }

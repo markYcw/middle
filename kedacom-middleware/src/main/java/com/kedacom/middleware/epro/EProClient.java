@@ -62,8 +62,8 @@ public class EProClient {
         EProClientListener listener = new EProClientListener(this);
 
         /*
-         * TODO 如果当RkClient被废弃时，没有正常删除监听器，这有可能有未知的风险。
-         * 但由于实际应用中RkClient只有一个，所以此处暂不处理
+         * TODO 如果当EProClient被废弃时，没有正常删除监听器，这有可能有未知的风险。
+         * 但由于实际应用中EProClient只有一个，所以此处暂不处理
          */
         TCPClient tcpClient = (TCPClient) km.getClient();
         tcpClient.addListener(listener);
@@ -289,7 +289,7 @@ public class EProClient {
         if (eProConnMonitorThread == null || !eProConnMonitorThread.isWork()) {
             eProConnMonitorThread = new EProConnMonitorThread(this);
             eProConnMonitorThread.setTimeout(15000);
-            eProConnMonitorThread.setName("Rk-ConnMonitor");
+            eProConnMonitorThread.setName("EPro-ConnMonitor");
             eProConnMonitorThread.setDaemon(true);
             newThread = true;
         }

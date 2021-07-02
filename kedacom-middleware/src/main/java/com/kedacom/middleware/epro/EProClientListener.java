@@ -3,7 +3,7 @@ package com.kedacom.middleware.epro;
 import com.kedacom.middleware.client.INotify;
 import com.kedacom.middleware.client.TCPClientListenerAdapter;
 import com.kedacom.middleware.epro.domain.EPro;
-import com.kedacom.middleware.epro.notify.LostCntNotify;
+import com.kedacom.middleware.epro.notify.*;
 import org.apache.log4j.Logger;
 
 /**
@@ -46,9 +46,111 @@ public class EProClientListener extends TCPClientListenerAdapter {
         if (notify instanceof LostCntNotify) {
             // EPro掉线
             this.onEProOffline((LostCntNotify) notify);
+        }else if(notify instanceof FingerPrintNotify){
+            //指纹图片通知
+            this.onFingerPrint((FingerPrintNotify) notify);
+        }else if(notify instanceof SignPictureNotify){
+            //签名图片通知
+            this.onSingPicture((SignPictureNotify) notify);
+        }else if (notify instanceof SignPdfNotify){
+            this.onSignPdf((SignPdfNotify) notify);
+        }else if (notify instanceof RecordNotify){
+            //录像文件通知
+            this.onRecord((RecordNotify) notify);
         }
     }
 
+    /**
+     * @Description EPro录像文件通知
+     * @param:
+     * @return:
+     * @author: ycw
+     * @date:
+     */
+    private void onRecord(RecordNotify notify){
+        log.info("======>EPro录像文件通知(RecordNotify) ssid=" + notify.getSsid() + "，ssno=" + notify.getSsno());
+
+        int ssid = notify.getSsid();
+        EProSession session = client.getSessionManager().getSessionBySsid(ssid);
+        String path = notify.recordPath;
+        if (session != null) {
+            EPro ePro = session.getEPro();
+            if (ePro != null) {
+                for (EProNotifyListener l : client.getAllListeners()) {
+                    l.onSignPdf(ePro.getIp(), path);
+                }
+            }
+        }
+    }
+
+    /**
+     * @Description EPro签名文件通知
+     * @param:
+     * @return:
+     * @author: ycw
+     * @date:
+     */
+    private void onSignPdf(SignPdfNotify notify){
+        log.info("======>EPro签名文件通知(SignPdfNotify) ssid=" + notify.getSsid() + "，ssno=" + notify.getSsno());
+
+        int ssid = notify.getSsid();
+        EProSession session = client.getSessionManager().getSessionBySsid(ssid);
+        String path = notify.signPdf;
+        if (session != null) {
+            EPro ePro = session.getEPro();
+            if (ePro != null) {
+                for (EProNotifyListener l : client.getAllListeners()) {
+                    l.onSignPdf(ePro.getIp(), path);
+                }
+            }
+        }
+    }
+
+    /**
+     * @Description EPro签名图片通知
+     * @param:
+     * @return:
+     * @author: ycw
+     * @date:
+     */
+    private void onSingPicture(SignPictureNotify notify){
+        log.info("======>EPro签名图片通知(SignPictureNotify) ssid=" + notify.getSsid() + "，ssno=" + notify.getSsno());
+
+        int ssid = notify.getSsid();
+        EProSession session = client.getSessionManager().getSessionBySsid(ssid);
+        String path = notify.signPicPath;
+        if (session != null) {
+            EPro ePro = session.getEPro();
+            if (ePro != null) {
+                for (EProNotifyListener l : client.getAllListeners()) {
+                    l.onSingPicture(ePro.getIp(), path);
+                }
+            }
+        }
+    }
+
+    /**
+     * @Description EPro指纹图片通知
+     * @param:
+     * @return:
+     * @author: ycw
+     * @date:
+     */
+    private void onFingerPrint(FingerPrintNotify notify){
+        log.info("======>EPro指纹图片通知(FingerPrintNotify) ssid=" + notify.getSsid() + "，ssno=" + notify.getSsno());
+
+        int ssid = notify.getSsid();
+        EProSession session = client.getSessionManager().getSessionBySsid(ssid);
+        String path = notify.getFingerPrintPath();
+        if (session != null) {
+            EPro ePro = session.getEPro();
+            if (ePro != null) {
+                for (EProNotifyListener l : client.getAllListeners()) {
+                    l.onFingerPrint(ePro.getIp(), path);
+                }
+            }
+        }
+    }
 
     /**
      * @Description EPro掉线通知
