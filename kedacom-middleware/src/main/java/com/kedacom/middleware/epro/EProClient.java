@@ -523,13 +523,13 @@ public class EProClient {
      * @param ePro
      * @throws KMException
      */
-    public void capture(EPro ePro) throws KMException {
+    public String capture(EPro ePro) throws KMException {
         int ssid = loginByEPro(ePro);
         CaptureRequest request = new CaptureRequest();
         request.setSsid(ssid);
 
-        this.sendRequest(request);
-
+        CaptureResponse response = (CaptureResponse) this.sendRequest(request);
+        return response.getCapturePath();
     }
 
     /**

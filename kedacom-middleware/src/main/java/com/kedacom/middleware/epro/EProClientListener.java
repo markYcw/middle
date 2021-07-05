@@ -77,7 +77,7 @@ public class EProClientListener extends TCPClientListenerAdapter {
             EPro ePro = session.getEPro();
             if (ePro != null) {
                 for (EProNotifyListener l : client.getAllListeners()) {
-                    l.onSignPdf(ePro.getIp(), path);
+                    l.onRecord(ePro.getIp(), path);
                 }
             }
         }

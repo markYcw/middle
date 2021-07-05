@@ -3,6 +3,8 @@ package com.kedacom.middleware.epro.request;
 import com.kedacom.middleware.client.IResponse;
 import com.kedacom.middleware.epro.response.StopRecResponse;
 import org.json.JSONException;
+import org.json.JSONObject;
+
 /**
  * 停止录像
  *
@@ -12,7 +14,16 @@ import org.json.JSONException;
 public class StopRecRequest extends EProRequest{
     @Override
     public String toJson() throws JSONException {
-        return null;
+        //Req部分
+        JSONObject req = super.buildReq("stoprec");
+
+        //data部分
+        JSONObject data = new JSONObject();
+        data.put("req", req);
+
+        //返回
+        String ret = data.toString();
+        return ret;
     }
 
     @Override
