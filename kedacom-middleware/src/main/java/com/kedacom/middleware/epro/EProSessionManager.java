@@ -21,7 +21,7 @@ public class EProSessionManager {
     private Hashtable<Integer, EProSession> sessions = new Hashtable<Integer, EProSession>();
 
     private EProClient eProClient;
-    private boolean sessionTimeoutEnable = true;//是否支持会话超时，默认true(支持).
+    private boolean sessionTimeoutEnable = false;//是否支持会话超时，默认true(支持).
     private EProSessionTimeoutManager timeoutManager;
 
     public EProSessionManager(EProClient eProClient) {
