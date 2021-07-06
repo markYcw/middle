@@ -21,6 +21,15 @@ public class SVRNotifyFactory {
         NotifyFactory.register(DeviceType.SVR, GetBurnTaskNotify.NAME, GetBurnTaskNotify.class);
         NotifyFactory.register(DeviceType.SVR, CreateBurnNotify.NAME, CreateBurnNotify.class);
         NotifyFactory.register(DeviceType.SVR, DvdStateChangeNotify.NAME, DvdStateChangeNotify.class);
+
+        NotifyFactory.register(DeviceType.SVR_NVRV7, LostCntNotify.NAME, LostCntNotify.class);
+        NotifyFactory.register(DeviceType.SVR_NVRV7, BurnStatusNotify.NAME, BurnStatusNotify.class);
+        NotifyFactory.register(DeviceType.SVR_NVRV7, DownloadrecntyNotify.NAME, DownloadrecntyNotify.class);
+        NotifyFactory.register(DeviceType.SVR_NVRV7, SearchEncoderAndDecoderNotify.NAME, SearchEncoderAndDecoderNotify.class);
+        NotifyFactory.register(DeviceType.SVR_NVRV7, QueryRecNotify.NAME, QueryRecNotify.class);
+        NotifyFactory.register(DeviceType.SVR_NVRV7, GetBurnTaskNotify.NAME, GetBurnTaskNotify.class);
+        NotifyFactory.register(DeviceType.SVR_NVRV7, CreateBurnNotify.NAME, CreateBurnNotify.class);
+        NotifyFactory.register(DeviceType.SVR_NVRV7, DvdStateChangeNotify.NAME, DvdStateChangeNotify.class);
     }
 
 }
