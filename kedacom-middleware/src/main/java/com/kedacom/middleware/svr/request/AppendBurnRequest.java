@@ -12,12 +12,17 @@ import org.json.JSONObject;
  * @date 2021/4/21 10:01
  */
 @Data
-public class AppendBurnRequest extends SVRRequest{
+public class AppendBurnRequest extends SVRRequest {
 
     /**
-     * 追加刻录的本地文件路径名
+     * 包名称
      */
     private String filepathname;
+
+    /**
+     * 光盘里的目录名
+     */
+    private String dirname;
     /**
      * 0:文件名全路径
      * 1:文件夹全路径
@@ -31,8 +36,9 @@ public class AppendBurnRequest extends SVRRequest{
         //data部分
         JSONObject data = new JSONObject();
         data.put("req", req);
-        data.put("type",type);
+        data.put("type", type);
         data.put("filepathname", filepathname);
+        data.put("dirname", dirname);
 
         //返回
         String ret = data.toString();

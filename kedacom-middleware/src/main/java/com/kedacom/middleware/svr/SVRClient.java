@@ -554,12 +554,13 @@ public class SVRClient {
      * @throws KMException
      * @author ycw
      */
-    public int appendBurn(SVR svr, String filepathname, int type) throws KMException {
+    public int appendBurn(SVR svr, String filepathname, int type, String dirname) throws KMException {
         int ssid = loginBySVR(svr);
         AppendBurnRequest request = new AppendBurnRequest();
         request.setSsid(ssid);
         request.setType(type);
         request.setFilepathname(filepathname);
+        request.setDirname(dirname);
 
         AppendBurnResponse response = (AppendBurnResponse) this.sendRequest(request);
         return response.getErrorcode();
