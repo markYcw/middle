@@ -77,7 +77,8 @@ public class SVRClientListener extends TCPClientListenerAdapter {
 			session.setStatus(SVRSessionStatus.disconnect);
 			SVR svr = session.getSvr();
 			if(svr != null){
-				client.reStartConnect(svr.getIp());
+				//现设备属于业务自己控制链路不需要掉线以后重新连接
+				//client.reStartConnect(svr.getIp());
 				
 				for (SVRNotifyListener l : client.getAllListeners()) {
 					l.onSVROffine( svr.getIp());

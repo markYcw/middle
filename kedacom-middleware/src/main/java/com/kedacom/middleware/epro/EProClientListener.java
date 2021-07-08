@@ -171,8 +171,8 @@ public class EProClientListener extends TCPClientListenerAdapter {
 
                 log.error("======>EPro掉线通知(onEProOffLine) ssid=" + notify.getSsid() + "，sson=" + notify.getSsno() + "，ip=" + ePro.getIp() + " 开始重连！");
 
-                String id = ePro.getId();
-                client.reStartConnect(id);
+                //现设备属于业务自己控制链路不需要掉线以后重新连接
+                //client.reStartConnect(id);
 
                 for (EProNotifyListener l : client.getAllListeners()) {
                     l.onEProOffLine(ePro.getId(), ePro.getIp());

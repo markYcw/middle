@@ -61,9 +61,9 @@ public class UPUClientListener extends TCPClientListenerAdapter {
 			if(upu != null){
 				
 				log.error("======> UPU掉线通知(onUPUOffine) ssid="+notify.getSsid()+"，sson="+notify.getSsno()+"，ip="+upu.getIp()+" 开始重连！");
-				
-				String id = upu.getId();
-				client.reStartConnect(id);
+				//现设备属于业务自己控制链路不需要掉线以后重新连接
+				//String id = upu.getId();
+				//client.reStartConnect(id);
 				
 				for (UPUNotifyListener l : client.getAllListeners()) {
 					l.onUPUOffine(upu.getId(), upu.getIp());

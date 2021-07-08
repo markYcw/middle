@@ -82,7 +82,8 @@ public class MTClientListener extends TCPClientListenerAdapter {
 			session.setStatus(MTSessionStatus.disconnect);
 			MT mt = session.getMt();
 			if(mt != null){
-				client.reStartConnect(mt.getId());
+				//现设备属于业务自己控制链路不需要掉线以后重新连接
+				//client.reStartConnect(mt.getId());
 				
 				for (MTNotifyListener l : client.getAllListeners()) {
 					l.onMtOffine(mt.getId(), mt.getIp());

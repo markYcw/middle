@@ -67,9 +67,9 @@ public class VRSClientListener extends TCPClientListenerAdapter {
 			if(vrs != null){
 				
 				log.error("======>VRS掉线通知(onVRSOffine) ssid="+notify.getSsid()+"，sson="+notify.getSsno()+"，ip="+vrs.getIp()+" 开始重连！");
-				
-				String id = vrs.getId();
-				client.reStartConnect(id);
+				//现设备属于业务自己控制链路不需要掉线以后重新连接
+				//String id = vrs.getId();
+				//client.reStartConnect(id);
 				
 				for (VRSNotifyListener l : client.getAllListeners()) {
 					l.onVRSOffine(vrs.getId(), vrs.getIp());
