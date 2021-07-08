@@ -7,10 +7,7 @@ import com.kedacom.middleware.client.TCPClient;
 import com.kedacom.middleware.exception.DataException;
 import com.kedacom.middleware.exception.KMException;
 import com.kedacom.middleware.exception.RemoteException;
-import com.kedacom.middleware.svr.domain.Devinfo;
-import com.kedacom.middleware.svr.domain.SVR;
-import com.kedacom.middleware.svr.domain.SvrEncChnList;
-import com.kedacom.middleware.svr.domain.SvrState;
+import com.kedacom.middleware.svr.domain.*;
 import com.kedacom.middleware.svr.request.*;
 import com.kedacom.middleware.svr.response.*;
 import org.apache.log4j.Logger;
@@ -1185,13 +1182,13 @@ public class SVRClient {
      * @date 2019-8-8 下午1:59:17
      * @version V1.0
      */
-    public int getRemotePointVideoSourceRequest(SVR svr) throws KMException {
+    public RemotePointVideoSourceInfo getRemotePointVideoSourceRequest(SVR svr) throws KMException {
         int ssid = loginBySVR(svr);
         GetRemotePointVideoSourceRequest request = new GetRemotePointVideoSourceRequest();
         request.setSsid(ssid);
 
         GetRemotePointVideoSourceRespose respose = (GetRemotePointVideoSourceRespose) this.sendRequest(request);
-        return respose.getErrorcode();
+        return respose.getRemotePointVideoSourceInfo();
     }
 
     /**
