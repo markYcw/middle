@@ -81,7 +81,7 @@ public class VRSClient {
 		return this.listeners.remove(listener);
 	}
 	
-	protected List<VRSNotifyListener> getAllListeners(){
+	public List<VRSNotifyListener> getAllListeners(){
 		List<VRSNotifyListener> list = new ArrayList<VRSNotifyListener>(this.listeners.size());
 		list.addAll(listeners);
 		return list;

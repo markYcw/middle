@@ -81,7 +81,7 @@ public class SVRClient {
         return this.listeners.remove(listener);
     }
 
-    protected List<SVRNotifyListener> getAllListeners() {
+    public List<SVRNotifyListener> getAllListeners() {
         List<SVRNotifyListener> list = new ArrayList<SVRNotifyListener>(
                 this.listeners.size());
         list.addAll(listeners);

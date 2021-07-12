@@ -80,7 +80,7 @@ public class MTClient {
 		return this.listeners.remove(listener);
 	}
 	
-	protected List<MTNotifyListener> getAllListeners(){
+	public List<MTNotifyListener> getAllListeners(){
 		List<MTNotifyListener> list = new ArrayList<MTNotifyListener>(this.listeners.size());
 		list.addAll(listeners);
 		return list;

@@ -90,7 +90,7 @@ public class UPUClient {
 		return this.listeners.remove(listener);
 	}
 	
-	protected List<UPUNotifyListener> getAllListeners(){
+	public List<UPUNotifyListener> getAllListeners(){
 		List<UPUNotifyListener> list = new ArrayList<UPUNotifyListener>(this.listeners.size());
 		list.addAll(listeners);
 		return list;
