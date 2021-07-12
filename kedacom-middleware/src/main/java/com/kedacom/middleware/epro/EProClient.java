@@ -98,7 +98,7 @@ public class EProClient {
      * @author:ycw
      * @date:
      */
-    protected List<EProNotifyListener> getAllListeners() {
+    public List<EProNotifyListener> getAllListeners() {
         List<EProNotifyListener> list = new ArrayList<EProNotifyListener>(this.listeners.size());
         list.addAll(listeners);
         return list;
