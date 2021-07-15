@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * “录播服务器”接口访问。
  * @author LinChaoYu
- * alter by ycw 2021/5/10
+ * @alterby ycw 2021/7/15 17:17
  */
 public class VRSClient {
 	private static final Logger log = Logger.getLogger(VRSClient.class);
