@@ -1,7 +1,9 @@
 package com.kedacom.middleware.svr;
 
 import com.kedacom.middleware.client.INotify;
+import com.kedacom.middleware.client.TCPClient;
 import com.kedacom.middleware.client.TCPClientListenerAdapter;
+import com.kedacom.middleware.epro.EProSession;
 import com.kedacom.middleware.svr.domain.Devinfo;
 import com.kedacom.middleware.svr.domain.SVR;
 import com.kedacom.middleware.svr.notify.*;
@@ -56,6 +58,26 @@ public class SVRClientListener extends TCPClientListenerAdapter {
 			this.searchEncoderAndDecoder((SearchEncoderAndDecoderNotify) notify);
 		}else if(notify instanceof QueryRecNotify) {
 			this.queryRec((QueryRecNotify) notify);
+		}
+	}
+
+	@Override
+	public void onClosed(TCPClient client) {
+		this.onAllOffine();
+	}
+	@Override
+	public void onInterrupt(TCPClient client) {
+		this.onAllOffine();
+	}
+
+	/**
+	 * 全部SVR下线
+	 */
+	private void onAllOffine(){
+		List<SVRSession> sessions = client.getSessionManager().getAllSessions();
+		for(SVRSession session : sessions){
+			int ssid = session.getSsid();
+			client.getSessionManager().removeSession(ssid);
 		}
 	}
 

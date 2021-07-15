@@ -1,10 +1,17 @@
 package com.kedacom.middleware.epro;
 
 import com.kedacom.middleware.client.INotify;
+import com.kedacom.middleware.client.TCPClient;
 import com.kedacom.middleware.client.TCPClientListenerAdapter;
 import com.kedacom.middleware.epro.domain.EPro;
 import com.kedacom.middleware.epro.notify.*;
+import com.kedacom.middleware.mcu.McuNotifyListener;
+import com.kedacom.middleware.mcu.McuSession;
+import com.kedacom.middleware.mcu.McuSessionStatus;
+import com.kedacom.middleware.mcu.domain.Mcu;
 import org.apache.log4j.Logger;
+
+import java.util.List;
 
 /**
  * @ClassName EProClientListener
@@ -59,6 +66,29 @@ public class EProClientListener extends TCPClientListenerAdapter {
             this.onRecord((RecordNotify) notify);
         }
     }
+
+    @Override
+    public void onClosed(TCPClient client) {
+        this.onAllOffine();
+    }
+    @Override
+    public void onInterrupt(TCPClient client) {
+        this.onAllOffine();
+    }
+
+    /**
+     * 全部E10PRO下线
+     */
+    private void onAllOffine(){
+        List<EProSession> sessions = client.getSessionManager().getAllSessions();
+        for(EProSession session : sessions){
+            int ssid = session.getSsid();
+            client.getSessionManager().removeSession(ssid);
+        }
+    }
+
+
+
 
     /**
      * @Description EPro录像文件通知

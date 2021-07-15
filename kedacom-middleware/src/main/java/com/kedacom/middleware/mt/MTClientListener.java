@@ -1,10 +1,14 @@
 package com.kedacom.middleware.mt;
 
 import com.kedacom.middleware.client.INotify;
+import com.kedacom.middleware.client.TCPClient;
 import com.kedacom.middleware.client.TCPClientListenerAdapter;
+import com.kedacom.middleware.epro.EProSession;
 import com.kedacom.middleware.mt.domain.MT;
 import com.kedacom.middleware.mt.notify.*;
 import org.apache.log4j.Logger;
+
+import java.util.List;
 
 /**
  * 会话终端事件监听器
@@ -69,11 +73,30 @@ public class MTClientListener extends TCPClientListenerAdapter {
 
 	}
 
+
+	@Override
+	public void onClosed(TCPClient client) {
+		this.onAllOffine();
+	}
+	@Override
+	public void onInterrupt(TCPClient client) {
+		this.onAllOffine();
+	}
+
+	/**
+	 * 全部MT下线
+	 */
+	private void onAllOffine(){
+		List<MTSession> sessions = client.getSessionManager().getAllSessions();
+		for(MTSession session : sessions){
+			int ssid = session.getSsid();
+			client.getSessionManager().removeSession(ssid);
+		}
+	}
+
 	/**
 	 * 终端掉线通知
-	 * 
-	 * @param ssid
-	 * @param mcu
+	 * @param notify
 	 */
 	private void onMtOffine(LostCntNotify notify) {
 		int ssid = notify.getSsid();
@@ -93,9 +116,9 @@ public class MTClientListener extends TCPClientListenerAdapter {
 	}
 	/**
 	 * 终端抢占通知
-	 * 
-	 * @param ssid
-	 * @param status
+	 *
+	 * @param mcuId
+	 * @param notify
 	 */
 	private void onMTRobbed(String mcuId, MTRobbedNotify notify) {
 		int ssid = notify.getSsid();

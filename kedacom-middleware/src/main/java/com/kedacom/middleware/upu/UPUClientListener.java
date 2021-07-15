@@ -1,10 +1,14 @@
 package com.kedacom.middleware.upu;
 
 import com.kedacom.middleware.client.INotify;
+import com.kedacom.middleware.client.TCPClient;
 import com.kedacom.middleware.client.TCPClientListenerAdapter;
+import com.kedacom.middleware.epro.EProSession;
 import com.kedacom.middleware.upu.domain.UPU;
 import com.kedacom.middleware.upu.notify.LostCntNotify;
 import org.apache.log4j.Logger;
+
+import java.util.List;
 
 /**
  * 会话 UPU 事件监听器
@@ -42,6 +46,26 @@ public class UPUClientListener extends TCPClientListenerAdapter {
 		if (notify instanceof LostCntNotify) {
 			//UPU掉线
 			this.onUPUOffine((LostCntNotify) notify);
+		}
+	}
+
+	@Override
+	public void onClosed(TCPClient client) {
+		this.onAllOffine();
+	}
+	@Override
+	public void onInterrupt(TCPClient client) {
+		this.onAllOffine();
+	}
+
+	/**
+	 * 全部UPU下线
+	 */
+	private void onAllOffine(){
+		List<UPUSession> sessions = client.getSessionManager().getAllSessions();
+		for(UPUSession session : sessions){
+			int ssid = session.getSsid();
+			client.getSessionManager().removeSession(ssid);
 		}
 	}
 	

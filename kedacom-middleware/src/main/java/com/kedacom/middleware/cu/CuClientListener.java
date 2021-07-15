@@ -66,7 +66,7 @@ public class CuClientListener extends TCPClientListenerAdapter {
 	
 	/**
 	 * 指定监控平台掉线通知
-	 * @param ssid
+	 * @param notify
 	 */
 	private void onCuOffine(LostCnntNotify notify) {
 		log.info("======>监控平台掉线通知( onCuOffine) ssid="+notify.getSsid()+" ;sson="+notify.getSsno());

@@ -1,11 +1,15 @@
 package com.kedacom.middleware.vrs;
 
 import com.kedacom.middleware.client.INotify;
+import com.kedacom.middleware.client.TCPClient;
 import com.kedacom.middleware.client.TCPClientListenerAdapter;
+import com.kedacom.middleware.epro.EProSession;
 import com.kedacom.middleware.vrs.domain.VRS;
 import com.kedacom.middleware.vrs.notify.LostCntNotify;
 import com.kedacom.middleware.vrs.notify.PlayStatusNotify;
 import org.apache.log4j.Logger;
+
+import java.util.List;
 
 /**
  * 会话 录播服务器 事件监听器
@@ -49,6 +53,26 @@ public class VRSClientListener extends TCPClientListenerAdapter {
 			this.onPlayStatus((PlayStatusNotify) notify);
 		}
 
+	}
+
+	@Override
+	public void onClosed(TCPClient client) {
+		this.onAllOffine();
+	}
+	@Override
+	public void onInterrupt(TCPClient client) {
+		this.onAllOffine();
+	}
+
+	/**
+	 * 全部VRS下线
+	 */
+	private void onAllOffine(){
+		List<VRSSession> sessions = client.getSessionManager().getAllSessions();
+		for(VRSSession session : sessions){
+			int ssid = session.getSsid();
+			client.getSessionManager().removeSession(ssid);
+		}
 	}
 	
 	/**

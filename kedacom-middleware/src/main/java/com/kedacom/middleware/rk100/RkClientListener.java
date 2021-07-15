@@ -1,10 +1,14 @@
 package com.kedacom.middleware.rk100;
 
 import com.kedacom.middleware.client.INotify;
+import com.kedacom.middleware.client.TCPClient;
 import com.kedacom.middleware.client.TCPClientListenerAdapter;
+import com.kedacom.middleware.epro.EProSession;
 import com.kedacom.middleware.rk100.domain.RK;
 import com.kedacom.middleware.rk100.notify.LostCntNotify;
 import org.apache.log4j.Logger;
+
+import java.util.List;
 
 /**
  * @ClassName RkClientListener
@@ -46,6 +50,26 @@ public class RkClientListener extends TCPClientListenerAdapter {
         if (notify instanceof LostCntNotify) {
             // 终端掉线
             this.onRkOffline((LostCntNotify) notify);
+        }
+    }
+
+    @Override
+    public void onClosed(TCPClient client) {
+        this.onAllOffine();
+    }
+    @Override
+    public void onInterrupt(TCPClient client) {
+        this.onAllOffine();
+    }
+
+    /**
+     * 全部RK100下线
+     */
+    private void onAllOffine(){
+        List<RkSession> sessions = client.getSessionManager().getAllSessions();
+        for(RkSession session : sessions){
+            int ssid = session.getSsid();
+            client.getSessionManager().removeSession(ssid);
         }
     }
 

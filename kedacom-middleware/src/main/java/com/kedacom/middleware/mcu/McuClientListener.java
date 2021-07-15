@@ -1,7 +1,13 @@
 package com.kedacom.middleware.mcu;
 
 import com.kedacom.middleware.client.INotify;
+import com.kedacom.middleware.client.TCPClient;
 import com.kedacom.middleware.client.TCPClientListenerAdapter;
+import com.kedacom.middleware.cu.CuNotifyListener;
+import com.kedacom.middleware.cu.CuSession;
+import com.kedacom.middleware.cu.CuSessionStatus;
+import com.kedacom.middleware.cu.domain.Cu;
+import com.kedacom.middleware.cu.notify.LostCnntNotify;
 import com.kedacom.middleware.mcu.domain.ConfStatus;
 import com.kedacom.middleware.mcu.domain.MTStatus;
 import com.kedacom.middleware.mcu.domain.Mcu;
@@ -15,6 +21,7 @@ import java.util.List;
  * 会话平台事件监听器
  * 
  * @author TaoPeng
+ * @alter by ycw 2021/7/15 16:38
  * 
  */
 public class McuClientListener extends TCPClientListenerAdapter {
@@ -69,11 +76,51 @@ public class McuClientListener extends TCPClientListenerAdapter {
 
 	}
 
+	@Override
+	public void onClosed(TCPClient client) {
+		this.onAllOffine();
+	}
+	@Override
+	public void onInterrupt(TCPClient client) {
+		this.onAllOffine();
+	}
+
+	/**
+	 * 全部视讯平台下线
+	 */
+	private void onAllOffine(){
+		List<McuSession> sessions = client.getSessionManager().getAllSessions();
+		for(McuSession session : sessions){
+			this.onMCuOffline(session.getSsid());
+		}
+	}
+
+	private void onMCuOffline(int ssid){
+		McuSession session = client.getSessionManager().getSessionBySsid(ssid);
+		if (session != null) {
+			session.setStatus(McuSessionStatus.disconnect);
+			Mcu cu = session.getMcu();
+			if (cu != null) {
+				String id = cu.getId();
+				String ip = cu.getIp();
+				client.reStartConnect(id);
+
+				for (McuNotifyListener l : client.getAllListeners()) {
+					try{
+						l.onMcuOffine(id,ip);
+					}catch(Exception e){
+						log.warn(e.getMessage(), e);
+					}
+				}
+			}
+		}
+	}
+
 	/**
 	 * 平台掉线通知
 	 * 
-	 * @param ssid
-	 * @param mcu
+	 * @param notify
+	 * @param notify
 	 */
 	private void onMcuOffine(LostCntNotify notify) {
 		log.error("======>平台掉线通知(onMcuOffine) ssid="+notify.getSsid()+"，sson="+notify.getSsno());
@@ -100,8 +147,8 @@ public class McuClientListener extends TCPClientListenerAdapter {
 	/**
 	 * 终端状态通知
 	 * 
-	 * @param ssid
-	 * @param status
+	 * @param mcuId
+	 * @param notify
 	 */
 	private void onMTStatus(String mcuId, MTStatusNotify notify) {
 		MTStatus status = notify.getMtStatus();
@@ -113,8 +160,8 @@ public class McuClientListener extends TCPClientListenerAdapter {
 	/**
 	 * 会议基本状态通知
 	 * 
-	 * @param ssid
-	 * @param status
+	 * @param mcuId
+	 * @param notify
 	 */
 	private void onConfStatus(String mcuId, ConfStatusNotify notify) {
 		ConfStatus status = notify.getConfStatus();
@@ -126,8 +173,8 @@ public class McuClientListener extends TCPClientListenerAdapter {
 	/**
 	 * 录像机状态通知
 	 * 
-	 * @param ssid
-	 * @param status
+	 * @param mcuId
+	 * @param notify
 	 */
 	private void onVcrStatus(String mcuId, VcrStatusNotify notify) {
 		VcrStatus status = notify.getVcrStatus();
