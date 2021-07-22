@@ -1,9 +1,13 @@
 package com.kedacom.middleware.cu;
 
+import com.kedacom.middleware.exception.KMException;
+import keda.common.exception.MountFileNotFoundException;
 import org.apache.log4j.Logger;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.MissingResourceException;
 import java.util.Properties;
 
 /**
@@ -21,10 +25,14 @@ public class CuErrorCode {
 	}
 	
 	private static void init(){
-		
-		InputStream is = CuErrorCode.class.getResourceAsStream("CuSdkErrCode.properties");
-		
-		
+
+
+		InputStream is = CuErrorCode.class.getClassLoader().getResourceAsStream("CuSdkErrCode.properties");
+		if(is==null){
+			throw new MissingResourceException("CuSdkErrCode.properties，not found",CuErrorCode.class.getName(),"CuErrorCode");
+		}
+
+
 		if(properties == null){
 			properties = new Properties();
 		}

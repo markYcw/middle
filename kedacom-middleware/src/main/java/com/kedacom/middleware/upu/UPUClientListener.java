@@ -1,16 +1,20 @@
 package com.kedacom.middleware.upu;
 
 import com.kedacom.middleware.client.INotify;
+import com.kedacom.middleware.client.TCPClient;
 import com.kedacom.middleware.client.TCPClientListenerAdapter;
+import com.kedacom.middleware.epro.EProSession;
 import com.kedacom.middleware.upu.domain.UPU;
 import com.kedacom.middleware.upu.notify.LostCntNotify;
 import org.apache.log4j.Logger;
+
+import java.util.List;
 
 /**
  * 会话 UPU 事件监听器
  * 
  * @author LinChaoYu
- * 
+ * @alterby ycw 2021/7/15 17:17
  */
 public class UPUClientListener extends TCPClientListenerAdapter {
 	private static final Logger log = Logger.getLogger(UPUClientListener.class);
@@ -44,6 +48,26 @@ public class UPUClientListener extends TCPClientListenerAdapter {
 			this.onUPUOffine((LostCntNotify) notify);
 		}
 	}
+
+	@Override
+	public void onClosed(TCPClient client) {
+		this.onAllOffine();
+	}
+	@Override
+	public void onInterrupt(TCPClient client) {
+		this.onAllOffine();
+	}
+
+	/**
+	 * 全部UPU下线
+	 */
+	private void onAllOffine(){
+		List<UPUSession> sessions = client.getSessionManager().getAllSessions();
+		for(UPUSession session : sessions){
+			int ssid = session.getSsid();
+			client.getSessionManager().removeSession(ssid);
+		}
+	}
 	
 	/**
 	 * UPU掉线通知
@@ -61,9 +85,9 @@ public class UPUClientListener extends TCPClientListenerAdapter {
 			if(upu != null){
 				
 				log.error("======> UPU掉线通知(onUPUOffine) ssid="+notify.getSsid()+"，sson="+notify.getSsno()+"，ip="+upu.getIp()+" 开始重连！");
-				
-				String id = upu.getId();
-				client.reStartConnect(id);
+				//现设备属于业务自己控制链路不需要掉线以后重新连接
+				//String id = upu.getId();
+				//client.reStartConnect(id);
 				
 				for (UPUNotifyListener l : client.getAllListeners()) {
 					l.onUPUOffine(upu.getId(), upu.getIp());

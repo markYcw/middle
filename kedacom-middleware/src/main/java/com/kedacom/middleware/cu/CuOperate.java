@@ -480,8 +480,7 @@ public class CuOperate {
 
 	/**
 	 * 停止前端录像
-	 * 
-	 * @param domain
+	 *
 	 *            域id
 	 * @param puid
 	 *            设备号
@@ -540,14 +539,15 @@ public class CuOperate {
      * @return: boolean
      * @author: fanshaocong
      * @Date: 2017年12月26日 上午10:36:54
+	 * @alter by ycw 2021年06月29日 上午10:36:54
      */
-    public boolean getTvWall(int cuId) throws KMException {
+    public int getTvWall(int cuId) throws KMException {
 
         GetTvWallRequest request = new GetTvWallRequest();
 
-        this.sendRequest(cuId, request);
+		GetTvWallResponse response = (GetTvWallResponse) this.sendRequest(cuId, request);
 
-        return true;
+		return response.getNum();
     }
 
     /**
@@ -710,7 +710,7 @@ public class CuOperate {
     }
     /**
    	 * 	根据国标ID获取2.0 PUID
-   	 * @param domain
+   	 * @param cuId
    	 * @return
    	 * @throws KMException
    	 */
@@ -724,7 +724,7 @@ public class CuOperate {
     
     /**
 	 * 获取当前监控平台磁阵信息。
-	 * @param cuId
+	 * @param ssid
 	 * @return
 	 * @throws ConnectException
 	 */

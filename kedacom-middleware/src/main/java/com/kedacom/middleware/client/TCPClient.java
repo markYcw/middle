@@ -84,7 +84,7 @@ public class TCPClient implements IClient {
 
 	/**
 	 * 创建线程池，修改目前notify里面new thread 方法，以免在大量设备的监控平台下出现OOM
-	 * @see onNotify
+	 * @seeonNotify
 	 */
 	ExecutorService cachedThreadPool = Executors.newCachedThreadPool();
 
@@ -431,7 +431,7 @@ public class TCPClient implements IClient {
 	/**
 	 * 收到通知
 	 * @param ssno
-	 * @param notify
+	 * @param jsonData
 	 */
 	protected void onNotify(int ssno, JSONObject jsonData){
 

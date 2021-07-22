@@ -127,7 +127,7 @@ public class CuDemo {
                         }
 
                         try {
-                            boolean tvWall = client.getCuOperate().getTvWall(cuId);
+                            client.getCuOperate().getTvWall(cuId);
                             try {
                                 //睡眠0.2s
                                 Thread.currentThread().sleep(200);

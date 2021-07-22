@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.MissingResourceException;
 import java.util.Properties;
 
 /**
@@ -23,8 +24,10 @@ public class MTErrorCode {
 	
 	private static void init(){
 		
-		InputStream is = MTErrorCode.class.getResourceAsStream("MTSdkErrCode.properties");
-		
+		InputStream is = MTErrorCode.class.getClassLoader().getResourceAsStream("MTSdkErrCode.properties");
+		if(is==null){
+			throw new MissingResourceException("MTSdkErrCode.properties，not found", MTErrorCode.class.getName(),"MTErrorCode");
+		}
 		
 		if(properties == null){
 			properties = new Properties();

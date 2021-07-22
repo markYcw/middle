@@ -44,7 +44,7 @@ public class MT {
 	private String password;
 	
 	/**
-	 * 终端类型：0-4.7、1-5.0
+	 * 终端类型：0-4.7、11-5.0
 	 */
 	private int type;
 	

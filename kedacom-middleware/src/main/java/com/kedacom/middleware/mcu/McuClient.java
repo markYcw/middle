@@ -98,7 +98,7 @@ public class McuClient {
 		return this.listeners.remove(listener);
 	}
 	
-	protected List<McuNotifyListener> getAllListeners(){
+	public List<McuNotifyListener> getAllListeners(){
 		List<McuNotifyListener> list = new ArrayList<McuNotifyListener>(this.listeners.size());
 		list.addAll(listeners);
 		return list;

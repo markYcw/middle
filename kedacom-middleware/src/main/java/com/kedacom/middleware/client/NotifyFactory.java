@@ -2,10 +2,12 @@ package com.kedacom.middleware.client;
 
 import com.kedacom.middleware.DeviceType;
 import com.kedacom.middleware.cu.notify.CuNotifyFactory;
+import com.kedacom.middleware.epro.notify.EProNotifyFactory;
 import com.kedacom.middleware.exception.DataException;
 import com.kedacom.middleware.gk.notify.GKNotifyFactory;
 import com.kedacom.middleware.mcu.notify.McuNotifyFactory;
 import com.kedacom.middleware.mt.notify.MTNotifyFactory;
+import com.kedacom.middleware.rk100.notify.RKNotifyFactory;
 import com.kedacom.middleware.svr.notify.SVRNotifyFactory;
 import com.kedacom.middleware.vrs.notify.VRSNotifyFactory;
 import org.json.JSONObject;
@@ -46,6 +48,8 @@ public class NotifyFactory {
 //		MTNotifyInit.init();
 		//CommonNotifyInit.init();
 		SVRNotifyFactory.init();
+		RKNotifyFactory.init();
+		EProNotifyFactory.init();
 	}
 	static{
 		init();
@@ -68,9 +72,9 @@ public class NotifyFactory {
 		String name = nty.optString("name");
 //		int ssid = nty.optInt("ssid");
 		int deviceType = nty.optInt("devtype");
-		if(name.contains("burn")){
-			deviceType = 2;//请求状态作终端临时处理
-		}
+//		if(name.contains("burn")){
+//			deviceType = 2;//请求状态作终端临时处理
+//		}
 		DeviceType dt = DeviceType.parse(deviceType);
 		if(dt == null){
 			throw new DataException("设备类型未知：" + deviceType);

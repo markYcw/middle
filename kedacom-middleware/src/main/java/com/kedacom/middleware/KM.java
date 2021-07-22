@@ -5,9 +5,11 @@ import com.kedacom.middleware.client.IClient;
 import com.kedacom.middleware.client.TCPClient;
 import com.kedacom.middleware.common.CommonClient;
 import com.kedacom.middleware.cu.CuClient;
+import com.kedacom.middleware.epro.EProClient;
 import com.kedacom.middleware.gk.GKClient;
 import com.kedacom.middleware.mcu.McuClient;
 import com.kedacom.middleware.mt.MTClient;
+import com.kedacom.middleware.rk100.RkClient;
 import com.kedacom.middleware.svr.SVRClient;
 import com.kedacom.middleware.upu.UPUClient;
 import com.kedacom.middleware.vrs.VRSClient;
@@ -86,6 +88,16 @@ public class KM {
 	 */
 	private UPUClient upuClient;
 
+	/**
+	 * RK100接口访问
+	 */
+	private RkClient rkClient;
+
+	/**
+	 * E10Pro接口访问
+	 */
+	private EProClient eProClient;
+
 	
 	public IClient getClient(){
 		return iclient;
@@ -145,6 +157,20 @@ public class KM {
 			upuClient = new UPUClient(this);
 		}
 		return upuClient;
+	}
+
+	public RkClient getRkClient(){
+		if(rkClient == null){
+			rkClient = new RkClient(this);
+		}
+		return rkClient;
+	}
+
+	public EProClient getEProClient(){
+		if(eProClient == null){
+			eProClient = new EProClient(this);
+		}
+		return eProClient;
 	}
 	
 	/**
@@ -209,6 +235,14 @@ public class KM {
 		
 		if(this.upuClient != null){
 			this.upuClient.stop();
+		}
+
+		if(this.rkClient != null){
+			this.rkClient.stop();
+		}
+
+		if(this.eProClient != null){
+			this.eProClient.stop();
 		}
 	}
 

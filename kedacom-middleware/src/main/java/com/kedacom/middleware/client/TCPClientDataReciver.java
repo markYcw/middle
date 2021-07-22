@@ -38,16 +38,16 @@ public class TCPClientDataReciver {
 					log.debug("socket is closed");
 					continue;
 				}
-				
+
 				log.debug("======> TCPPackageUtil readPack socket InputStream");
 				
 				String data = TCPPackageUtil.readPack(socket.getInputStream());//此操作是阻塞的。
 				
-				log.debug("======> TCPPackageUtil readPack socket InputStream data="+data);
+//				log.debug("收到 ======> TCPPackageUtil readPack socket InputStream data ="+data);
 				try{
 					this.onData(data);
 				}catch(JSONException e){
-					throw new ProtocolException("TCPPackageUtil.readPack:"+e.getMessage(), e);
+					throw new ProtocolException("TCPPackageUtil.readPack for json error: " + e.getMessage(), e);
 				}
 			}catch(ProtocolException e){
 				log.warn("TCPPackageUtil.readPack:"+e.getMessage(), e);
@@ -72,32 +72,34 @@ public class TCPClientDataReciver {
 		thread = null;
 		log.debug("thread exit");
 	}
-	
+
 	//收到数据
 	private void onData(String data) throws JSONException {
 
-		String t = data;
-		if(t != null && t.length() > 1000){
-			t = t.substring(0, 1000);
-		}
+//		String t = data;
+//		if (t != null && t.length() > 1000) {
+//			t = t.substring(0, 1000);
+//		}
 //		log.debug(TCPClient.concat("收到 <== ", t)); //只打印前1000个字符。
-		log.debug(TCPClient.concat("收到 <== ", data));//打印全部字符
-		
+//		log.debug(TCPClient.concat("收到 <== ", data));//打印全部字符
+
 		JSONObject json = new JSONObject(data);
-		
-		if(isResponse(json)){
+
+		if (isResponse(json)) {
+			log.debug(TCPClient.concat("收到请求返回消息 <== ", data));
 			//响应
 			JSONObject resp = json.getJSONObject("resp");
 			int ssno = resp.optInt("ssno");
 			//int ssid = resp.optInt("ssid");
 			tcpClient.onResponse(ssno, json);
-		}else if(isNotify(json)){
+		} else if (isNotify(json)) {
+			log.debug(TCPClient.concat("收到到通知消息 <== ", data));
 			//通知
 			JSONObject nty = json.getJSONObject("nty");
 			int ssno = nty.optInt("ssno");
 			//int ssid = nty.optInt("ssid");
 			tcpClient.onNotify(ssno, json);
-		}else{
+		} else {
 			log.warn("未知的数据类型");
 		}
 	}

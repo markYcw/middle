@@ -1,13 +1,12 @@
 package com.kedacom.middleware.svr;
 
 import com.kedacom.middleware.client.INotify;
+import com.kedacom.middleware.client.TCPClient;
 import com.kedacom.middleware.client.TCPClientListenerAdapter;
+import com.kedacom.middleware.epro.EProSession;
 import com.kedacom.middleware.svr.domain.Devinfo;
 import com.kedacom.middleware.svr.domain.SVR;
-import com.kedacom.middleware.svr.notify.BurnStatusNotify;
-import com.kedacom.middleware.svr.notify.DownloadrecntyNotify;
-import com.kedacom.middleware.svr.notify.LostCntNotify;
-import com.kedacom.middleware.svr.notify.SearchEncoderAndDecoderNotify;
+import com.kedacom.middleware.svr.notify.*;
 import org.apache.log4j.Logger;
 
 import java.util.List;
@@ -17,7 +16,7 @@ import java.util.List;
  * 会话终端事件监听器
  * 
  * @author TaoPeng
- * 
+ * @alterby ycw 2021/7/15 17:17
  */
 public class SVRClientListener extends TCPClientListenerAdapter {
 
@@ -57,15 +56,41 @@ public class SVRClientListener extends TCPClientListenerAdapter {
 			this.onDownloadrec((DownloadrecntyNotify) notify);
 		}else if(notify instanceof SearchEncoderAndDecoderNotify){
 			this.searchEncoderAndDecoder((SearchEncoderAndDecoderNotify) notify);
+		}else if(notify instanceof QueryRecNotify) {
+			this.queryRec((QueryRecNotify) notify);
 		}
 	}
-	
+
+	@Override
+	public void onClosed(TCPClient client) {
+		this.onAllOffine();
+	}
+	@Override
+	public void onInterrupt(TCPClient client) {
+		this.onAllOffine();
+	}
+
+	/**
+	 * 全部SVR下线
+	 */
+	private void onAllOffine(){
+		List<SVRSession> sessions = client.getSessionManager().getAllSessions();
+		for(SVRSession session : sessions){
+			int ssid = session.getSsid();
+			client.getSessionManager().removeSession(ssid);
+		}
+	}
+
+	private void queryRec(QueryRecNotify notify) {
+		log.info("---------查询SVR录像----------");
+	}
+
 
 	/**
 	 * 终端掉线通知
 	 * 
-	 * @param ssid
-	 * @param mcu
+	 * @param
+	 * @param notify
 	 */
 	private void onSVROffine(LostCntNotify notify) {
 		int ssid = notify.getSsid();
@@ -74,7 +99,8 @@ public class SVRClientListener extends TCPClientListenerAdapter {
 			session.setStatus(SVRSessionStatus.disconnect);
 			SVR svr = session.getSvr();
 			if(svr != null){
-				client.reStartConnect(svr.getIp());
+				//现设备属于业务自己控制链路不需要掉线以后重新连接
+				//client.reStartConnect(svr.getIp());
 				
 				for (SVRNotifyListener l : client.getAllListeners()) {
 					l.onSVROffine( svr.getIp());

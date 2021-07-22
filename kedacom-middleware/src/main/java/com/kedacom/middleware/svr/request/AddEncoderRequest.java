@@ -12,68 +12,65 @@ import org.json.JSONObject;
  * 类描述：添加编码器
  * 创建人：lzs
  * 创建时间：2019-7-19 下午5:07:42
- * @version
- *
  */
 public class AddEncoderRequest extends SVRRequest {
 
 
-	
-	private int chnid; //解码通道id
-	
-	private Devinfo devinfo;
-	
-	@Override
-	public String toJson() throws JSONException {
-		//Req部分
-		JSONObject req = super.buildReq("addencchn");
-		
-		//设备信息 Data部分
-		JSONObject dev = new JSONObject();
-		dev.put("devtype", devinfo.getDvetype());
-		dev.put("ipcprotetype",devinfo.getIpcprotetype() );	
-		dev.put("manuid", devinfo.getManuid());	
-		dev.put("devipaddr",devinfo.getDevipaddr());	
-		dev.put("streamtransmode", devinfo.getStreamtransmode());	
-		dev.put("szguid","");	
-		dev.put("szname", "");	
-		dev.put("sztypename", "");	
-		dev.put("szdevuuid", "");	
-		dev.put("szdevxaddr", "");	
-		dev.put("szdevusername","");	
-		dev.put("szdevuserpwd","" );	
-		dev.put("szdevrtspurl", "");	
-		dev.put("decaddtype", devinfo.getDecaddtype());	
-		
-		JSONObject data = new JSONObject();
-		data.put("req", req);
-		data.put("chnid", chnid);
-		data.put("devinfo", dev);
-		
-		//返回
-		String ret = data.toString();
-		return ret;
-	}
+    private int chnid; //解码通道id
 
-	@Override
-	public IResponse getResponse() {
-		return new AddEncoderRespose();
-	}
+    private Devinfo devinfo;
 
-	public int getChnid() {
-		return chnid;
-	}
+    @Override
+    public String toJson() throws JSONException {
+        //Req部分
+        JSONObject req = super.buildReq("addencchn");
 
-	public void setChnid(int chnid) {
-		this.chnid = chnid;
-	}
+        //设备信息 Data部分
+        JSONObject dev = new JSONObject();
+        dev.put("devtype", devinfo.getDvetype());
+        dev.put("ipcprotetype", devinfo.getIpcprotetype());
+        dev.put("manuid", devinfo.getManuid());
+        dev.put("devipaddr", devinfo.getDevipaddr());
+        dev.put("streamtransmode", devinfo.getStreamtransmode());
+        dev.put("szguid", devinfo.getSzguid());
+        dev.put("szname", devinfo.getSzname());
+        dev.put("sztypename", devinfo.getSztypename());
+        dev.put("szdevuuid", devinfo.getSzdevuuid());
+        dev.put("szdevxaddr", devinfo.getSzdevxaddr());
+        dev.put("szdevusername", devinfo.getSzdevusername());
+        dev.put("szdevuserpwd", devinfo.getSzdevuserpwd());
+        dev.put("szdevrtspurl", devinfo.getSzdevrtspurl());
+        dev.put("decaddtype", devinfo.getDecaddtype());
 
-	public Devinfo getDevinfo() {
-		return devinfo;
-	}
+        JSONObject data = new JSONObject();
+        data.put("req", req);
+        data.put("chnid", chnid);
+        data.put("devinfo", dev);
 
-	public void setDevinfo(Devinfo devinfo) {
-		this.devinfo = devinfo;
-	}
+        //返回
+        String ret = data.toString();
+        return ret;
+    }
+
+    @Override
+    public IResponse getResponse() {
+        return new AddEncoderRespose();
+    }
+
+    public int getChnid() {
+        return chnid;
+    }
+
+    public void setChnid(int chnid) {
+        this.chnid = chnid;
+    }
+
+    public Devinfo getDevinfo() {
+        return devinfo;
+    }
+
+    public void setDevinfo(Devinfo devinfo) {
+        this.devinfo = devinfo;
+    }
 
 }

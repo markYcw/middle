@@ -4,13 +4,14 @@ package com.kedacom.middleware.vrs.domain;
 /**
  * 录播服务器参数信息
  * @author LinChaoYu
- *
+ * @alterBy ycw 2021/5/8 16:11 增加VRS2000B
  */
 public class VRS {
 	
 	//录播服务器软件版本
 	public static final String VRS_VERSION_5_0 = "5.0";//5.0版本
 	public static final String VRS_VERSION_5_1 = "5.1";//5.1版本
+	public static final String VRS_2000B_SV5 = "18";
 
 	/**
 	 * 录播服务器本地标识。比如：录播服务器信息在本地数据库的数据ID
@@ -40,7 +41,7 @@ public class VRS {
 	/*
 	 * 端口（保留）
 	 */
-	private int port;
+	private Integer port;
 	
 	/**
 	 * 用户名

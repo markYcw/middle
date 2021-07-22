@@ -3,6 +3,7 @@ package com.kedacom.middleware.vrs.request;
 import com.kedacom.middleware.DeviceType;
 import com.kedacom.middleware.client.IResponse;
 import com.kedacom.middleware.vrs.response.LoginResponse;
+import lombok.Data;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -12,6 +13,7 @@ import org.json.JSONObject;
  * @author LinChaoYu
  *
  */
+@Data
 public class LoginRequest extends VRSRequest {
 
 	/**
@@ -33,6 +35,11 @@ public class LoginRequest extends VRSRequest {
 	 * 设备类型
 	 */
 	private int devtype = DeviceType.VRS50.getValue();
+
+	/**
+	 * 端口
+	 */
+	private int port;
 	
 	@Override
 	public String toJson() throws JSONException {
@@ -42,6 +49,9 @@ public class LoginRequest extends VRSRequest {
 		
 		//data部分
 		JSONObject data = new JSONObject();
+		if(devtype==18){
+			data.put("port",port);
+		}
 		data.put("devtype", devtype);
 		data.put("req", req);
 		data.put("ip", this.ip);
@@ -58,35 +68,4 @@ public class LoginRequest extends VRSRequest {
 		return new LoginResponse();
 	}
 
-	public String getIp() {
-		return ip;
-	}
-
-	public void setIp(String ip) {
-		this.ip = ip;
-	}
-
-	public int getDevtype() {
-		return devtype;
-	}
-
-	public void setDevtype(int devtype) {
-		this.devtype = devtype;
-	}
-
-	public String getUser() {
-		return user;
-	}
-
-	public void setUser(String user) {
-		this.user = user;
-	}
-
-	public String getPwd() {
-		return pwd;
-	}
-
-	public void setPwd(String pwd) {
-		this.pwd = pwd;
-	}
 }

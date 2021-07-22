@@ -1,16 +1,20 @@
 package com.kedacom.middleware.gk;
 
 import com.kedacom.middleware.client.INotify;
+import com.kedacom.middleware.client.TCPClient;
 import com.kedacom.middleware.client.TCPClientListenerAdapter;
+import com.kedacom.middleware.epro.EProSession;
 import com.kedacom.middleware.gk.domain.GK;
 import com.kedacom.middleware.gk.notify.LostCntNotify;
 import org.apache.log4j.Logger;
+
+import java.util.List;
 
 /**
  * 会话 GK 事件监听器
  * 
  * @author LinChaoYu
- * 
+ * @alterby ycw 2021/7/15 17:17
  */
 public class GKClientListener extends TCPClientListenerAdapter {
 
@@ -46,6 +50,26 @@ public class GKClientListener extends TCPClientListenerAdapter {
 			
 		} 
 
+	}
+
+	@Override
+	public void onClosed(TCPClient client) {
+		this.onAllOffine();
+	}
+	@Override
+	public void onInterrupt(TCPClient client) {
+		this.onAllOffine();
+	}
+
+	/**
+	 * 全部GK下线
+	 */
+	private void onAllOffine(){
+		List<GKSession> sessions = client.getSessionManager().getAllSessions();
+		for(GKSession session : sessions){
+			int ssid = session.getSsid();
+			client.getSessionManager().removeSession(ssid);
+		}
 	}
 	
 	/**

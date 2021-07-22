@@ -25,7 +25,7 @@ public class SearchEncoderAndDecoderNotify extends SVRNotify {
 
 	public static List<Devinfo>  list = new ArrayList<Devinfo>();//存放搜索到的解码器
 	
-	public static final int DECODER = 2;//解码器
+//	public static final int DECODER = 2;//解码器
 	
 	private int errorcode;
 	
@@ -33,7 +33,7 @@ public class SearchEncoderAndDecoderNotify extends SVRNotify {
 	
 	private int totaldevnum;
 	
-	private int blast;
+	public volatile static int blast;
 	
 	public int getErrorcode() {
 		return errorcode;
@@ -70,13 +70,15 @@ public class SearchEncoderAndDecoderNotify extends SVRNotify {
 	@Override
 	public void parseData(JSONObject jsonData) throws DataException {
 		super.parseNty(jsonData);
+		blast = jsonData.optInt("blast");
+
  		JSONArray array = jsonData.optJSONArray("devinfo");
 		if(array != null){
 			for(int i = 0 ; i < array.length() ; i++){
 				JSONObject obj;
 				try {
 					obj = array.getJSONObject(i);
-					if(DECODER == obj.optInt("devtype")){
+//					if(DECODER == obj.optInt("devtype")){
 						Devinfo devinfo = new Devinfo();
 						devinfo.setDvetype(obj.optInt("devtype"));
 						devinfo.setIpcprotetype(obj.optInt("ipcprotetype"));
@@ -93,14 +95,13 @@ public class SearchEncoderAndDecoderNotify extends SVRNotify {
 						devinfo.setSzdevuserpwd(obj.optString("szdevuserpwd"));
 						devinfo.setSzdevrtspurl(obj.optString("szdevrtspurl"));
 						list.add(devinfo);
-					}
+//					}
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
 				
 			}
 		}
-		System.out.println(list.size());
 	}
 
 	public List<Devinfo> getList() {

@@ -2,6 +2,7 @@ package com.kedacom.middleware.svr.request;
 
 import com.kedacom.middleware.client.IResponse;
 import com.kedacom.middleware.svr.response.SetComposePicRespose;
+import lombok.Data;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -9,9 +10,10 @@ import org.json.JSONObject;
 * @ClassName: SetComposePicRequest 
 * @Description:  设置合成画面 
 * @author lzs 
-* @date 2019-7-10 下午5:07:44 
+* @date 2019-7-10 下午5:07:44  alter by ycw 2021/5/24 15:30
 * @version V1.0
  */
+@Data
 public class SetComposePicRequest extends SVRRequest{
 	
 	private int videoresolution;//分辨率
@@ -22,7 +24,9 @@ public class SetComposePicRequest extends SVRRequest{
 	
 	private int picinfonum;//有效合成通道数
 	
-	private int [] chnid;
+	private int [] chnid;//各画面信息配置
+
+	private int [] pictype;//各个画面主辅流配置0：主流 1：辅流
 
 	@Override
 	public String toJson() throws JSONException {
@@ -45,6 +49,7 @@ public class SetComposePicRequest extends SVRRequest{
 		data.put("borderwidth", borderwidth);
 		data.put("mergestyle", mergestyle);
 		data.put("picinfonum", picinfonum);
+		data.put("pictype", pictype);
 		//返回
 		String ret = data.toString();
 		return ret;
@@ -57,43 +62,4 @@ public class SetComposePicRequest extends SVRRequest{
 		
 	}
 
-	public int getVideoresolution() {
-		return videoresolution;
-	}
-
-	public void setVideoresolution(int videoresolution) {
-		this.videoresolution = videoresolution;
-	}
-
-	public int getBorderwidth() {
-		return borderwidth;
-	}
-
-	public void setBorderwidth(int borderwidth) {
-		this.borderwidth = borderwidth;
-	}
-
-	public int getMergestyle() {
-		return mergestyle;
-	}
-
-	public void setMergestyle(int mergestyle) {
-		this.mergestyle = mergestyle;
-	}
-
-	public int getPicinfonum() {
-		return picinfonum;
-	}
-
-	public void setPicinfonum(int picinfonum) {
-		this.picinfonum = picinfonum;
-	}
-
-	public int[] getChnid() {
-		return chnid;
-	}
-
-	public void setChnid(int[] chnid) {
-		this.chnid = chnid;
-	}
 }

@@ -20,7 +20,7 @@ public enum DeviceType {
 	MCU(1),
 	
 	/**
-	 * 会议终端4.7
+	 * 会议终端3代高清
 	 */
 	MT(2),
 	
@@ -47,6 +47,11 @@ public enum DeviceType {
 	 * Svr
 	 */
 	SVR(10),
+
+	/**
+	 * SVR_2931
+	 */
+	SVR_NVRV7(30),
 	
 	/**
 	 * 会议终端5.0
@@ -62,11 +67,21 @@ public enum DeviceType {
 	 * 录播服务器5.1
 	 */
 	VRS51(15),
+
+	/**
+	 * 硬盘刻录机SVR-2kb
+	 */
+	VRS2000B(18),
 	
 	/**
 	 * 人脸对比服务
 	 */
 	FACE(20),
+
+	/**
+	 * RK100
+	 */
+	RK100(22),
 	
 	/**
 	 * UPU
@@ -81,7 +96,12 @@ public enum DeviceType {
 	/**
 	 * 软终端（科达天行）
 	 */
-	SKY(25)
+	SKY(25),
+
+	/**
+	 * 签名板PRO
+	 */
+	E10PRO(31),
 	;
 
 	private int value; 
