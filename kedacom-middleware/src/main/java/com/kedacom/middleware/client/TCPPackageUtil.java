@@ -1,6 +1,8 @@
 package com.kedacom.middleware.client;
 
 import com.kedacom.middleware.exception.ProtocolException;
+import org.apache.log4j.Logger;
+import sun.rmi.runtime.Log;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -13,6 +15,8 @@ import java.nio.charset.Charset;
  *
  */
 public class TCPPackageUtil {
+
+	private static final Logger log = Logger.getLogger(TCPPackageUtil.class);
 
 	/**
 	 * 字符集
@@ -63,7 +67,8 @@ public class TCPPackageUtil {
 		next += dataLengthByte.length;
 		System.arraycopy(data, 0, pkg, next, data.length);
 		next += data.length;
-		
+
+		log.debug("组包完成："+pkg);
 		return pkg;
 	}
 
