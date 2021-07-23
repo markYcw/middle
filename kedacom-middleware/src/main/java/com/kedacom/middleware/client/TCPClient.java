@@ -294,7 +294,8 @@ public class TCPClient implements IClient {
 		//发送
 		try{
 			this.sendStringData(req);
-		}catch(NetException e){
+		}catch(Exception e){
+			log.error("发送request失败，cause:" + e, e);
 			resultCache.remove(ssno);
 			throw e;
 		}
@@ -368,6 +369,7 @@ public class TCPClient implements IClient {
 		try {
 			socket.setSoTimeout(timeout3Read);
 			socket.getOutputStream().write(bytes);
+			log.debug("发送成功："+data);
 		} catch (IOException e) {
 			ConnectException ce = new ConnectException("发送数据异常", e);
 			this.close();
@@ -400,7 +402,7 @@ public class TCPClient implements IClient {
 	}
 	/**
 	 * 收到“响应”
-	 * @param data
+	 * @param jsonData
 	 */
 	protected void onResponse(int ssno, JSONObject jsonData){
 		RequestResponse rr = null;
