@@ -805,6 +805,35 @@ public class VRSClient {
 		this.sendRequest(request);
 	}
 
+	/**
+	 * 查询录像文件
+	 * @param id
+	 * @param querytype 查询类型 0:获取总条目数以及按照索引和返回数目获取对应的条目 1：获取总条目数 2：按照索引和返回数目获取对应的条目
+	 * @param querymask 查询条件 0：无效 0x0001：录像任务id
+	 * @param rectaskid 录像任务ID
+	 * @param maxnum 最大查询数目
+	 * @param startindex 查询起始下标
+	 * @return
+	 * @throws KMException
+	 */
+	public RecFileInfo queryRecFile(String id, int querytype, int querymask, int rectaskid, int maxnum, int startindex)throws KMException{
+		int ssid = this.tryLogin(id);
+
+		QueryRecFileRequest request = new QueryRecFileRequest();
+		request.setSsid(ssid);
+		request.setQuerytype(querytype);
+		request.setQuerymask(querymask);
+		request.setRectaskid(rectaskid);
+		request.setMaxnum(maxnum);
+		request.setStartindex(startindex);
+
+		QueryRecFileResponse response = (QueryRecFileResponse) this.sendRequest(request);
+		return response.getRecFileInfo();
+
+	}
+
+
+
 
 
 
