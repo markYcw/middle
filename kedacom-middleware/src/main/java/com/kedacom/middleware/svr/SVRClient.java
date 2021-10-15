@@ -1255,6 +1255,22 @@ public class SVRClient {
         return respose.getEncChnList();
     }
 
+    /**
+     * @Description 获取远程点通道列表
+     * @param:
+     * @return:
+     * @author:zlf
+     * @date:
+     */
+    public List<SvrChnList> getRemChnList(SVR svr) throws KMException {
+        int ssid = loginBySVR(svr);
+        GetRemChnListRequest request = new GetRemChnListRequest();
+        request.setSsid(ssid);
+
+        GetRemChnListResponse respose = (GetRemChnListResponse) this.sendRequest(request);
+        return respose.getChnList();
+    }
+
     public static synchronized KM getKm() {
         if (km == null) {
             km = KM.getInstance();
