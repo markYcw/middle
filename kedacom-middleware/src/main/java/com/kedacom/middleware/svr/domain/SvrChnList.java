@@ -21,7 +21,12 @@ public class SvrChnList implements Serializable {
     /*
     远程点通道别名
      */
-    private int ChnAlias;
+    private String ChnAlias;
+
+    /*
+  远程点url
+   */
+    private String url;
 
     /*
     远程点是否在线

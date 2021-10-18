@@ -1271,6 +1271,22 @@ public class SVRClient {
         return respose.getChnList();
     }
 
+    /**
+     * 获取编码器能力集
+     * @param svr
+     * @return
+     * @throws KMException
+     */
+    public GetEncDevCapResponse getEncDevCap(SVR svr) throws KMException {
+        int ssid = loginBySVR(svr);
+        GetEncDevCapRequest request = new GetEncDevCapRequest();
+        request.setSsid(ssid);
+
+        GetEncDevCapResponse respose = (GetEncDevCapResponse) this.sendRequest(request);
+        return respose;
+    }
+
+
     public static synchronized KM getKm() {
         if (km == null) {
             km = KM.getInstance();

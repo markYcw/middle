@@ -32,7 +32,8 @@ public class GetRemChnListResponse extends SVRResponse{
             JSONObject jsonObject = encChnListArray.optJSONObject(i);
             SvrChnList svrChnList = new SvrChnList();
             svrChnList.setChnId(jsonObject.optInt("ChnId"));
-            svrChnList.setChnAlias(jsonObject.optInt("ChnAlias"));
+            svrChnList.setChnAlias(jsonObject.optString("ChnAlias"));
+            svrChnList.setUrl(jsonObject.optString("url"));
             svrChnList.setIsOnline(jsonObject.optInt("IsOnline"));
             ChnList.add(svrChnList);
         }
