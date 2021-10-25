@@ -1243,7 +1243,7 @@ public class SVRClient {
      * @Description 获取编码通道列表
      * @param:
      * @return:
-     * @author:zlf
+     * @author:ycw
      * @date:
      */
     public List<SvrEncChnList> getEncChnList(SVR svr) throws KMException {
@@ -1251,15 +1251,15 @@ public class SVRClient {
         GetEncChnListRequest request = new GetEncChnListRequest();
         request.setSsid(ssid);
 
-        GetEncChnListResponse respose = (GetEncChnListResponse) this.sendRequest(request);
-        return respose.getEncChnList();
+        GetEncChnListResponse response = (GetEncChnListResponse) this.sendRequest(request);
+        return response.getEncChnList();
     }
 
     /**
      * @Description 获取远程点通道列表
      * @param:
      * @return:
-     * @author:zlf
+     * @author:ycw
      * @date:
      */
     public List<SvrChnList> getRemChnList(SVR svr) throws KMException {
@@ -1267,11 +1267,12 @@ public class SVRClient {
         GetRemChnListRequest request = new GetRemChnListRequest();
         request.setSsid(ssid);
 
-        GetRemChnListResponse respose = (GetRemChnListResponse) this.sendRequest(request);
-        return respose.getChnList();
+        GetRemChnListResponse response = (GetRemChnListResponse) this.sendRequest(request);
+        return response.getChnList();
     }
 
     /**
+     * @author ycw
      * 获取编码器能力集
      * @param svr
      * @return
@@ -1282,8 +1283,28 @@ public class SVRClient {
         GetEncDevCapRequest request = new GetEncDevCapRequest();
         request.setSsid(ssid);
 
-        GetEncDevCapResponse respose = (GetEncDevCapResponse) this.sendRequest(request);
-        return respose;
+        GetEncDevCapResponse response = (GetEncDevCapResponse) this.sendRequest(request);
+        return response;
+    }
+
+    /**
+     * @author ycw
+     * 获取远程点设备列表
+     * @param svr
+     * @param start
+     * @param count
+     * @return
+     * @throws KMException
+     */
+    public GetRemDevListResponse getRemDevList(SVR svr, int start, int count) throws KMException {
+        int ssid = loginBySVR(svr);
+        GetRemDevListRequest request = new GetRemDevListRequest();
+        request.setSsid(ssid);
+        request.setStart(start);
+        request.setCount(count);
+
+        GetRemDevListResponse response = (GetRemDevListResponse) this.sendRequest(request);
+        return response;
     }
 
 
