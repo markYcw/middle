@@ -341,9 +341,10 @@ public class CuOperate {
 		if(domain == null){
 			domain = session.getCmuno();//默认为当前登录平台
 		}
-		
-		startime = TimeUtil.getDayStart(startime);
-		endtime = TimeUtil.getDayEnd(endtime);
+
+		//不需要全天时间
+		/*startime = TimeUtil.getDayStart(startime);
+		endtime = TimeUtil.getDayEnd(endtime);*/
 		
 		QueryRectimeRequest request = new QueryRectimeRequest();
 		request.setDomain(domain);
