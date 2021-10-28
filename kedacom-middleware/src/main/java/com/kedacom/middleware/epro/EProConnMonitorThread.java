@@ -43,6 +43,8 @@ public class EProConnMonitorThread extends ATaskThread {
                 }
             } catch (Exception e) {
                 log.error("(EProId=" + id + ")" + e.getMessage(), e);
+                //登录失败以后把父类的work属性置为false，重连由上层控制底层不做控制
+                super.stop();
             }
 
             if (!ret) {
