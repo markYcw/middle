@@ -1,10 +1,13 @@
 package com.kedacom.middleware.svr.domain;
 
+import lombok.Data;
+
 /**
  * svr状态
- * @author DengJie
+ * @author ycw
  *
  */
+@Data
 public class SvrState {
 	/**
 	 * 0：不在线 非0：在线
@@ -26,6 +29,17 @@ public class SvrState {
 	 * 0：没有刻录任务1：有刻录任务
 	 */
 	private int burntaskdoing;
+
+	/**
+	 * 刻录通道id
+	 */
+	private int burnchnid;
+
+	/**
+	 * 刻录模式 0：无效 1：双盘同步刻录 2：只刻录DVD1 3：只刻录DVD2 4：循环连续刻录
+	 */
+	private int burnmode;
+
 	/**
 	 * svr光盘1
 	 */
@@ -34,48 +48,6 @@ public class SvrState {
 	 * svr光盘2
 	 */
 	private Dvd dvd2;
-	public int getOnline() {
-		return online;
-	}
-	public void setOnline(int online) {
-		this.online = online;
-	}
-	public int getBurntaskid() {
-		return burntaskid;
-	}
-	public void setBurntaskid(int burntaskid) {
-		this.burntaskid = burntaskid;
-	}
-	public int getRecing() {
-		return recing;
-	}
-	public void setRecing(int recing) {
-		this.recing = recing;
-	}
-	public int getBurning() {
-		return burning;
-	}
-	public void setBurning(int burning) {
-		this.burning = burning;
-	}
-	public int getBurntaskdoing() {
-		return burntaskdoing;
-	}
-	public void setBurntaskdoing(int burntaskdoing) {
-		this.burntaskdoing = burntaskdoing;
-	}
-	public Dvd getDvd1() {
-		return dvd1;
-	}
-	public void setDvd1(Dvd dvd1) {
-		this.dvd1 = dvd1;
-	}
-	public Dvd getDvd2() {
-		return dvd2;
-	}
-	public void setDvd2(Dvd dvd2) {
-		this.dvd2 = dvd2;
-	}
 	
 	
 }

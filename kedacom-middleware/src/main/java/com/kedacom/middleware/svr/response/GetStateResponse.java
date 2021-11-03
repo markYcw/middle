@@ -28,6 +28,8 @@ public class GetStateResponse extends SVRResponse {
         svrState.setBurntaskdoing(jsonData.optInt("burntaskdoing"));
         svrState.setBurntaskid(jsonData.optInt("burntaskid"));
         svrState.setRecing(jsonData.optInt("recing"));
+        svrState.setBurnchnid(jsonData.optInt("burnchnid"));
+        svrState.setBurnmode(jsonData.optInt("burnmode"));
 
         JSONObject jd1 = jsonData.optJSONObject("dvd1");
         if (jd1 != null) {
