@@ -56,7 +56,7 @@ public class TCPClientDataReciver {
 				if(run){
 					//异常。未主动停止，抛出异常
 					if(tcpClient.isConnected()){
-						//中断
+						//接收数据出现问题捕获异常
 						tcpClient.onInterrupt();
 					}else{
 						//关闭
