@@ -583,6 +583,32 @@ public class MTClient {
 		
 		this.sendRequest(request);//StartP2PResponse
 	}
+
+	/**
+	 * 开启点对点会议3.0/5.0兼容
+	 * @param id 终端标识 {@link MT#getId()}
+	 * @param addrType 地址类型（终端4.7有效）
+	 * @param ip 终端IP地址
+	 * @param alias 别名（终端4.7有效）
+	 * @param bitrate 呼叫码率
+	 * @param type 主呼协议类型（终端5.0有效）
+	 * @throws KMException
+	 */
+	public void call(String id, int addrType, String ip, String alias, int bitrate, int type) throws KMException{
+		int ssid = this.tryLogin(id);
+		if(ssid == -1)
+			throw new KMException("终端连接索引无效");
+
+		StartP2PRequest request = new StartP2PRequest();
+		request.setSsid(ssid);
+		request.setAddrType(addrType);
+		request.setIp(ip);
+		request.setAlias(alias);
+		request.setBitrate(bitrate);
+		request.setType(type);
+
+		this.sendRequest(request);//StartP2PResponse
+	}
 	
 	/**
 	 * 停止点对点会议
