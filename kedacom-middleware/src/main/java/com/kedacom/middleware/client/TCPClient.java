@@ -162,10 +162,8 @@ public class TCPClient implements IClient {
 			if(dataReciver == null || !dataReciver.isRun()){
 				dataReciver = new TCPClientDataReciver(this);
 				dataReciver.start();
-				log.debug("start to reciver finished.");
 			}else {
 				dataReciver.start();
-				log.debug("start to reciver finished.");
 			}
 			return;
 		}
