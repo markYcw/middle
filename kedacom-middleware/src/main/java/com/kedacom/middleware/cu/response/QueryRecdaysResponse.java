@@ -7,7 +7,7 @@ import org.json.JSONObject;
 /**
  * 10.2 录像日历
  * 
- * @author dengjie
+ * @author ycw
  * 
  */
 public class QueryRecdaysResponse extends CuResponse {

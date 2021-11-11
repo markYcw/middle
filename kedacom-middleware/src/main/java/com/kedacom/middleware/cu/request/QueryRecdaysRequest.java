@@ -2,6 +2,7 @@ package com.kedacom.middleware.cu.request;
 
 import com.kedacom.middleware.cu.response.CuResponse;
 import com.kedacom.middleware.cu.response.QueryRecdaysResponse;
+import com.kedacom.middleware.util.DateUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -11,7 +12,7 @@ import java.util.Date;
 /**
  * 10.2 录像日历
  * 
- * @author dengjie
+ * @author ycw
  * @see QueryRecdaysResponse
  */
 public class QueryRecdaysRequest extends CuRequest {
@@ -47,11 +48,10 @@ public class QueryRecdaysRequest extends CuRequest {
 		JSONObject req = super.buildReq("queryrecdays");
 		
 		// queryvod部分
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
 		JSONObject queryvod = new JSONObject();
 		queryvod.putOpt("domain", domain);
-		queryvod.putOpt("starttime", sdf.format(starttime));
-		queryvod.putOpt("endtime", sdf.format(endtime));
+		queryvod.putOpt("starttime", DateUtils.getSecondTimestamp(starttime));
+		queryvod.putOpt("endtime", DateUtils.getSecondTimestamp(endtime));
 		// channel部分
 		JSONObject channel = new JSONObject();
 		channel.putOpt("puid", puid);

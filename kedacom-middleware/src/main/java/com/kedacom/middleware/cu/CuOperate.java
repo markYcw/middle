@@ -315,6 +315,40 @@ public class CuOperate {
 		int[] flags = response.getRecflags();
 		return flags;
 	}
+
+	/**
+	 * @author ycw
+	 * @param domain 指定查询录像的域
+	 * @param startTime 开始时间
+	 * @param endTime 结束时间
+	 * @param type 1:平台， 2：前端 3：本地
+	 * @param puId 设备号
+	 * @param chnId 视频源号（通道号）
+	 * @return
+	 * @throws KMException
+	 */
+	public int[] queryRecDays(String domain, Date startTime, Date endTime,int type, String puId, int chnId) throws KMException {
+		int ssid = client.getSessionManager().getSSIDByPuid(puId);
+		if(ssid == CuSession.INVALID_SSID){
+			throw new KMException("设备所在监控平台未连接");
+		}
+		CuSession session = client.getSessionManager().getSessionBySSID(ssid);
+
+		if(domain == null){
+			domain = session.getCmuno();//默认为当前登录平台
+		}
+		QueryRecdaysRequest request = new QueryRecdaysRequest();
+		request.setDomain(domain);
+		request.setPuid(puId);
+		request.setChnid(chnId);
+		request.setStarttime(startTime);
+		request.setEndtime(endTime);
+		request.setType(type);
+
+		QueryRecdaysResponse response = (QueryRecdaysResponse)this.sendRequest(session.getCu().getId(), request);
+		int[] flags = response.getRecflags();
+		return flags;
+	}
 	
 	/**
 	 * 获取指定时间段的所有录像时间段。
