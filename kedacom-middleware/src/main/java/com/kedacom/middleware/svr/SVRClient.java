@@ -1307,6 +1307,28 @@ public class SVRClient {
         return response;
     }
 
+    /**
+     * 额外刻录
+     * @param svr
+     * @param startTime 开始时间
+     * @param endTime 结束时间
+     * @param mode 刻录模式
+     * @param taskId 刻录任务ID
+     * @return
+     * @throws KMException
+     */
+    public void newExtraBurn(SVR svr, String startTime, String endTime, int mode, int taskId) throws KMException {
+        int ssid = loginBySVR(svr);
+        NewExtraBurnRequest request = new NewExtraBurnRequest();
+        request.setSsid(ssid);
+        request.setStartTime(startTime);
+        request.setEndTime(endTime);
+        request.setMode(mode);
+        request.setTaskId(taskId);
+
+        this.sendRequest(request);
+    }
+
 
     public static synchronized KM getKm() {
         if (km == null) {
