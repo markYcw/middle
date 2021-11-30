@@ -50,8 +50,8 @@ public class QueryRecdaysRequest extends CuRequest {
 		// queryvod部分
 		JSONObject queryvod = new JSONObject();
 		queryvod.putOpt("domain", domain);
-		queryvod.putOpt("starttime", DateUtils.getSecondTimestamp(starttime));
-		queryvod.putOpt("endtime", DateUtils.getSecondTimestamp(endtime));
+		queryvod.putOpt("starttime", DateUtils.getDateString(starttime));
+		queryvod.putOpt("endtime", DateUtils.getDateString(endtime));
 		// channel部分
 		JSONObject channel = new JSONObject();
 		channel.putOpt("puid", puid);
