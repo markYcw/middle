@@ -1,5 +1,6 @@
 package com.kedacom.middleware.svr;
 
+import com.kedacom.middleware.svr.domain.CreateBurnResponseInfo;
 import com.kedacom.middleware.svr.domain.Devinfo;
 
 import java.util.List;
@@ -36,6 +37,11 @@ public class SVRNotifyListenerAdpater implements SVRNotifyListener {
 	 */
 	@Override
 	public void searchEncoderAnDecoder(List<Devinfo> list) {
+	}
+
+	@Override
+	public void creatBurn(CreateBurnResponseInfo info, String ip) {
+
 	}
 
 }

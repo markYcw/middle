@@ -1,5 +1,6 @@
 package com.kedacom.middleware.svr;
 
+import com.kedacom.middleware.svr.domain.CreateBurnResponseInfo;
 import com.kedacom.middleware.svr.domain.Devinfo;
 
 import java.util.List;
@@ -50,5 +51,12 @@ public interface SVRNotifyListener {
 	* @version V1.0
 	 */
 	public void searchEncoderAnDecoder(List<Devinfo> list);
+
+	/**
+	 * 新建刻录通知
+	 * @param info
+	 * @param ip
+	 */
+	public void creatBurn(CreateBurnResponseInfo info, String ip);
 
 }

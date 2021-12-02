@@ -3,7 +3,7 @@ package com.kedacom.middleware.svr;
 import com.kedacom.middleware.client.INotify;
 import com.kedacom.middleware.client.TCPClient;
 import com.kedacom.middleware.client.TCPClientListenerAdapter;
-import com.kedacom.middleware.epro.EProSession;
+import com.kedacom.middleware.svr.domain.CreateBurnResponseInfo;
 import com.kedacom.middleware.svr.domain.Devinfo;
 import com.kedacom.middleware.svr.domain.SVR;
 import com.kedacom.middleware.svr.notify.*;
@@ -58,6 +58,8 @@ public class SVRClientListener extends TCPClientListenerAdapter {
 			this.searchEncoderAndDecoder((SearchEncoderAndDecoderNotify) notify);
 		}else if(notify instanceof QueryRecNotify) {
 			this.queryRec((QueryRecNotify) notify);
+		}else if(notify instanceof CreateBurnNotify){
+			this.creatBurn((CreateBurnNotify)notify);
 		}
 	}
 
@@ -85,6 +87,23 @@ public class SVRClientListener extends TCPClientListenerAdapter {
 		log.info("---------查询SVR录像----------");
 	}
 
+	/**
+	 * 新建刻录通知
+	 * @param notify
+	 */
+	private void creatBurn(CreateBurnNotify notify) {
+		log.info("===========新建刻录JAVA中间件通知CreateBurnNotify："+notify);
+		int ssid = notify.getSsid();
+		CreateBurnResponseInfo burnTask = CreateBurnNotify.burnTask;
+		SVRSession session = client.getSessionManager().getSessionBySsid(ssid);
+		SVR svr = session.getSvr();
+		String ip = svr.getIp();
+		if (session != null) {
+			for (SVRNotifyListener l : client.getAllListeners()) {
+				l.creatBurn(burnTask,ip);
+			}
+		}
+	}
 
 	/**
 	 * 终端掉线通知

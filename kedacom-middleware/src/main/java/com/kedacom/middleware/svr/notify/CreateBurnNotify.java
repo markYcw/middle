@@ -2,14 +2,16 @@ package com.kedacom.middleware.svr.notify;
 
 import com.kedacom.middleware.exception.DataException;
 import com.kedacom.middleware.svr.domain.CreateBurnResponseInfo;
+import lombok.Data;
 import org.json.JSONObject;
 
 /**
  * @ClassName CreateBurnNotify
  * @Description 创建刻录通知
- * @Author zlf
- * @Date 2021/6/1 13:41
+ * @Author ycw
+ * @Date 2021/12/2 13:41
  */
+@Data
 public class CreateBurnNotify extends SVRNotify {
 
     /**
