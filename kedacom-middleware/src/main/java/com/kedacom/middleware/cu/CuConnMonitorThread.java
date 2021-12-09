@@ -1,5 +1,7 @@
 package com.kedacom.middleware.cu;
 
+import com.kedacom.middleware.exception.KMException;
+import com.kedacom.middleware.exception.RemoteException;
 import keda.common.util.ATaskThread;
 import org.apache.log4j.Logger;
 
@@ -43,7 +45,15 @@ public class CuConnMonitorThread extends ATaskThread {
                    success.add(id);
                    ret = true;
                }
-           }catch(Exception e){
+           }catch (RemoteException e){
+               int errorCode = e.getErrorcode();
+               if(errorCode==10012||errorCode==10011){
+                   log.error("登录监控平台失败用户名或密码错误：(cuId="+id+")" + e.getMessage(), e);
+                   //如果是用户名密码错误则不再无限重连
+                   super.stop();
+               }
+               log.error("登录监控平台失败：(cuId="+id+")" + e.getMessage(), e);
+           } catch(Exception e){
                exp = e;
                log.error("登录监控平台失败：(cuId="+id+")" + e.getMessage(), e);
            }
