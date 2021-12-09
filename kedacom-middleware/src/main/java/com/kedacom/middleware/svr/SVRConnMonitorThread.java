@@ -39,8 +39,6 @@ public class SVRConnMonitorThread extends ATaskThread {
                }
            }catch(Exception e){
                log.error("(svrIp="+ip+")"+e.getMessage(), e);
-               //登录失败以后把父类的work属性置为false，重连由上层控制底层不做控制
-               super.stop();
            }
 
            if(!ret){

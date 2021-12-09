@@ -46,8 +46,6 @@ public class CuConnMonitorThread extends ATaskThread {
            }catch(Exception e){
                exp = e;
                log.error("登录监控平台失败：(cuId="+id+")" + e.getMessage(), e);
-               //登录失败以后把父类的work属性置为false，重连由上层控制底层不做控制
-               super.stop();
            }
 
            CuSession session = client.getSessionManager().getSessionByCuID(id);
