@@ -123,7 +123,8 @@ public class MTClient {
 	 */
 	public void addMT(MT mt,boolean isReStart){
 		this.mtCacheByID.put(mt.getId(), mt);
-		this.reStartConnect(mt.getId());
+		if (isReStart)
+			this.reStartConnect(mt.getIp());
 	}
 	
 	/**
