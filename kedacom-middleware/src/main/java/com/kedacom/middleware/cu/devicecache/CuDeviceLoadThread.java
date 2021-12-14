@@ -9,7 +9,9 @@ import com.kedacom.middleware.cu.domain.*;
 import com.kedacom.middleware.cu.notify.*;
 import com.kedacom.middleware.exception.KMException;
 import keda.common.util.ToolsUtil;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.*;
 
@@ -20,7 +22,7 @@ import java.util.*;
  */
 public class CuDeviceLoadThread  extends TCPClientListenerAdapter{
 
-	private static final Logger log = Logger.getLogger(CuDeviceLoadThread.class);
+	private static final Logger log = LogManager.getLogger(CuDeviceLoadThread.class);
 	
 	/**
 	 * 会话标识

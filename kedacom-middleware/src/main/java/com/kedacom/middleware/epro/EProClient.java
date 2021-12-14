@@ -10,7 +10,9 @@ import com.kedacom.middleware.exception.ConnectException;
 import com.kedacom.middleware.exception.DataException;
 import com.kedacom.middleware.exception.KMException;
 import com.kedacom.middleware.exception.RemoteException;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -24,7 +26,7 @@ import java.util.List;
  */
 public class EProClient {
 
-    private static final Logger log = Logger.getLogger(EProClient.class);
+    private static final Logger log = LogManager.getLogger(EProClient.class);
 
     private KM km;
 

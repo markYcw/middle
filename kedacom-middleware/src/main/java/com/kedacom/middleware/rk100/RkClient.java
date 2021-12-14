@@ -10,7 +10,9 @@ import com.kedacom.middleware.exception.RemoteException;
 import com.kedacom.middleware.rk100.domain.RK;
 import com.kedacom.middleware.rk100.request.*;
 import com.kedacom.middleware.rk100.response.*;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -24,7 +26,7 @@ import java.util.List;
  */
 public class RkClient {
 
-    private static final Logger log = Logger.getLogger(RkClient.class);
+    private static final Logger log = LogManager.getLogger(RkClient.class);
 
     private KM km;
 

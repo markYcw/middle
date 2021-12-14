@@ -4,12 +4,14 @@ import com.kedacom.middleware.mcu.McuNotifyListener;
 import com.kedacom.middleware.mcu.domain.ConfStatus;
 import com.kedacom.middleware.mcu.domain.MTStatus;
 import com.kedacom.middleware.mcu.domain.VcrStatus;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
 public class MyMcuNotifyListener implements McuNotifyListener{
-	private static final Logger log = Logger.getLogger(MyMcuNotifyListener.class);
+	private static final Logger log = LogManager.getLogger(MyMcuNotifyListener.class);
 	@Override
 	public void onMcuOffine(String mcuId, String mcuIp) {
 		// TODO Auto-generated method stub

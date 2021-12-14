@@ -1,6 +1,7 @@
 package keda.common.util;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.text.MessageFormat;
 import java.util.*;
@@ -12,7 +13,7 @@ import java.util.*;
  */
 public class ResourceFiles implements I18nResources {
 
-	private static final Logger log = Logger.getLogger(ResourceFiles.class);
+	private static final Logger log = LogManager.getLogger(ResourceFiles.class);
 	
 	private Map<Locale, HashMap<String, String>> maps = new HashMap<Locale, HashMap<String, String>>();
 	

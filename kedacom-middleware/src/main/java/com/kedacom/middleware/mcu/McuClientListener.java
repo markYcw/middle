@@ -13,7 +13,9 @@ import com.kedacom.middleware.mcu.domain.MTStatus;
 import com.kedacom.middleware.mcu.domain.Mcu;
 import com.kedacom.middleware.mcu.domain.VcrStatus;
 import com.kedacom.middleware.mcu.notify.*;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
@@ -26,7 +28,7 @@ import java.util.List;
  */
 public class McuClientListener extends TCPClientListenerAdapter {
 
-	private static final Logger log = Logger.getLogger(McuClientListener.class);
+	private static final Logger log = LogManager.getLogger(McuClientListener.class);
 	
 	private McuClient client;
 

@@ -1,6 +1,7 @@
 package keda.common.util;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * 	定时执行垃圾回收线程
@@ -8,7 +9,7 @@ import org.apache.log4j.Logger;
  *
  */
 public class SystemGC extends Thread {
-	private static Logger log = Logger.getLogger(SystemGC.class);
+	private static Logger log = LogManager.getLogger(SystemGC.class);
 	//休眠5分钟
 	private int sleepTime = 300000;
 	//是否停止

@@ -1,10 +1,8 @@
 package com.kedacom.middleware.cu;
 
-import com.kedacom.middleware.exception.KMException;
-import keda.common.exception.MountFileNotFoundException;
-import org.apache.log4j.Logger;
-
-import java.io.FileNotFoundException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.MissingResourceException;
@@ -18,7 +16,7 @@ import java.util.Properties;
 public class CuErrorCode {
 
 	private static Properties properties = new  Properties();
-	private static final Logger log = Logger.getLogger(CuErrorCode.class);
+	private static final Logger log = LogManager.getLogger(CuErrorCode.class);
 	
 	static {
 		init();

@@ -6,7 +6,9 @@ import com.kedacom.middleware.client.TCPClientListenerAdapter;
 import com.kedacom.middleware.epro.EProSession;
 import com.kedacom.middleware.mt.domain.MT;
 import com.kedacom.middleware.mt.notify.*;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
@@ -18,7 +20,7 @@ import java.util.List;
  */
 public class MTClientListener extends TCPClientListenerAdapter {
 
-	private static final Logger log = Logger.getLogger(MTClientListener.class);
+	private static final Logger log = LogManager.getLogger(MTClientListener.class);
 	
 	private MTClient client;
 

@@ -1,7 +1,9 @@
 package com.kedacom.middleware.svr;
 
 import keda.common.util.ATaskThread;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -13,7 +15,7 @@ import java.util.Set;
 */
 public class SVRConnMonitorThread extends ATaskThread {
 
-   private static final Logger log = Logger.getLogger(SVRConnMonitorThread.class);
+   private static final Logger log = LogManager.getLogger(SVRConnMonitorThread.class);
 
    private SVRClient client;
    private Set<String> ips = new HashSet<String>();

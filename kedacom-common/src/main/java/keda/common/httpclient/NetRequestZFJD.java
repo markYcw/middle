@@ -2,7 +2,8 @@ package keda.common.httpclient;
 
 import keda.common.io.MultiPartFormOutputStream;
 import keda.common.util.ByteArray;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -14,7 +15,7 @@ import java.util.Hashtable;
 import java.util.Iterator;
 
 public class NetRequestZFJD {
-	private static Logger log = Logger.getLogger(NetRequestZFJD.class);
+	private static Logger log = LogManager.getLogger(NetRequestZFJD.class);
 	public static String server;
 	public static String sessionId;
 	private static final String BOUNDARY = "---------7d4a6d158c9";           // 定义数据分隔线

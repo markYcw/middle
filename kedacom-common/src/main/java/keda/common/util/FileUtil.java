@@ -1,6 +1,7 @@
 package keda.common.util;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.*;
 import java.util.zip.ZipEntry;
@@ -14,7 +15,7 @@ import java.util.zip.ZipOutputStream;
  *
  */
 public class FileUtil {
-	private static final Logger log = Logger.getLogger(RuntimeUtil.class);
+	private static final Logger log = LogManager.getLogger(RuntimeUtil.class);
 	private static final long DIFFDAY = 1000 * 60 * 60 * 24;
 	private static final int  BUFFER_SIZE = 2 * 1024;
 

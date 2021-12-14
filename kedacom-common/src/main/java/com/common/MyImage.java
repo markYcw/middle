@@ -1,6 +1,7 @@
 package com.common;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import sun.awt.AppContext;
 
 import javax.accessibility.*;
@@ -23,7 +24,7 @@ public class MyImage implements Icon, Serializable {
      *
      */
     private static final long serialVersionUID = 6064018555599490502L;
-    private static Logger log = Logger.getLogger(MyImage.class);
+    private static Logger log = LogManager.getLogger(MyImage.class);
     /**
      *
      */

@@ -1,7 +1,9 @@
 package com.kedacom.middleware.epro;
 
 import keda.common.util.ATaskThread;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -14,7 +16,7 @@ import java.util.Set;
  */
 public class EProConnMonitorThread extends ATaskThread {
 
-    private static final Logger log = Logger.getLogger(EProConnMonitorThread.class);
+    private static final Logger log = LogManager.getLogger(EProConnMonitorThread.class);
 
     private EProClient client;
 

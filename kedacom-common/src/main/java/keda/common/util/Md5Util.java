@@ -1,6 +1,7 @@
 package keda.common.util;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -16,7 +17,7 @@ import java.security.NoSuchAlgorithmException;
  *
  */
 public class Md5Util {
-	private static Logger log = Logger.getLogger(Md5Util.class);
+	private static Logger log = LogManager.getLogger(Md5Util.class);
 	private final static String[] hexDigits = { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f" };  
 
 	/**

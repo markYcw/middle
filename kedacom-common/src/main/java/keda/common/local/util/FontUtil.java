@@ -1,6 +1,7 @@
 package keda.common.local.util;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,7 +18,7 @@ import java.net.URL;
  */
 public class FontUtil {
 	/** 日志工具类 **/
-	private static Logger log = Logger.getLogger(FontUtil.class);
+	private static Logger log = LogManager.getLogger(FontUtil.class);
 	/** 系统支持字体 **/
 	String fontList[] = null;
 

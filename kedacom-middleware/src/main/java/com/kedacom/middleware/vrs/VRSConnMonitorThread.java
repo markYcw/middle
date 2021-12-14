@@ -1,7 +1,9 @@
 package com.kedacom.middleware.vrs;
 
 import keda.common.util.ATaskThread;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -12,7 +14,7 @@ import java.util.Set;
 *
 */
 public class VRSConnMonitorThread extends ATaskThread {
-   private static final Logger log = Logger.getLogger(VRSConnMonitorThread.class);
+   private static final Logger log = LogManager.getLogger(VRSConnMonitorThread.class);
 
    private VRSClient client;
 

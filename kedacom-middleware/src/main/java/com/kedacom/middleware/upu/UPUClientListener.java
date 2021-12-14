@@ -6,7 +6,9 @@ import com.kedacom.middleware.client.TCPClientListenerAdapter;
 import com.kedacom.middleware.epro.EProSession;
 import com.kedacom.middleware.upu.domain.UPU;
 import com.kedacom.middleware.upu.notify.LostCntNotify;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
@@ -17,7 +19,7 @@ import java.util.List;
  * @alterby ycw 2021/7/15 17:17
  */
 public class UPUClientListener extends TCPClientListenerAdapter {
-	private static final Logger log = Logger.getLogger(UPUClientListener.class);
+	private static final Logger log = LogManager.getLogger(UPUClientListener.class);
 	
 	private UPUClient client;
 

@@ -1,6 +1,7 @@
 package keda.common.util;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.net.InetAddress;
 import java.net.NetworkInterface;
@@ -8,7 +9,7 @@ import java.net.SocketException;
 import java.util.Enumeration;
 
 public class NetUtil {
-	private static Logger log = Logger.getLogger(NetUtil.class);
+	private static Logger log = LogManager.getLogger(NetUtil.class);
 	/**
 	# * 根据网卡取本机配置的IP
 	# * 如果是双网卡的，则取出外网IP

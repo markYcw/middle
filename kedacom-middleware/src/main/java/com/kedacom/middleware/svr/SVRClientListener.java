@@ -7,7 +7,9 @@ import com.kedacom.middleware.svr.domain.CreateBurnResponseInfo;
 import com.kedacom.middleware.svr.domain.Devinfo;
 import com.kedacom.middleware.svr.domain.SVR;
 import com.kedacom.middleware.svr.notify.*;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
@@ -20,7 +22,7 @@ import java.util.List;
  */
 public class SVRClientListener extends TCPClientListenerAdapter {
 
-	private static final Logger log = Logger.getLogger(SVRClientListener.class);
+	private static final Logger log = LogManager.getLogger(SVRClientListener.class);
 	
 	private SVRClient client;
 
