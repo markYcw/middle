@@ -30,7 +30,7 @@ public class CreateBurnNotify extends SVRNotify {
     public void parseData(JSONObject jsonData) throws DataException {
         super.parseNty(jsonData);
         JSONObject burntask = jsonData.optJSONObject("burntask");
-
+        burnTask.setSsno(getSsno());
         burnTask.setBurntaskdbid(burntask.optInt("burntaskdbid"));
         burnTask.setBurntaskid(burntask.optInt("burntaskid"));
         burnTask.setDurationtime(burntask.optString("durationtime"));

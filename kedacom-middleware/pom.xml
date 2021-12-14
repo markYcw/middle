@@ -6,7 +6,7 @@
 
     <groupId>com.kedacom.middleware</groupId>
     <artifactId>kedacom-middleware</artifactId>
-    <version>1.0.7.65</version>
+    <version>1.0.7.66</version>
     <description>中间件</description>
 
     <properties>
