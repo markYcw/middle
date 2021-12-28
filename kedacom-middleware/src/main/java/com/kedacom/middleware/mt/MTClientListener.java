@@ -93,6 +93,16 @@ public class MTClientListener extends TCPClientListenerAdapter {
 		for(MTSession session : sessions){
 			int ssid = session.getSsid();
 			client.getSessionManager().removeSession(ssid);
+				session.setStatus(MTSessionStatus.disconnect);
+				MT mt = session.getMt();
+				if(mt != null){
+					//现设备属于业务自己控制链路不需要掉线以后重新连接
+					//client.reStartConnect(mt.getId());
+					for (MTNotifyListener l : client.getAllListeners()) {
+						l.onMtOffine(mt.getId(), mt.getIp());
+					}
+				}
+
 		}
 	}
 

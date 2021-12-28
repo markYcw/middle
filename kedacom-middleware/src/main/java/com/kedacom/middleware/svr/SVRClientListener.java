@@ -8,7 +8,6 @@ import com.kedacom.middleware.svr.domain.Devinfo;
 import com.kedacom.middleware.svr.domain.SVR;
 import com.kedacom.middleware.svr.notify.*;
 import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.List;
@@ -82,6 +81,16 @@ public class SVRClientListener extends TCPClientListenerAdapter {
 		for(SVRSession session : sessions){
 			int ssid = session.getSsid();
 			client.getSessionManager().removeSession(ssid);
+			session.setStatus(SVRSessionStatus.disconnect);
+			SVR svr = session.getSvr();
+			if(svr != null){
+				//现设备属于业务自己控制链路不需要掉线以后重新连接
+				//client.reStartConnect(svr.getIp());
+
+				for (SVRNotifyListener l : client.getAllListeners()) {
+					l.onSVROffine( svr.getIp());
+				}
+			}
 		}
 	}
 

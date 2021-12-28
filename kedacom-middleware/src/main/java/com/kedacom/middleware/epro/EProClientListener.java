@@ -85,7 +85,11 @@ public class EProClientListener extends TCPClientListenerAdapter {
         List<EProSession> sessions = client.getSessionManager().getAllSessions();
         for(EProSession session : sessions){
             int ssid = session.getSsid();
+            EPro ePro = session.getEPro();
             client.getSessionManager().removeSession(ssid);
+            for (EProNotifyListener l : client.getAllListeners()) {
+                l.onEProOffLine(ePro.getId(), ePro.getIp());
+            }
         }
     }
 

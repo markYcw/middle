@@ -74,6 +74,13 @@ public class VRSClientListener extends TCPClientListenerAdapter {
 		for(VRSSession session : sessions){
 			int ssid = session.getSsid();
 			client.getSessionManager().removeSession(ssid);
+			session.setStatus(VRSSessionStatus.DISCONNECT);
+			VRS vrs = session.getVrs();
+			if(vrs != null){
+				for (VRSNotifyListener l : client.getAllListeners()) {
+					l.onVRSOffine(vrs.getId(), vrs.getIp());
+				}
+			}
 		}
 	}
 	
