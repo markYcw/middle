@@ -33,7 +33,7 @@ public class EProDemo {
       final EProClient eProClient = km.getEProClient();
 
         String id = "1";
-        String ip = "172.16.131.215";
+        String ip = "172.16.128.106";
         int port = 8888;
 
         final EPro ePro = new EPro();
@@ -42,10 +42,11 @@ public class EProDemo {
         ePro.setPort(port);
 
         eProClient.addEPro(ePro);
+        eProClient.login(id);
         eProClient.openCamera(ePro);
         eProClient.startRec(ePro);
         try {
-            Thread.sleep(60000);
+            Thread.sleep(20000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -53,6 +54,11 @@ public class EProDemo {
         String audio = response.getAudio();
         String video = response.getVideo();
         eProClient.getRec(ePro,audio);
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         eProClient.getRec(ePro,video);
     }
 

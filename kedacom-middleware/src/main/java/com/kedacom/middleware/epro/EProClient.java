@@ -126,7 +126,7 @@ public class EProClient {
      */
     public void addEPro(EPro ePro) {
         this.EProCacheByID.put(ePro.getId(), ePro);
-        this.reStartConnect(ePro.getId());
+        //this.reStartConnect(ePro.getId());
     }
 
     /**
