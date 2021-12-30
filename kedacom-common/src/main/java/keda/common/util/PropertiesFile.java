@@ -1,7 +1,7 @@
 package keda.common.util;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+
+import org.apache.log4j.Logger;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -30,7 +30,7 @@ import java.util.Set;
  */
 public class PropertiesFile {
 	
-	private static Logger log = LogManager.getLogger(PropertiesFile.class);
+	private static Logger log = Logger.getLogger(PropertiesFile.class);
 	
 	/**
 	 * 应用程序根目录， 配置文件将被保存到此目录下

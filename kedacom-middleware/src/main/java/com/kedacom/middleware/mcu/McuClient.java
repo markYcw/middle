@@ -12,9 +12,9 @@ import com.kedacom.middleware.exception.RemoteException;
 import com.kedacom.middleware.mcu.domain.*;
 import com.kedacom.middleware.mcu.request.*;
 import com.kedacom.middleware.mcu.response.*;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+
+
+import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -28,7 +28,7 @@ import java.util.Set;
  */
 public class McuClient {
 
-	private static final Logger log = LogManager.getLogger(McuClient.class);
+	private static final Logger log = Logger.getLogger(McuClient.class);
 	
 	/**
 	 * 会话管理。根据目前的设计，一个终端最多一个会话，好比一个监控平台只有一个主链。

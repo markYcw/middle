@@ -5,8 +5,8 @@ import keda.common.server.disk.DiskInfo;
 import keda.common.server.mem.MemoryInfo;
 import keda.common.server.net.NetInfo;
 import keda.common.server.os.OsInfo;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+
+import org.apache.log4j.Logger;
 import org.hyperic.sigar.*;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -31,7 +31,7 @@ import java.util.Properties;
  */
 public class ServerHypericInfoUtil {
 	
-	public final static Logger log = LogManager.getLogger(ServerHypericInfoUtil.class);
+	public final static Logger log = Logger.getLogger(ServerHypericInfoUtil.class);
 	
 	
 	/**

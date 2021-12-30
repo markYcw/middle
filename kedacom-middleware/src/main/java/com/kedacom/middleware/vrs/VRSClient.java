@@ -10,9 +10,9 @@ import com.kedacom.middleware.exception.RemoteException;
 import com.kedacom.middleware.vrs.domain.*;
 import com.kedacom.middleware.vrs.request.*;
 import com.kedacom.middleware.vrs.response.*;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+
+
+import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -24,7 +24,7 @@ import java.util.List;
  * @alterby ycw 2021/7/15 17:17
  */
 public class VRSClient {
-	private static final Logger log = LogManager.getLogger(VRSClient.class);
+	private static final Logger log = Logger.getLogger(VRSClient.class);
 	private KM km;
 
 	/**

@@ -10,9 +10,9 @@ import com.kedacom.middleware.exception.RemoteException;
 import com.kedacom.middleware.mt.domain.*;
 import com.kedacom.middleware.mt.request.*;
 import com.kedacom.middleware.mt.response.*;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+
+
+import org.apache.log4j.Logger;
 
 
 import java.util.ArrayList;
@@ -25,7 +25,7 @@ import java.util.List;
  *
  */
 public class MTClient {
-	private static final Logger log = LogManager.getLogger(MTClient.class);
+	private static final Logger log = Logger.getLogger(MTClient.class);
 
 	private KM km;
 

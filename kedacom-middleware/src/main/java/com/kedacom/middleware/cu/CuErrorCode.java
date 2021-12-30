@@ -1,8 +1,8 @@
 package com.kedacom.middleware.cu;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+
+
+import org.apache.log4j.Logger;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.MissingResourceException;
@@ -16,7 +16,7 @@ import java.util.Properties;
 public class CuErrorCode {
 
 	private static Properties properties = new  Properties();
-	private static final Logger log = LogManager.getLogger(CuErrorCode.class);
+	private static final Logger log = Logger.getLogger(CuErrorCode.class);
 	
 	static {
 		init();

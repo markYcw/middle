@@ -16,9 +16,9 @@ import com.kedacom.middleware.gk.request.LogoutRequest;
 import com.kedacom.middleware.gk.response.GKResponse;
 import com.kedacom.middleware.gk.response.GetRegentityListResponse;
 import com.kedacom.middleware.gk.response.LoginResponse;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+
+
+import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -30,7 +30,7 @@ import java.util.List;
  *
  */
 public class GKClient {
-	private static final Logger log = LogManager.getLogger(GKClient.class);
+	private static final Logger log = Logger.getLogger(GKClient.class);
 	private KM km;
 
 	/**

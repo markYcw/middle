@@ -1,8 +1,8 @@
 package com.kedacom.middleware.client;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+
+
+import org.apache.log4j.Logger;
 
 /**
  * TCP连接监控。
@@ -11,7 +11,7 @@ import org.apache.logging.log4j.Logger;
  */
 public class TCPClientConnMonitor {
 
-	private static final Logger log = LogManager.getLogger(TCPClientConnMonitor.class);
+	private static final Logger log = Logger.getLogger(TCPClientConnMonitor.class);
 	private TCPClient tcpClient;
 	
 	public TCPClientConnMonitor(TCPClient tcpClient){

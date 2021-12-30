@@ -1,7 +1,7 @@
 package keda.common.util;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+
+import org.apache.log4j.Logger;
 
 
 /**
@@ -11,7 +11,7 @@ import org.apache.logging.log4j.Logger;
  */
 public abstract class ATaskThread implements Runnable{
 
-	private static final Logger log = LogManager.getLogger(ATaskThread.class);
+	private static final Logger log = Logger.getLogger(ATaskThread.class);
 	
 	private static int threadIndex = 0;
 	

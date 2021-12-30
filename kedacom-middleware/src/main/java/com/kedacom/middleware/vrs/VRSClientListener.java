@@ -7,9 +7,9 @@ import com.kedacom.middleware.epro.EProSession;
 import com.kedacom.middleware.vrs.domain.VRS;
 import com.kedacom.middleware.vrs.notify.LostCntNotify;
 import com.kedacom.middleware.vrs.notify.PlayStatusNotify;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+
+
+import org.apache.log4j.Logger;
 
 import java.util.List;
 
@@ -21,7 +21,7 @@ import java.util.List;
  */
 public class VRSClientListener extends TCPClientListenerAdapter {
 
-	private static final Logger log = LogManager.getLogger(VRSClientListener.class);
+	private static final Logger log = Logger.getLogger(VRSClientListener.class);
 	
 	private VRSClient client;
 

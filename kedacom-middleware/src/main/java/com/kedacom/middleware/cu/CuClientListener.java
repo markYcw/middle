@@ -8,15 +8,15 @@ import com.kedacom.middleware.cu.notify.DeviceStatusNotify;
 import com.kedacom.middleware.cu.notify.GetDeviceNotify;
 import com.kedacom.middleware.cu.notify.GetGroupNotify;
 import com.kedacom.middleware.cu.notify.LostCnntNotify;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+
+
+import org.apache.log4j.Logger;
 
 import java.util.List;
 
 public class CuClientListener extends TCPClientListenerAdapter {
 
-	private static final Logger log = LogManager.getLogger(CuClientListener.class);
+	private static final Logger log = Logger.getLogger(CuClientListener.class);
 	
 	private CuClient client;
 

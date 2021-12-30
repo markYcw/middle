@@ -1,7 +1,7 @@
 package keda.common.httpclient;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+
+import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -13,7 +13,7 @@ import java.util.Set;
  * 系统事件帮助执行类，是一个后台执行线程
  */
 public class SystemEventHelper {
-	private static Logger log = LogManager.getLogger(SystemEventHelper.class);
+	private static Logger log = Logger.getLogger(SystemEventHelper.class);
 	/**监听组**/
 	private Set<SystemEventListener> listeners = new HashSet<SystemEventListener>();
 	private HelperThread t = null;

@@ -1,7 +1,7 @@
 package keda.common.local.util;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+
+import org.apache.log4j.Logger;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -24,7 +24,7 @@ public class PropertiesUtil {
     /**
      * 日志工具类
      **/
-    private static Logger log = LogManager.getLogger(PropertiesUtil.class);
+    private static Logger log = Logger.getLogger(PropertiesUtil.class);
     /// 配置文件资源
     private Properties settingpros;
     /// 配置多语言文件名称

@@ -10,9 +10,9 @@ import com.kedacom.middleware.exception.ConnectException;
 import com.kedacom.middleware.exception.DataException;
 import com.kedacom.middleware.exception.KMException;
 import com.kedacom.middleware.exception.RemoteException;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+
+
+import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -26,7 +26,7 @@ import java.util.List;
  */
 public class EProClient {
 
-    private static final Logger log = LogManager.getLogger(EProClient.class);
+    private static final Logger log = Logger.getLogger(EProClient.class);
 
     private KM km;
 
@@ -553,10 +553,27 @@ public class EProClient {
      * @param ePro
      * @throws KMException
      */
-    public void stopRec(EPro ePro) throws KMException {
+    public StopRecResponse stopRec(EPro ePro) throws KMException {
         int ssid = loginByEPro(ePro);
         StopRecRequest request = new StopRecRequest();
         request.setSsid(ssid);
+
+       StopRecResponse response = (StopRecResponse)this.sendRequest(request);
+       return response;
+
+    }
+
+    /**
+     * 获取录像
+     * @param file 要获取的文件名称
+     * @param ePro
+     * @throws KMException
+     */
+    public void getRec(EPro ePro, String file) throws KMException {
+        int ssid = loginByEPro(ePro);
+        GetRecRequest request = new GetRecRequest();
+        request.setSsid(ssid);
+        request.setFile(file);
 
         this.sendRequest(request);
 

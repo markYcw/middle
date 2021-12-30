@@ -3,8 +3,8 @@ package keda.common.util;
 import keda.common.exception.MountFileNotFoundException;
 import keda.common.exception.RunTimeExecException;
 import keda.common.jsonobject.JsonAreaTreeGridNode;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+
+import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -31,7 +31,7 @@ import java.util.zip.ZipInputStream;
  *
  */
 public class ToolsUtil {
-	private static Logger log = LogManager.getLogger(ToolsUtil.class);
+	private static Logger log = Logger.getLogger(ToolsUtil.class);
 	/**状态在线标识*/
 	public static final int STATUS_ONLINE = 1;
 	/**状态不在线标识*/

@@ -2,9 +2,9 @@ package com.kedacom.middleware.mcu;
 
 import com.kedacom.middleware.exception.RemoteException;
 import keda.common.util.ATaskThread;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+
+
+import org.apache.log4j.Logger;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -16,7 +16,7 @@ import java.util.Set;
 */
 public class McuConnMonitorThread extends ATaskThread {
 
-   private static final Logger log = LogManager.getLogger(McuConnMonitorThread.class);
+   private static final Logger log = Logger.getLogger(McuConnMonitorThread.class);
 
    private McuClient client;
    private Set<String> ids = new HashSet<String>();

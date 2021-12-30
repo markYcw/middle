@@ -9,9 +9,9 @@ import com.kedacom.middleware.common.response.ReadkeyResponse;
 import com.kedacom.middleware.common.response.ReadkeysResponse;
 import com.kedacom.middleware.exception.KMException;
 import com.kedacom.middleware.exception.RemoteException;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+
+
+import org.apache.log4j.Logger;
 
 import java.util.List;
 
@@ -22,7 +22,7 @@ import java.util.List;
  */
 public class CommonClient {
 
-	private static final Logger log = LogManager.getLogger(CommonClient.class);
+	private static final Logger log = Logger.getLogger(CommonClient.class);
 
 	private KM km;
 	public CommonClient(KM km){

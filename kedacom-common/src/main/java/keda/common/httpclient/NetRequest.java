@@ -3,8 +3,8 @@ package keda.common.httpclient;
 import keda.common.io.MultiPartFormOutputStream;
 import keda.common.util.ByteArray;
 import keda.common.util.ToolsUtil;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+
+import org.apache.log4j.Logger;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -21,7 +21,7 @@ import java.util.Iterator;
  *
  */
 public class NetRequest {
-	private static Logger log = LogManager.getLogger(NetRequest.class);
+	private static Logger log = Logger.getLogger(NetRequest.class);
 	public String server;
 	public String sessionId;
 	private static final String BOUNDARY = "---------7d4a6d158c9";// 定义数据分隔线

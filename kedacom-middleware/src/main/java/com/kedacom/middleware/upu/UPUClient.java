@@ -16,9 +16,9 @@ import com.kedacom.middleware.upu.request.UPURequest;
 import com.kedacom.middleware.upu.response.FindMtByE164Response;
 import com.kedacom.middleware.upu.response.LoginResponse;
 import com.kedacom.middleware.upu.response.UPUResponse;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+
+
+import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -31,7 +31,7 @@ import java.util.List;
  *
  */
 public class UPUClient {
-	private static final Logger log = LogManager.getLogger(UPUClient.class);
+	private static final Logger log = Logger.getLogger(UPUClient.class);
 	private KM km;
 
 	/**

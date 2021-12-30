@@ -1,7 +1,7 @@
 package keda.common.httpclient;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+
+import org.apache.log4j.Logger;
 import org.json.JSONObject;
 
 import java.text.MessageFormat;
@@ -9,7 +9,7 @@ import java.text.MessageFormat;
 public class NetServiceZFJD {
 	public static final String DEVICE_TYPE_ENCODER = "encoder";
 	public static final String DEVICE_TYPE_DECODER = "decoder";
-	public static Logger log = LogManager.getLogger(NetServiceZFJD.class);
+	public static Logger log = Logger.getLogger(NetServiceZFJD.class);
 	private static NetServiceZFJD instance;
 	
 	private NetServiceZFJD() {

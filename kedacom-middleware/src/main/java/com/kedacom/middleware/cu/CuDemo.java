@@ -6,8 +6,8 @@ import com.kedacom.middleware.cu.domain.*;
 import com.kedacom.middleware.cu.notify.GetTvWallNotify;
 import com.kedacom.middleware.exception.KMException;
 import keda.common.util.TimeUtil;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+
+import org.apache.log4j.Logger;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -20,7 +20,7 @@ import java.util.List;
  */
 public class CuDemo {
 
-    private static final Logger log = LogManager.getLogger(CuDemo.class);
+    private static final Logger log = Logger.getLogger(CuDemo.class);
 
     public static void main(String[] args) {
         demo();

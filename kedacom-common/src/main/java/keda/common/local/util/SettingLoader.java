@@ -1,7 +1,7 @@
 package keda.common.local.util;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+
+import org.apache.log4j.Logger;
 //import org.apache.log4j.helpers.OptionConverter;
 
 import java.io.InterruptedIOException;
@@ -13,7 +13,7 @@ public class SettingLoader {
 	static final String TSTR = "Caught Exception while in Loader.getResource. This may be innocuous.";
 	private static boolean java1 = true;
 	private static boolean ignoreTCL = false;
-	private static Logger log = LogManager.getLogger(SettingLoader.class);
+	private static Logger log = Logger.getLogger(SettingLoader.class);
 
 	public static URL getResource(String resource) {
 		ClassLoader classLoader = null;

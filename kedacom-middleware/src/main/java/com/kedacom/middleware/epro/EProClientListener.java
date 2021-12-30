@@ -9,9 +9,9 @@ import com.kedacom.middleware.mcu.McuNotifyListener;
 import com.kedacom.middleware.mcu.McuSession;
 import com.kedacom.middleware.mcu.McuSessionStatus;
 import com.kedacom.middleware.mcu.domain.Mcu;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+
+
+import org.apache.log4j.Logger;
 
 import java.util.List;
 
@@ -23,7 +23,7 @@ import java.util.List;
  */
 public class EProClientListener extends TCPClientListenerAdapter {
 
-    private static final Logger log = LogManager.getLogger(EProClientListener.class);
+    private static final Logger log = Logger.getLogger(EProClientListener.class);
 
     private EProClient client;
 

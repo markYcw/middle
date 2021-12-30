@@ -5,9 +5,9 @@ import com.kedacom.middleware.exception.DataException;
 import com.kedacom.middleware.exception.KMException;
 import com.kedacom.middleware.exception.NetException;
 import com.kedacom.middleware.util.ConnStatus;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+
+
+import org.apache.log4j.Logger;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -29,7 +29,7 @@ import java.util.concurrent.Executors;
  */
 public class TCPClient implements IClient {
 
-	private static final Logger log = LogManager.getLogger(TCPClient.class);
+	private static final Logger log = Logger.getLogger(TCPClient.class);
 
 	/**
 	 * 等待“响应”的默认超时时间，单位：毫秒

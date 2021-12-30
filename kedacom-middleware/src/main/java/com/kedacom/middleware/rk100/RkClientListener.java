@@ -6,9 +6,9 @@ import com.kedacom.middleware.client.TCPClientListenerAdapter;
 import com.kedacom.middleware.epro.EProSession;
 import com.kedacom.middleware.rk100.domain.RK;
 import com.kedacom.middleware.rk100.notify.LostCntNotify;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+
+
+import org.apache.log4j.Logger;
 
 import java.util.List;
 
@@ -21,7 +21,7 @@ import java.util.List;
  */
 public class RkClientListener extends TCPClientListenerAdapter {
 
-    private static final Logger log = LogManager.getLogger(RkClientListener.class);
+    private static final Logger log = Logger.getLogger(RkClientListener.class);
 
     private RkClient client;
 

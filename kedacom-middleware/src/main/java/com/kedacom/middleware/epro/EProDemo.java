@@ -2,8 +2,8 @@ package com.kedacom.middleware.epro;
 
 import com.kedacom.middleware.KM;
 import com.kedacom.middleware.epro.domain.EPro;
+import com.kedacom.middleware.epro.response.StopRecResponse;
 import com.kedacom.middleware.exception.KMException;
-import keda.common.util.ATaskThread;
 
 /**
  * @ClassName ProDemo
@@ -33,7 +33,7 @@ public class EProDemo {
       final EProClient eProClient = km.getEProClient();
 
         String id = "1";
-        String ip = "172.16.129.221";
+        String ip = "172.16.131.215";
         int port = 8888;
 
         final EPro ePro = new EPro();
@@ -42,17 +42,18 @@ public class EProDemo {
         ePro.setPort(port);
 
         eProClient.addEPro(ePro);
-
-        ATaskThread thread = new ATaskThread() {
-            @Override
-            public void doWork() throws Exception {
-                int login = eProClient.login(ip, port);
-                System.out.println("==================登录E10Rro成功：" + login);
-            }
-        };
-        thread.setName("EPro-work");
-        thread.setTimeout(20000);
-        thread.start();
+        eProClient.openCamera(ePro);
+        eProClient.startRec(ePro);
+        try {
+            Thread.sleep(60000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        StopRecResponse response = eProClient.stopRec(ePro);
+        String audio = response.getAudio();
+        String video = response.getVideo();
+        eProClient.getRec(ePro,audio);
+        eProClient.getRec(ePro,video);
     }
 
 }

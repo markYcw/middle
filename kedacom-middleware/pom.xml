@@ -6,7 +6,7 @@
 
     <groupId>com.kedacom.middleware</groupId>
     <artifactId>kedacom-middleware</artifactId>
-    <version>1.0.7.67</version>
+    <version>1.0.7.68</version>
     <description>中间件</description>
 
     <properties>
@@ -22,9 +22,9 @@
         </dependency>
         <!-- https://mvnrepository.com/artifact/log4j/log4j -->
         <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-api</artifactId>
-            <version>2.16.0</version>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.17</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/net.sf.ezmorph/ezmorph -->
         <dependency>

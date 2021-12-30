@@ -10,9 +10,9 @@ import com.kedacom.middleware.exception.RemoteException;
 import com.kedacom.middleware.svr.domain.*;
 import com.kedacom.middleware.svr.request.*;
 import com.kedacom.middleware.svr.response.*;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+
+
+import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -24,7 +24,7 @@ import java.util.List;
  * @author DengJie
  */
 public class SVRClient {
-    private static final Logger log = LogManager.getLogger(SVRClient.class);
+    private static final Logger log = Logger.getLogger(SVRClient.class);
     private static KM km;
 
     /**
