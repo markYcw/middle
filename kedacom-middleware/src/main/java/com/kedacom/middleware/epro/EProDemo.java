@@ -43,6 +43,11 @@ public class EProDemo {
 
         eProClient.addEPro(ePro);
         eProClient.login(id);
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         eProClient.openCamera(ePro);
         eProClient.startRec(ePro);
         try {
