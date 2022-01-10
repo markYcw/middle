@@ -569,6 +569,28 @@ public class SVRClient {
     }
 
     /**
+     * 追加刻录 支持中间件上传附件到SVR
+     *
+     * @param svr
+     * @param filepathname 追加刻录的本地文件路径名
+     * @param type         0:文件名全路径  1:文件夹全路径
+     * @throws KMException
+     * @author ycw
+     */
+    public int appendBurnNew(SVR svr, String filepathname, int type, String dirname,int needupload) throws KMException {
+        int ssid = loginBySVR(svr);
+        AppendBurnNewRequest request = new AppendBurnNewRequest();
+        request.setSsid(ssid);
+        request.setType(type);
+        request.setFilepathname(filepathname);
+        request.setDirname(dirname);
+        request.setNeedupload(needupload);
+
+        AppendBurnResponse response = (AppendBurnResponse) this.sendRequest(request);
+        return response.getErrorcode();
+    }
+
+    /**
      * 停止刻录
      *
      * @param svr
