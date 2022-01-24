@@ -157,6 +157,8 @@ public class DeviceStatusNotify extends CuNotify {
 						//0: 位置 1：空闲 2：录像 3：尝试中 4：停止中
 						if (plat == 2) {
 							status.setPlatRecord(true);
+						}else if(plat == 0){
+							System.out.println("========监控平台平台录像状态通知");
 						}else {
 							status.setPlatRecord(false);
 						}
@@ -165,6 +167,8 @@ public class DeviceStatusNotify extends CuNotify {
 						if (pu == 2) {
 							status.setPuRecord(true);
 
+						}else if(pu == 0){
+							System.out.println("========监控平台前端录像状态通知");
 						}else {
 							status.setPuRecord(false);
 
