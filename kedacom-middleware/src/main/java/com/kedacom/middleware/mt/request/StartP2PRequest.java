@@ -82,6 +82,7 @@ public class StartP2PRequest extends MTRequest {
 		
 		JSONObject data = new JSONObject();
 		data.put("req", req);
+		data.put("rate",bitrate);
 		data.put("remotemt", remotemt);
 		
 		//返回
