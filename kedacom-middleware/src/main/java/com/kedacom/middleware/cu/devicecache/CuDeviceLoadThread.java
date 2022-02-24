@@ -36,7 +36,7 @@ public class CuDeviceLoadThread  extends TCPClientListenerAdapter{
 	private int currSsid = CuSession.INVALID_SSID; //
 
 	/**
-	 * 已完成设备加载的监控平台 key 是监控平台的ssid，value是1
+	 * 设备加载池，当完成设备加载时去除当前放入的ssid key 是监控平台的ssid，value是1
 	 */
 	public static ConcurrentHashMap<Integer,Integer> okPoll = new ConcurrentHashMap<>();
 	
@@ -176,6 +176,8 @@ public class CuDeviceLoadThread  extends TCPClientListenerAdapter{
 		if(nextSsid >= 0){
 			this.currSsid = nextSsid;
 			try {
+				//开始加载分组并把ssid放入设备加载池
+				okPoll.put(nextSsid,1);
 				this.requestLoadDeviceGroup(nextSsid);
 			} catch (KMException e) {
 				log.error("加载指定平台的设备分组失败, ssid=" + nextSsid, e);
@@ -196,7 +198,7 @@ public class CuDeviceLoadThread  extends TCPClientListenerAdapter{
 		CuSession session = client.getSessionManager().getSessionBySSID(ssid);
 		if(success){
 			//设备加载完成成功
-			okPoll.put(ssid,1);
+			okPoll.remove(ssid);
 			unKownDeviceGroup.remove(ssid);
 			session.getDeviceCache().setLoadComplete(true);
 			this.onDeviceLoadCompate(session.getCu().getId());
