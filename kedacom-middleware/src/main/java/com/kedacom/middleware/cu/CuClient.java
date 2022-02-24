@@ -99,7 +99,7 @@ public class CuClient {
 	
 	/**
 	 * 增加监听器
-	 * @see #removeListener(TCPClientListener)
+	 * @see # removeListener(TCPClientListener)
 	 * @param listener
 	 * @return
 	 */
@@ -110,7 +110,7 @@ public class CuClient {
 	/**
 	 * 删除监听器
 	 * @param listener
-	 * @see #addListener(TCPClientListener)
+	 * @see # addListener(TCPClientListener)
 	 * @return
 	 */
 	public boolean removeListener(CuNotifyListener listener){
@@ -261,7 +261,7 @@ public class CuClient {
 	/**
 	 * 获取会话标识
 	 * @param id 监控平台ID，{@link Cu#getId()}
-	 * @return 如果已连接，返回ssid，否则返回{@link CuSession.INVALID_SSID}
+	 * @return 如果已连接，返回ssid，否则返回{@linkCuSession.INVALID_SSID}
 	 */
 	protected int tryGetSSIDByID(int id) throws ConnectException {
 		CuSession session = sessionManager.getSessionByCuID(id);
@@ -290,7 +290,7 @@ public class CuClient {
 	/**
 	 * 根据ID登录监控平台
 	 * @see #addCu(Cu)
-	 * @see #login(String, String, String, String)
+	 * @see # login(String, String, String, String)
 	 * @see #logout(int)
 	 * @param id
 	 * @return
@@ -345,6 +345,7 @@ public class CuClient {
 			sessionManager.putSession(session);
 			
 			//开始加载分组
+			log.info("开始加载分组ssid为："+ssid);
 			deviceLoadThread.addSsid(ssid);
 			
 		}

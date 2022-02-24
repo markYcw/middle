@@ -59,8 +59,10 @@ public class CuDeviceLoadThread  extends TCPClientListenerAdapter{
 	 * @see #removeSsid(int)
 	 */
 	public void addSsid(int ssid){
+		log.info("开始加载指定会话的设备ssid为："+ssid);
 		synchronized (ssidCache) {
 			ssidCache.addLast(ssid);
+			log.info("ssidCache此时的状态为："+ssidCache);
 		}
 		this.startThread();
 	}
@@ -94,6 +96,8 @@ public class CuDeviceLoadThread  extends TCPClientListenerAdapter{
 						int cacheSize = 0;
 						synchronized (ssidCache) {
 							cacheSize = ssidCache.size();
+							log.info("cacheSize:"+cacheSize);
+							log.info("currSsid:"+currSsid);
 						}
 						if(currSsid == CuSession.INVALID_SSID && cacheSize > 0){
 							CuDeviceLoadThread.this.doWork();
@@ -106,6 +110,7 @@ public class CuDeviceLoadThread  extends TCPClientListenerAdapter{
 									log.error("lock.wait() failed" , e);
 								}
 							}
+							log.info("======即将进入加载设备步骤此时的work："+work);
 							
 							if(!work){
 								break;
@@ -120,6 +125,7 @@ public class CuDeviceLoadThread  extends TCPClientListenerAdapter{
 			loadThread.start();
 		}else{
 			synchronized (lock) {
+				log.info("loadThread线程已存在准备唤醒");
 				lock.notifyAll();
 			}
 		}
