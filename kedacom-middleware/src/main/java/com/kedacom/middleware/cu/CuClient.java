@@ -419,6 +419,7 @@ public class CuClient {
 		if(ssid >= 0){
 			deviceLoadThread.removeSsid(ssid);
 			CuSession session = sessionManager.removeSession(ssid);
+			CuDeviceLoadThread.okPoll.remove(ssid);
 			if(session != null && session.isLogin()){
 				try {
 					this.cuOperate.logout(ssid);

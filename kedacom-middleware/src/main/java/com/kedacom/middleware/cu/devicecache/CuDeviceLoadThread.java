@@ -14,6 +14,7 @@ import keda.common.util.ToolsUtil;
 import org.apache.log4j.Logger;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 监控设备加载线程
@@ -33,6 +34,11 @@ public class CuDeviceLoadThread  extends TCPClientListenerAdapter{
 	 * 当前正在加载的ssid
 	 */
 	private int currSsid = CuSession.INVALID_SSID; //
+
+	/**
+	 * 已完成设备加载的监控平台 key 是监控平台的ssid，value是1
+	 */
+	public static ConcurrentHashMap<Integer,Integer> okPoll = new ConcurrentHashMap<>();
 	
 	/**
 	 * 未加载设备的分组集合
@@ -189,7 +195,8 @@ public class CuDeviceLoadThread  extends TCPClientListenerAdapter{
 		
 		CuSession session = client.getSessionManager().getSessionBySSID(ssid);
 		if(success){
-			//成功
+			//设备加载完成成功
+			okPoll.put(ssid,1);
 			unKownDeviceGroup.remove(ssid);
 			session.getDeviceCache().setLoadComplete(true);
 			this.onDeviceLoadCompate(session.getCu().getId());
