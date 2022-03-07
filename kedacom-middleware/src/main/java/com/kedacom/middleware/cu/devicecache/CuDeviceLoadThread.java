@@ -331,7 +331,7 @@ public class CuDeviceLoadThread  extends TCPClientListenerAdapter{
 	 * 收到通知：分组
 	 * @param notify
 	 */
-	private void onDeviceGroupNotify(GetGroupNotify notify){
+	private synchronized void onDeviceGroupNotify(GetGroupNotify notify){
 		
 		int ssid = notify.getSsid();
 		boolean isSend = notify.isIsend();
