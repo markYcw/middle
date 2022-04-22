@@ -17,6 +17,7 @@ import org.apache.log4j.Logger;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * “录播服务器”接口访问。
@@ -100,9 +101,15 @@ public class VRSClient {
 	 * 增加VRS信息。
 	 * @param vrs
 	 */
-	public void addVRS(VRS vrs) throws KMException {
+	public void addVRS(VRS vrs){
 		this.vrsCacheByID.put(vrs.getId(), vrs);
-		this.tryLogin(vrs.getId());
+		CompletableFuture.runAsync(()-> {
+			try {
+				this.tryLogin(vrs.getId());
+			} catch (Exception e) {
+				log.error("=========登录VRS失败{}",e);
+			}
+		});
 	}
 	
 	/**

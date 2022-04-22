@@ -23,6 +23,7 @@ import org.apache.log4j.Logger;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * “UPU服务器”接口访问。
@@ -109,9 +110,15 @@ public class UPUClient {
 	 * 增加UPU信息。
 	 * @param UPU
 	 */
-	public void addUPU(UPU UPU) throws KMException {
+	public void addUPU(UPU UPU) {
 		this.upuCacheByID.put(UPU.getId(), UPU);
-		tryLogin(UPU.getId());
+		CompletableFuture.runAsync(()-> {
+			try {
+				tryLogin(UPU.getId());
+			} catch (Exception e) {
+				log.error("=========登录UPU失败{}",e);
+			}
+		});
 	}
 	
 	/**
