@@ -438,6 +438,7 @@ public class EProClient {
      * @date:
      */
     public void logout(String id) {
+        log.info("=============UPU登出");
         int ssid = -1;
         try {
             ssid = this.tryGetSSIDByIDForLogout(id);

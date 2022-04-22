@@ -100,9 +100,9 @@ public class VRSClient {
 	 * 增加VRS信息。
 	 * @param vrs
 	 */
-	public void addVRS(VRS vrs){
+	public void addVRS(VRS vrs) throws KMException {
 		this.vrsCacheByID.put(vrs.getId(), vrs);
-		this.reStartConnect(vrs.getId());
+		this.tryLogin(vrs.getId());
 	}
 	
 	/**
@@ -154,7 +154,7 @@ public class VRSClient {
 	 * 设置（添加或修改）VRS信息
 	 * @param vrs
 	 */
-	public void setVRS(VRS vrs){
+	public void setVRS(VRS vrs) throws KMException {
 		VRS old = this.vrsCacheByID.get(vrs.getId());
 		if(old != null){
 			updateVRS(vrs);

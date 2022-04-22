@@ -109,9 +109,9 @@ public class UPUClient {
 	 * 增加UPU信息。
 	 * @param UPU
 	 */
-	public void addUPU(UPU UPU){
+	public void addUPU(UPU UPU) throws KMException {
 		this.upuCacheByID.put(UPU.getId(), UPU);
-		this.reStartConnect(UPU.getId());
+		tryLogin(UPU.getId());
 	}
 	
 	/**
@@ -163,7 +163,7 @@ public class UPUClient {
 	 * 设置（添加或修改）UPU信息
 	 * @param UPU
 	 */
-	public void setUPU(UPU UPU){
+	public void setUPU(UPU UPU) throws KMException {
 		com.kedacom.middleware.upu.domain.UPU old = this.upuCacheByID.get(UPU.getId());
 		if(old != null){
 			updateUPU(UPU);
