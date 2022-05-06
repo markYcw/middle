@@ -580,5 +580,19 @@ public class EProClient {
 
     }
 
+    /**
+     * 取消所有操作
+     * @param ePro
+     * @throws KMException
+     */
+    public void cancelAll(EPro ePro) throws KMException {
+        int ssid = loginByEPro(ePro);
+        CancelAllRequest request = new CancelAllRequest();
+        request.setSsid(ssid);
+
+        this.sendRequest(request);
+
+    }
+
 
 }
