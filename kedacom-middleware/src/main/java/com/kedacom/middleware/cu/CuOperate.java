@@ -6,6 +6,8 @@ import com.kedacom.middleware.cu.response.*;
 import com.kedacom.middleware.exception.ConnectException;
 import com.kedacom.middleware.exception.KMException;
 import keda.common.util.TimeUtil;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.log4j.Logger;
 
 import java.util.Collection;
 import java.util.Date;
@@ -20,6 +22,9 @@ import java.util.List;
 public class CuOperate {
 
 	private CuClient client;
+
+	private static final Logger log = Logger.getLogger(CuClient.class);
+
 	public CuOperate(CuClient client){
 		this.client = client;
 	}
@@ -118,6 +123,7 @@ public class CuOperate {
 	 * @throws KMException
 	 */
 	public long getTime(int cuId) throws KMException {
+		log.info("=====java中间件获取cu时间入参："+cuId);
 		return this.getTime(cuId, false);
 	}
 	

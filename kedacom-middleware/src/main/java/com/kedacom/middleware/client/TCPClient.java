@@ -282,6 +282,7 @@ public class TCPClient implements IClient {
 	public IResponse sendRequest(IRequest request, long timeout) throws KMException {
 
 		int ssno = getSsno();
+		log.info("=========开始设置ssNo"+ssno);
 		request.setSsno(ssno);
 
 		String req;
