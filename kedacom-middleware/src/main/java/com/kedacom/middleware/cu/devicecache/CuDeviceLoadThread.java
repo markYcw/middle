@@ -1,10 +1,12 @@
 package com.kedacom.middleware.cu.devicecache;
 
+import com.alibaba.fastjson.JSONObject;
 import com.kedacom.middleware.client.INotify;
 import com.kedacom.middleware.client.TCPClientListenerAdapter;
 import com.kedacom.middleware.cu.CuClient;
 import com.kedacom.middleware.cu.CuNotifyListener;
 import com.kedacom.middleware.cu.CuSession;
+import com.kedacom.middleware.cu.CuSessionManager;
 import com.kedacom.middleware.cu.domain.*;
 import com.kedacom.middleware.cu.notify.*;
 import com.kedacom.middleware.exception.KMException;
@@ -275,12 +277,15 @@ public class CuDeviceLoadThread  extends TCPClientListenerAdapter{
 	@Override
 	public void onNotify(INotify notify) {
 		int ssid = notify.getSsid();
+		CuSessionManager sessionManager = client.getSessionManager();
+		List<CuSession> allSessions = sessionManager.getAllSessions();
+		log.info("CuDeviceLoadThread的sessionManager的cuSession集合"+allSessions);
 		CuSession session = client.getSessionManager().getSessionBySSID(ssid);
 		int id = 0;
 		if(session != null){
 			id = session.getCu().getId();
 		}else{
-			log.warn("无效的会话,ssid=" + ssid);
+			log.warn("CuDeviceLoadThread无效的会话,ssid=" + ssid);
 			return;
 		}
 		
@@ -595,7 +600,7 @@ public class CuDeviceLoadThread  extends TCPClientListenerAdapter{
 //	}
 
 	private void onRec(int ssid, String deviceId, Map<Integer, PChannelStatus> pChannelStatusMap) {
-		log.info("设备通道状态变更通知:ssid=" + ssid + ",puId=" + deviceId + ",pChannelStatusMap=" + pChannelStatusMap);
+		log.info("设备通道状态变更通知:ssid=" + ssid + ",puId=" + deviceId + ",pChannelStatusMap=" + JSONObject.toJSONString(pChannelStatusMap));
 		CuSession cuSession = client.getSessionManager().getSessionBySSID(ssid);
 		CuDeviceCache deviceCache = cuSession.getDeviceCache();
 		PDevice device = deviceCache.getDevice(deviceId);

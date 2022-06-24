@@ -27,12 +27,15 @@ public class CuClientListener extends TCPClientListenerAdapter {
 	public void onNotify(INotify notify) {
 
 		int ssid = notify.getSsid();
+		CuSessionManager sessionManager = client.getSessionManager();
+		List<CuSession> allSessions = sessionManager.getAllSessions();
+		log.info("CuClientListener的sessionManager的cuSession集合"+allSessions);
 		CuSession session = client.getSessionManager().getSessionBySSID(ssid);
 		int id = 0;
 		if(session != null){
 			id = session.getCu().getId();
 		}else{
-			log.warn("无效的会话,ssid=" + ssid);
+			log.warn("CuClientListener无效的会话,ssid=" + ssid);
 			return;
 		}
 		
